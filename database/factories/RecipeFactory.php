@@ -24,13 +24,13 @@ class RecipeFactory extends Factory
     public function definition()
     {
         $description = Str::of($this->faker->paragraph())->limit(20);
-        
+
         $randomUserId = User::inRandomOrder()
             ->firstOrFail()
             ->id;
 
         return [
-            'title' => $this->faker->sentence(),
+            'title' => $this->faker->unique()->sentence(),
             'description' => $description,
             'cover' => NULL,
             'portions' => rand(1, 6),

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         DB::table('recipes')->delete();
         DB::table('steps')->delete();
         DB::table('measurements')->delete();
+        DB::table('tags')->delete();
 
         // Call custom seeders
         $this->call([
@@ -31,5 +32,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\Recipe::factory(3)->create();
         \App\Models\Step::factory(rand(3, 12))->create();
         \App\Models\Ingredient::factory(7)->create();
+        \App\Models\Tag::factory(12)->create();
     }
 }
