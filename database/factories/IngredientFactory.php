@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Ingredient;
 use App\Models\Measurement;
+use App\Models\Recipe;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class IngredientFactory extends Factory
@@ -31,15 +32,18 @@ class IngredientFactory extends Factory
         ];
 
         $randomVegetable = $commonVegetables[array_rand($commonVegetables)];
-        $randomMeasurement = Measurement::inRandomOrder()
+        $randomMeasurementId = Measurement::inRandomOrder()
+            ->firstOrFail()
+            ->id;
+        $randomRecipeId = Recipe::inRandomOrder()
             ->firstOrFail()
             ->id;
 
         return [
             'name' => $randomVegetable,
             'qty' => rand(1, 10),
-            'recipe_id' => rand(1, 100),
-            'measurement_id' => $randomMeasurement
+            'recipe_id' => $randomRecipeId,
+            'measurement_id' => $randomMeasurementId
         ];
     }
 }
