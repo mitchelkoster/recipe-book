@@ -9,6 +9,10 @@ class Tag extends Model
 {
     use HasFactory;
 
+    // Timestamp is not required
+    public $timestamps = false;
+
+
     /**
      * The recipes that belong to a tag
      */
