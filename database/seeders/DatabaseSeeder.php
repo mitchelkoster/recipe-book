@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,15 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Empty tables before seeding
-        DB::table('users')->delete();
-        DB::table('ingredients')->delete();
-        DB::table('recipes')->delete();
-        DB::table('steps')->delete();
-        DB::table('measurements')->delete();
-        DB::table('tags')->delete();
-        DB::table('recipe_tag')->delete();
-
         // Call custom seeders
         $this->call([
             MeasurementSeeder::class,
