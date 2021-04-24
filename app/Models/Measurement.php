@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Measurement extends Model
 {
     use HasFactory;
+
+    // Timestamp is not required
+    public $timestamps = false;
+
 }

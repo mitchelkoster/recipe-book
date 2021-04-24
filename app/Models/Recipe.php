@@ -10,11 +10,11 @@ class Recipe extends Model
     use HasFactory;
 
     /**
-     * Get the ingredients that are required for a recipe
+     * The ingredients that are required for a recipe
      */
     public function ingredients()
     {
-        $this->hasMany(Ingredient::class);
+        return $this->belongsToMany(Ingredient::class, 'recipe_ingredients');
     }
 
     /**
@@ -30,7 +30,7 @@ class Recipe extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class, 'recipe_tags');
     }
 
     /**

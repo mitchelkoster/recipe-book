@@ -9,12 +9,15 @@ class Ingredient extends Model
 {
     use HasFactory;
 
+    // Timestamp is not required
+    public $timestamps = false;
+
     /**
-     * Get the recipe the ingredient belongs to
+     * Thre recipies that are made with an ingredient
      */
-    public function recipe()
+    public function recipes()
     {
-        return $this->belongsTo(Recipe::class);
+        return $this->belongsToMany(Recipe::class, 'recipe_ingredients');
     }
 
     /**
