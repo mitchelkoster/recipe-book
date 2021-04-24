@@ -13,6 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Use user factories to automate seeding
         \App\Models\User::factory(10)->create();
+
+        // Call custom seeders
+        $this->call([
+            MeasurementSeeder::class,
+        ]);
     }
 }
