@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
         // Empty tables before seeding
         DB::table('users')->delete();
         DB::table('ingredients')->delete();
+        DB::table('recipes')->delete();
+        DB::table('steps')->delete();
         DB::table('measurements')->delete();
 
         // Call custom seeders
@@ -27,6 +29,7 @@ class DatabaseSeeder extends Seeder
         // Use user factories to automate seeding
         \App\Models\User::factory(10)->create();
         \App\Models\Recipe::factory(3)->create();
+        \App\Models\Step::factory(rand(3, 12))->create();
         \App\Models\Ingredient::factory(7)->create();
     }
 }
