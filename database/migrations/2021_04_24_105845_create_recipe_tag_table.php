@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRecipeTagsTable extends Migration
+class CreateRecipeTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateRecipeTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('recipe_tags', function (Blueprint $table) {
+        Schema::create('recipe_tag', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->onDelete('cascade');
+            $table->foreignId('recipe_id')->onDelete('cascade');
             $table->foreignId('tag_id')->onDelete('cascade');
         });
     }
@@ -27,6 +27,6 @@ class CreateRecipeTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipe_tags');
+        Schema::dropIfExists('recipe_tag');
     }
 }

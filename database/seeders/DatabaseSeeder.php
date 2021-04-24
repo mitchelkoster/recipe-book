@@ -33,5 +33,12 @@ class DatabaseSeeder extends Seeder
         \App\Models\Step::factory(rand(3, 12))->create();
         \App\Models\Ingredient::factory(7)->create();
         \App\Models\Tag::factory(12)->create();
+
+        // Link all tags to recipes many-to-many
+        foreach (\App\Models\Recipe::all() as $recipe)
+        {
+            $randomTag = \App\Models\Tag::inRandomOrder()->firstOrFail()->pluck('id');
+            $recipe->tags()->attach($randomTag);
+        }
     }
 }
