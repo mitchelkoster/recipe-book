@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         DB::table('steps')->delete();
         DB::table('measurements')->delete();
         DB::table('tags')->delete();
+        DB::table('recipe_tag')->delete();
 
         // Call custom seeders
         $this->call([
@@ -34,10 +35,13 @@ class DatabaseSeeder extends Seeder
         \App\Models\Ingredient::factory(7)->create();
         \App\Models\Tag::factory(12)->create();
 
-        // Link all tags to recipes many-to-many
+        // Link random database tags to recipes
         foreach (\App\Models\Recipe::all() as $recipe)
         {
-            $randomTag = \App\Models\Tag::inRandomOrder()->firstOrFail()->pluck('id');
+            $randomTag = \App\Models\Tag::inRandomOrder()
+                ->firstOrFail()
+                ->pluck('id');
+
             $recipe->tags()->attach($randomTag);
         }
     }

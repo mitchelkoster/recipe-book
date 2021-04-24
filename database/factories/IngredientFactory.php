@@ -31,10 +31,15 @@ class IngredientFactory extends Factory
             'nutritonal yeast', 'tofu', 'soy milk', 'pasta',
         ];
 
+        // Retrieve random vegatable
         $randomVegetable = $commonVegetables[array_rand($commonVegetables)];
+
+        // Retrieve random measurement for recipe
         $randomMeasurementId = Measurement::inRandomOrder()
             ->firstOrFail()
             ->id;
+
+        // Retrieve random recipe that the ingredient is used in
         $randomRecipeId = Recipe::inRandomOrder()
             ->firstOrFail()
             ->id;
