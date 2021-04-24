@@ -19,6 +19,7 @@ class CreateRecipesTable extends Migration
             $table->string('description');
             $table->string('cover')->nullable(); // This is an image path
             $table->tinyInteger('portions');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }
