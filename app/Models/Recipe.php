@@ -14,7 +14,7 @@ class Recipe extends Model
      */
     public function ingredients()
     {
-        return $this->belongsToMany(Ingredient::class, 'recipe_ingredient');
+        return $this->belongsToMany(Ingredient::class, 'recipe_ingredients');
     }
 
     /**
@@ -30,7 +30,7 @@ class Recipe extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class, 'recipe_tags');
     }
 
     /**

@@ -13,7 +13,7 @@ class CreateRecipeTagTable extends Migration
      */
     public function up()
     {
-        Schema::create('recipe_tag', function (Blueprint $table) {
+        Schema::create('recipe_tags', function (Blueprint $table) {
             $table->id();
             $table->foreignId('recipe_id')->onDelete('cascade');
             $table->foreignId('tag_id')->onDelete('cascade');
@@ -27,6 +27,6 @@ class CreateRecipeTagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipe_tag');
+        Schema::dropIfExists('recipe_tags');
     }
 }
