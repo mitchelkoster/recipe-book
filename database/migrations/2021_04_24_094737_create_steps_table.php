@@ -15,7 +15,10 @@ class CreateStepsTable extends Migration
     {
         Schema::create('steps', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('description')->nullable();
+            $table->text('instructions');
+            $table->string('picture')->nullable();
+            $table->tinyInteger('position');
         });
     }
 

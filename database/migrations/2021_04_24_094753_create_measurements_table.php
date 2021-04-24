@@ -15,7 +15,8 @@ class CreateMeasurementsTable extends Migration
     {
         Schema::create('measurements', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->enum('system', ['imperial', 'metric'])->default('imperial');
+            $table->string('type');
         });
     }
 
