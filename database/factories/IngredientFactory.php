@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Ingredient;
+use App\Models\Measurement;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class IngredientFactory extends Factory
@@ -21,8 +22,24 @@ class IngredientFactory extends Factory
      */
     public function definition()
     {
+        // List of vegertables to populate the database with
+        $commonVegetables = [
+            'carrot', 'apple', 'chickpea', 'flour',
+            'onion', 'zuccini', 'eggplant', 'maple syrup',
+            'flax seed', 'tomato', 'potato', 'grape',
+            'nutritonal yeast', 'tofu', 'soy milk', 'pasta',
+        ];
+
+        $randomVegetable = $commonVegetables[array_rand($commonVegetables)];
+        $randomMeasurement = Measurement::inRandomOrder()
+            ->firstOrFail()
+            ->id;
+
         return [
-            //
+            'name' => $randomVegetable,
+            'qty' => rand(1, 10),
+            'recipe_id' => rand(1, 100),
+            'measurement_id' => $randomMeasurement
         ];
     }
 }

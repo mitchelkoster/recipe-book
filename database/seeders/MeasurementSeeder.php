@@ -40,7 +40,7 @@ class MeasurementSeeder extends Seeder
         // Use Eloquent model
         Measurement::insert($data);
 
-        // Remove entries and create new ones
+        // Create new entries
         DB::table('measurements')->delete();
         DB::table('measurements')->insert($data);
     }

@@ -9,6 +9,9 @@ class Ingredient extends Model
 {
     use HasFactory;
 
+    // Timestamp is not required
+    public $timestamps = false;
+
     /**
      * Get the recipe the ingredient belongs to
      */
