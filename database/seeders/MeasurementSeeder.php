@@ -41,7 +41,6 @@ class MeasurementSeeder extends Seeder
         Measurement::insert($data);
 
         // Create new entries
-        DB::table('measurements')->delete();
         DB::table('measurements')->insert($data);
     }
 }
