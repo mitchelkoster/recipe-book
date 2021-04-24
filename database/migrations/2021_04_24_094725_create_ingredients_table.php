@@ -18,6 +18,7 @@ class CreateIngredientsTable extends Migration
             $table->string('name');
             $table->integer('qty');
             $table->foreignId('recipe_id');
+            $table->foreignId('measurement_id');
         });
     }
 
