@@ -30,9 +30,15 @@ class DatabaseSeeder extends Seeder
         {
             $randomTag = \App\Models\Tag::inRandomOrder()
                 ->firstOrFail()
-                ->pluck('id');
+                ->id;
+
+            $randomIngredient = \App\Models\Ingredient::inRandomOrder()
+                ->firstOrFail()
+                ->id;
+
 
             $recipe->tags()->attach($randomTag);
+            $recipe->ingredients()->attach($randomIngredient);
         }
     }
 }

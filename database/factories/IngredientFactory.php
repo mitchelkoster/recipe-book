@@ -39,15 +39,9 @@ class IngredientFactory extends Factory
             ->firstOrFail()
             ->id;
 
-        // Retrieve random recipe that the ingredient is used in
-        $randomRecipeId = Recipe::inRandomOrder()
-            ->firstOrFail()
-            ->id;
-
         return [
             'name' => $randomVegetable,
             'qty' => rand(1, 10),
-            'recipe_id' => $randomRecipeId,
             'measurement_id' => $randomMeasurementId
         ];
     }
