@@ -53,7 +53,7 @@ composer update
 With all dependencies installed you can now bring up the containers configure the project
 
 ```bash
-cp .env.example .env
+cp .env.docker .env
 ./vendor/bin/sail up -d
 ```
 
@@ -65,7 +65,7 @@ php artisan key:generate
 php artisan migrate:fresh --seed
 
 # Install front-end dependencies
-php npm install && npm run dev
+npm install && npm run dev
 ```
 
 Outside of the containers over your project make sure you have the right permissions:
