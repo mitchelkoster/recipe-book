@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
     {
         // Call custom seeders
         $this->call([
+            UserSeeder::class,
             MeasurementSeeder::class,
         ]);
 
         // Use user factories to automate seeding
-        \App\Models\User::factory(10)->create();
         \App\Models\Recipe::factory(3)->create();
         \App\Models\Step::factory(rand(3, 12))->create();
         \App\Models\Ingredient::factory(7)->create();
