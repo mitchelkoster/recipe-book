@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use \App\Models\Recipe;
+use \App\Models\Tag;
+use \App\Models\Ingredient;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,22 +20,20 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             MeasurementSeeder::class,
+            RecipeSeeder::class,
+            StepSeeder::class,
+            IngredientSeeder::class,
+            TagSeeder::class
         ]);
 
-        // Use user factories to automate seeding
-        \App\Models\Recipe::factory(3)->create();
-        \App\Models\Step::factory(rand(3, 12))->create();
-        \App\Models\Ingredient::factory(7)->create();
-        \App\Models\Tag::factory(12)->create();
-
         // Link random database tags to recipes
-        foreach (\App\Models\Recipe::all() as $recipe)
+        foreach (Recipe::all() as $recipe)
         {
-            $randomTag = \App\Models\Tag::inRandomOrder()
+            $randomTag = Tag::inRandomOrder()
                 ->firstOrFail()
                 ->id;
 
-            $randomIngredient = \App\Models\Ingredient::inRandomOrder()
+            $randomIngredient = Ingredient::inRandomOrder()
                 ->firstOrFail()
                 ->id;
 
