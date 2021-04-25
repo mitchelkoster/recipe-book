@@ -43,6 +43,12 @@ sudo apt install php 7.4 php7.4-curl php-xml composer
 ```
 
 ## Getting started
+It is recommended to create a bash alias for `sail`:
+```bash
+# Add to ~/.bashrc
+alias sail='bash vendor/bin/sail'
+```
+
 To get started first install all depedencies
 
 ```bash
@@ -57,15 +63,16 @@ cp .env.docker .env
 ./vendor/bin/sail up -d
 ```
 
-Next connect the `sail` docker container and configure the project:
+Once the docker containers are running you can configure Laravel, populate the database & install front-end dependencies
 
 ```bash
 # Set up application key and database
-php artisan key:generate
-php artisan migrate:fresh --seed
+sail php artisan key:generate
+sail php artisan migrate:fresh --seed
 
 # Install front-end dependencies
-npm install && npm run dev
+sail npm install
+sail npm run dev
 ```
 
 Outside of the containers over your project make sure you have the right permissions:
