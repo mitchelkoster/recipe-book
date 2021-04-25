@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Call custom seeders
+        // Call database seeders
         $this->call([
             UserSeeder::class,
             MeasurementSeeder::class,
@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class
         ]);
 
-        // Link random database tags to recipes
+        // Link random database tags and ingredients to recipes
         foreach (Recipe::all() as $recipe)
         {
             $randomTag = Tag::inRandomOrder()
@@ -36,7 +36,6 @@ class DatabaseSeeder extends Seeder
             $randomIngredient = Ingredient::inRandomOrder()
                 ->firstOrFail()
                 ->id;
-
 
             $recipe->tags()->attach($randomTag);
             $recipe->ingredients()->attach($randomIngredient);
