@@ -15,8 +15,8 @@ class CreateRecipeTagTable extends Migration
     {
         Schema::create('recipe_tags', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('recipe_id')->onDelete('cascade');
-            $table->foreignId('tag_id')->onDelete('cascade');
+            $table->foreignId('recipe_id')->constrained()->onDelete('cascade');
+            $table->foreignId('tag_id')->constrained()->onDelete('cascade');
         });
     }
 
