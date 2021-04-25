@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Measurement;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-
 class MeasurementSeeder extends Seeder
 {
     /**
@@ -15,32 +13,23 @@ class MeasurementSeeder extends Seeder
      */
     public function run()
     {
-        // Bulk data to insert
-        $data = [
-            // Imperial
-            ['system' => 'imperial', 'type' => 'pound (lb)'],
-            ['system' => 'imperial', 'type' => 'ounce (oz)'],
-            ['system' => 'imperial', 'type' => 'pint (pt)'],
-            ['system' => 'imperial', 'type' => 'fluid ounce (fl oz)'],
-            ['system' => 'imperial', 'type' => 'ounce (oz)'],
-            ['system' => 'imperial', 'type' => 'cup'],
-            ['system' => 'imperial', 'type' => 'tablespoon (tbsp)'],
-            ['system' => 'imperial', 'type' => 'teaspoon (tsp)'],
+        // Imperial
+        Measurement::create(['system' => 'imperial', 'type' => 'pound (lb)']);
+        Measurement::create(['system' => 'imperial', 'type' => 'ounce (oz)']);
+        Measurement::create(['system' => 'imperial', 'type' => 'pint (pt)']);
+        Measurement::create(['system' => 'imperial', 'type' => 'fluid ounce (fl oz)']);
+        Measurement::create(['system' => 'imperial', 'type' => 'ounce (oz)']);
+        Measurement::create(['system' => 'imperial', 'type' => 'cup']);
+        Measurement::create(['system' => 'imperial', 'type' => 'tablespoon (tbsp)']);
+        Measurement::create(['system' => 'imperial', 'type' => 'teaspoon (tsp)']);
 
-            // Metric
-            ['system' => 'metric', 'type' => 'kilogram (kg)'],
-            ['system' => 'metric', 'type' => 'gram (g)'],
-            ['system' => 'metric', 'type' => 'liter (l)'],
-            ['system' => 'metric', 'type' => 'deciliter (dl)'],
-            ['system' => 'metric', 'type' => 'milliliter (ml)'],
-            ['system' => 'metric', 'type' => 'tablespoon (tbsp)'],
-            ['system' => 'metric', 'type' => 'teaspoon (tsp)'],
-        ];
-
-        // Use Eloquent model
-        Measurement::insert($data);
-
-        // Create new entries
-        DB::table('measurements')->insert($data);
+        // Metric
+        Measurement::create(['system' => 'metric', 'type' => 'kilogram (kg)']);
+        Measurement::create(['system' => 'metric', 'type' => 'gram (g)']);
+        Measurement::create(['system' => 'metric', 'type' => 'liter (l)']);
+        Measurement::create(['system' => 'metric', 'type' => 'deciliter (dl)']);
+        Measurement::create(['system' => 'metric', 'type' => 'milliliter (ml)']);
+        Measurement::create(['system' => 'metric', 'type' => 'tablespoon (tbsp)']);
+        Measurement::create(['system' => 'metric', 'type' => 'teaspoon (tsp)']);
     }
 }
