@@ -46,22 +46,26 @@ sudo apt install php 7.4 php7.4-curl php-xml composer
 To get started first install all depedencies
 
 ```bash
+# Install back-end dependencies
 composer update
 ```
 
 With all dependencies installed you can now bring up the containers configure the project
 
 ```bash
+cp .env.example .env
 ./vendor/bin/sail up -d
 ```
 
 Next connect the `sail` docker container and configure the project:
 
 ```bash
-vm .env.sample .env
+# Set up application key and database
 php artisan key:generate
-npm install && npm run dev
 php artisan migrate:fresh --seed
+
+# Install front-end dependencies
+php npm install && npm run dev
 ```
 
 Outside of the containers over your project make sure you have the right permissions:
