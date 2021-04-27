@@ -14,12 +14,10 @@ class RecipeController extends Controller
      */
     public function latest()
     {
-        // TODO: This includes the ENTIRE user table
         $recipes = Recipe::with('user')
             ->orderByDesc('created_at')
             ->limit(6)
             ->get();
-        // dd($recipes);
         
         return view('latest', ['recipes' => $recipes]);
     }
