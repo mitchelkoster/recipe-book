@@ -16,7 +16,7 @@
                             <!-- Recipe image -->
                             <div class="h-1/2">
                                 <img
-                                    src="/img/placeholder_recipe.png"
+                                    src="{{ asset('img/placeholder_recipe.png') }}"
                                     alt="Random recipe"
                                     class="mr-2"
                                 >
