@@ -16,8 +16,14 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
-    <body>
-        <div class="font-sans text-gray-900 antialiased">
+    <body class="bg-gray-100 font-sans">
+        <!-- Page Navigation -->
+        <header class="flex flex-row p-2 shadow bg-gray-50">
+            @include('layouts.navigation')
+        </header>
+
+        <!-- Page Content -->
+        <div class="text-gray-900 antialiased">
             {{ $slot }}
         </div>
     </body>
