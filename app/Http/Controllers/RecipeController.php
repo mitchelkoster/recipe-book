@@ -8,13 +8,30 @@ use Illuminate\Http\Request;
 class RecipeController extends Controller
 {
     /**
+     * Display the latest recipes.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function latest()
+    {
+        // TODO: This includes the ENTIRE user table
+        $recipes = Recipe::with('user')
+            ->orderByDesc('created_at')
+            ->limit(6)
+            ->get();
+        // dd($recipes);
+        
+        return view('latest', ['recipes' => $recipes]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        abort(404);
     }
 
     /**
@@ -24,7 +41,7 @@ class RecipeController extends Controller
      */
     public function create()
     {
-        //
+        abort(404);
     }
 
     /**
@@ -35,7 +52,7 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -46,7 +63,7 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -57,7 +74,7 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        //
+        abort(404);
     }
 
     /**
