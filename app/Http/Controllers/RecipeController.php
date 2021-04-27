@@ -1,0 +1,102 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Recipe;
+use Illuminate\Http\Request;
+
+class RecipeController extends Controller
+{
+    /**
+     * Display the latest recipes.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function latest()
+    {
+        // TODO: This includes the ENTIRE user table
+        $recipes = Recipe::with('user')
+            ->orderByDesc('created_at')
+            ->limit(6)
+            ->get();
+        // dd($recipes);
+        
+        return view('latest', ['recipes' => $recipes]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        abort(404);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        abort(404);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        abort(404);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Recipe  $recipe
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Recipe $recipe)
+    {
+        abort(404);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Recipe  $recipe
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Recipe $recipe)
+    {
+        abort(404);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Recipe  $recipe
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Recipe $recipe)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Recipe  $recipe
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Recipe $recipe)
+    {
+        //
+    }
+}

@@ -4,8 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="icon" href="{{ asset('img/logo.svg') }}" type="image/gif" sizes="16x16"> 
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Recipes') }}</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -16,8 +17,14 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
-    <body>
-        <div class="font-sans text-gray-900 antialiased">
+    <body class="bg-gray-100 font-sans">
+        <!-- Page Navigation -->
+        <header class="flex flex-row p-2 shadow bg-gray-50">
+            @include('layouts.navigation')
+        </header>
+
+        <!-- Page Content -->
+        <div class="text-gray-900 antialiased">
             {{ $slot }}
         </div>
     </body>

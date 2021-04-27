@@ -23,7 +23,7 @@ class RecipeFactory extends Factory
      */
     public function definition()
     {
-        $description = Str::of($this->faker->paragraph())->limit(20);
+        $description = Str::of($this->faker->paragraph())->limit(150);
 
         $randomUserId = User::inRandomOrder()
             ->firstOrFail()
