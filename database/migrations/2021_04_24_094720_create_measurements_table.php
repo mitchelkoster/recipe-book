@@ -17,6 +17,7 @@ class CreateMeasurementsTable extends Migration
             $table->id();
             $table->enum('system', ['imperial', 'metric'])->default('imperial');
             $table->string('type');
+            $table->softDeletes();
         });
     }
 

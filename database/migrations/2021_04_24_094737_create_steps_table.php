@@ -18,8 +18,8 @@ class CreateStepsTable extends Migration
             $table->string('description')->nullable();
             $table->text('instructions');
             $table->string('picture')->nullable();
-            $table->tinyInteger('position');
             $table->foreignId('recipe_id')->constrained();
+            $table->softDeletes();
         });
     }
 

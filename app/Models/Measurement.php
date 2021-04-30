@@ -11,5 +11,4 @@ class Measurement extends Model
 
     // Timestamp is not required
     public $timestamps = false;
-
 }

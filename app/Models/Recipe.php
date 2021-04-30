@@ -9,6 +9,9 @@ class Recipe extends Model
 {
     use HasFactory;
 
+    // Allow mass assignment
+    protected $guarded = [];
+
     /**
      * The ingredients that are required for a recipe
      */
@@ -22,7 +25,7 @@ class Recipe extends Model
      */
     public function steps()
     {
-        $this->hasMany(Step::class);
+        return $this->hasMany(Step::class);
     }
 
     /**

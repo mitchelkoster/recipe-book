@@ -25,6 +25,6 @@ class Ingredient extends Model
      */
     public function measurement()
     {
-        return $this->hasOne(Measurement::class);
+        return $this->belongsTo(Measurement::class);
     }
 }

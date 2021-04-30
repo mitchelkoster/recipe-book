@@ -21,6 +21,7 @@ class CreateRecipesTable extends Migration
             $table->tinyInteger('portions');
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
