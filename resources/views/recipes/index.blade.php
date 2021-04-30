@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="max-w-6xl mx-auto">
-        <h1 class="text-2xl text-gray-800 mt-8">{{__('All recipes')}}</h1>
+        <h1 class="text-2xl text-gray-800">{{__('All recipes')}}</h1>
         <p class="mt-2 text-gray-600 text-sm">
             {{__('An overview of all recipes on this website.')}}
         </p>

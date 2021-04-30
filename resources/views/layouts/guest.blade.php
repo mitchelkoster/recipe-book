@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <link rel="icon" href="{{ asset('img/logo.svg') }}" type="image/gif" sizes="16x16"> 
+        <link rel="icon" href="{{ asset('img/logo.svg') }}" type="image/gif" sizes="16x16">
 
         <title>{{ config('app.name', 'Recipes') }}</title>
 
@@ -24,7 +24,7 @@
         </header>
 
         <!-- Page Content -->
-        <div class="text-gray-900 antialiased">
+        <div class="text-gray-900 antialiased mt-8">
             {{ $slot }}
         </div>
     </body>
