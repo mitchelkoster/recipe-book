@@ -31,7 +31,7 @@ class RecipeController extends Controller
     {
         $recipes = Recipe::with('user')
             ->orderByDesc('created_at')
-            ->paginate(4);
+            ->paginate(10);
 
         return view('recipes.index', compact('recipes'));
     }
