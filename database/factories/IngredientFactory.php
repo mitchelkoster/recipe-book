@@ -40,7 +40,7 @@ class IngredientFactory extends Factory
             ,"buttermilk","chicken","fresh ginger","light brown sugar","lime juice","red pepper","chicken breasts","raisins","red wine vinegar"
         ];
 
-        // Retrieve random vegatable
+        // Retrieve random ingredient
         $randomIngredient = $ingredients[array_rand($ingredients)];
 
         // Retrieve random measurement for recipe
