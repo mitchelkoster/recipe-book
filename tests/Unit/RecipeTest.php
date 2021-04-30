@@ -58,6 +58,38 @@ class RecipeTest extends TestCase
     }
 
     /**
+     * See if we can update a recipe
+     *
+     * @return void
+     */
+    public function test_update_recipe()
+    {
+        // Create users
+        $user = User::factory()->create();
+        $this->assertEquals(1, $user->count());
+
+        // Add user to recipe
+        $recipe = Recipe::factory()->create();
+        $this->assertEquals(1, $recipe->count());
+
+        // Recipe created & get title
+        $this->assertEquals(1, $recipe->count());
+        $oldTitle = $recipe->firstOrFail()->title;
+
+        // Update recipe & compare
+        $recipe->firstOrFail()->update([
+            'title' => 'updated',
+            'description' => 'updated',
+            'cover' => 'updated',
+            'portions' => 10,
+        ]);
+        $newTitle = $recipe->firstOrFail()->title;
+
+        // See if title has changed
+        $this->assertNotEquals($oldTitle, $newTitle);
+    }
+
+    /**
      * See if we can get the last 6 recipe's
      *
      * @return void
