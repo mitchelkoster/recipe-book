@@ -73,6 +73,12 @@ sail php artisan migrate:fresh --seed
 # Install front-end dependencies
 sail npm install
 sail npm run dev
+
+# Run all tests
+sail test
+
+# For a specific test only
+sail test --filter RecipeTest
 ```
 
 Outside of the containers over your project make sure you have the right permissions:
