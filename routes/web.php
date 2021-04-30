@@ -15,7 +15,10 @@ use App\Http\Controllers\RecipeController;
 */
 
 Route::get('/', [RecipeController::class, 'latest']);
+
+// Recipe routes
 Route::get('/latest', [RecipeController::class, 'latest']);
+Route::resource('/recipes', RecipeController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

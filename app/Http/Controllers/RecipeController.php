@@ -18,8 +18,8 @@ class RecipeController extends Controller
             ->orderByDesc('created_at')
             ->limit(6)
             ->get();
-        
-        return view('latest', ['recipes' => $recipes]);
+
+        return view('recipes.latest', compact('recipes'));
     }
 
     /**
@@ -29,7 +29,11 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        abort(404);
+        $recipes = Recipe::with('user')
+            ->orderByDesc('created_at')
+            ->paginate(4);
+
+        return view('recipes.index', compact('recipes'));
     }
 
     /**
