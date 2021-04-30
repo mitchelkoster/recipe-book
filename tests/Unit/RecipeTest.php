@@ -97,4 +97,32 @@ class RecipeTest extends TestCase
             'ingredient_id' => $ingredient->id
         ]);
     }
+
+    /**
+     * See if a recipe has tags
+     *
+     * @return void
+     */
+    public function test_recipe_has_tags()
+    {
+        // Create a recipe with tags
+        $user = User::factory()->create();
+        $recipe = Recipe::factory()->create([
+            'user_id' => $user->id
+        ]);
+
+        // Create tags
+        $tags = Tag::factory(30)->create();
+
+        // Link tags to recipes on ORM
+        foreach ($tags as $tag) {
+            $recipe->firstOrFail()->tags()->attach($tag);
+        }
+
+        // See if a database relations are created
+        $this->assertDatabaseHas('recipe_tags', [
+            'recipe_id' => $recipe->firstOrFail()->id,
+            'tag_id' => $tag->id
+        ]);
+    }
 }
