@@ -64,6 +64,29 @@
                 <li>{{$ingredient->qty}} {{$ingredient->measurement->type}} of <span class="underline capitalize italic">{{$ingredient->name}}</span></li>
                 @endforeach
             </ul>
+
+            <div class="flex items-center flex-col bg-white rounded mb-8">
+                <h1 class="text-2xl text-gray-800 mt-4">{{ __('Steps') }}</h1>
+
+                @forelse ($recipe->steps as $step)
+                    <section class="flex items-center flex-col bg-white rounded my-2">
+                        <h2 class="text-xl text-gray-800 mt-4">{{ $step->description }}</h2>
+                        <p class="mt-2 text-gray-600">{{ $step->instructions }}</p>
+
+                        @if ( isset($step->picture) )
+                            <img
+                                src="{{ asset('img/placeholder_recipe.png') }}"
+                                alt="Random recipe"
+                                class="object-fill h-48 w-full mt-8"
+                                height="150"
+                                width="150"
+                            >
+                        @endif
+                    </section>
+                @empty
+                    <p class="text-lg text-green-600 mt-4">{{__('recipes are available yet')}}</p>
+                @endforelse
+            </div>
         </main>
     </div>
 </x-guest-layout>

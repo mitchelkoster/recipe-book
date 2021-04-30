@@ -29,9 +29,9 @@ class RecipeController extends Controller
      */
     public function index()
     {
-//        $recipes = Recipe::with('user')
-//            ->orderByDesc('created_at')
-//            ->paginate(10);
+        $recipes = Recipe::with('user')
+            ->orderByDesc('created_at')
+            ->paginate(10);
 
         return view('recipes.index', compact('recipes'));
     }
@@ -66,7 +66,8 @@ class RecipeController extends Controller
     public function show(Recipe $recipe)
     {
         $recipe = Recipe::with([
-            'user', 'ingredients', 'ingredients.measurement'
+            'user', 'steps',
+            'ingredients', 'ingredients.measurement'
         ])->find($recipe->id);
 
         return view('recipes.show', compact('recipe'));

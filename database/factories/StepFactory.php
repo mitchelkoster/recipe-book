@@ -32,7 +32,6 @@ class StepFactory extends Factory
             'description' => $includeDescription ? $this->faker->sentence() : NULL,
             'instructions' => $this->faker->paragraphs(rand(1, 3), true),
             'picture' => NULL,
-            'position' => 0,
             'recipe_id' => $randomRecipeId
         ];
     }
