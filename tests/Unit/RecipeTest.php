@@ -28,8 +28,33 @@ class RecipeTest extends TestCase
         $this->assertEquals(1, $user->count());
 
         // Add user to recipe
-        $recipes = Recipe::factory(1)->create();
-        $this->assertEquals(1, $recipes->count());
+        $recipe = Recipe::factory()->create();
+        $this->assertEquals(1, $recipe->count());
+    }
+
+    /**
+     * See if we can delete a recipe
+     *
+     * @return void
+     */
+    public function test_delete_recipe()
+    {
+        // Create users
+        $user = User::factory()->create();
+        $this->assertEquals(1, $user->count());
+
+        // Add user to recipe
+        $recipe = Recipe::factory()->create();
+        $this->assertEquals(1, $recipe->count());
+
+        // Recipe created
+        $this->assertEquals(1, $recipe->count());
+
+        // Remove recipe
+        $recipe->delete();
+
+        // Recipe removed
+        $this->assertEquals(0, $recipe->count());
     }
 
     /**
