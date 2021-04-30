@@ -26,19 +26,26 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class
         ]);
 
-        // Link random database tags and ingredients to recipes
+        // Attach tags and ingredients to recipes
         foreach (Recipe::all() as $recipe)
         {
-            $randomTag = Tag::inRandomOrder()
-                ->firstOrFail()
-                ->id;
+            // Attach random tags to recipes
+            for( $i = 0; $i < rand(0, 5); $i++ ) {
+                $randomTag = Tag::inRandomOrder()
+                    ->firstOrFail()
+                    ->id;
 
-            $randomIngredient = Ingredient::inRandomOrder()
-                ->firstOrFail()
-                ->id;
+                $recipe->tags()->attach($randomTag);
+            }
 
-            $recipe->tags()->attach($randomTag);
-            $recipe->ingredients()->attach($randomIngredient);
+            // Attach random ingredients to recipes
+            for( $i = 0; $i < rand(1, 7); $i++ ) {
+                $randomIngredient = Ingredient::inRandomOrder()
+                    ->firstOrFail()
+                    ->id;
+
+                $recipe->ingredients()->attach($randomIngredient);
+            }
         }
     }
 }
