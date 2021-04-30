@@ -25,7 +25,7 @@
 
                             <!-- Recipe content -->
                             <div class="ml-4 text-lg leading-7 font-semibold">
-                                <a href="#" class="underline text-green-600 ">
+                                <a href="{{ url('/recipes', $recipe->id) }}" class="underline text-green-600 ">
                                     {{ $recipe->title }}
                                 </a>
 
@@ -37,7 +37,6 @@
                                 </div>
 
                                 <div class="mt-2 w-60 text-gray-600 text-sm">
-                                    {{-- Laravel has wonderful, thorough documentation covering every aspect of the framework. Whether you are new to the framework or have previous experience with Laravel, we recommend reading all of the documentation from beginning to end. --}}
                                     {{ $recipe->description }}
                                 </div>
                             </div>
