@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <header class="flex items-center flex-col bg-white rounded">
             <!-- Title and description -->
             <section class="text-center w-full">
