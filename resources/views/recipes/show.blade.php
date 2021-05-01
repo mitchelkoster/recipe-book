@@ -78,6 +78,7 @@
                 @endforeach
             </ul>
 
+            <!-- Show all steps -->
             <div class="flex items-center flex-col bg-white rounded mb-8">
                 <h1 class="text-2xl text-gray-800 mt-4">{{ __('Steps') }}</h1>
 
@@ -97,7 +98,7 @@
                         @endif
                     </section>
                 @empty
-                    <p class="text-lg text-green-600 mt-4">{{__('recipes are available yet')}}</p>
+                    <p class="text-lg text-green-600 mt-4">{{__('This recipe just contains ingredients for now!')}}</p>
                 @endforelse
             </div>
         </main>
