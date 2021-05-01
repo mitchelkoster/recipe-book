@@ -66,8 +66,8 @@ class RecipeController extends Controller
     public function show(Recipe $recipe)
     {
         $recipe = Recipe::with([
-            'user', 'steps',
-            'ingredients', 'ingredients.measurement'
+            'user', 'steps', 'tags',
+            'ingredients', 'ingredients.measurement',
         ])->find($recipe->id);
 
         return view('recipes.show', compact('recipe'));
