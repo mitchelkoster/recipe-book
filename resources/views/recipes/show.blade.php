@@ -1,16 +1,16 @@
 <x-guest-layout>
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <header class="flex items-center flex-col bg-white rounded">
             <!-- Title and description -->
-            <div class="text-center w-full">
+            <section class="text-center w-full">
                 <h1 class="text-2xl text-gray-800 mt-8 px-8">{{ $recipe->title }}</h1>
                 <p class="mt-2 text-gray-600 px-8">
                     {{ $recipe->description }}
                 </p>
-            </div>
+            </section>
 
-            <!-- Recipe cook, date created & portions -->
-            <div class="my-2 p-2 w-full flex justify-evenly">
+            <!-- Recipe cook -->
+            <section class="my-2 p-2 w-full flex justify-evenly">
                 <div class="flex">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
@@ -21,6 +21,7 @@
                     <a href="#" class="ml-2 text-green-400 hover:text-green-600">{{ $recipe->user->name }}</a>
                 </div>
 
+                <!-- created date -->
                 <div class="flex">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
@@ -31,6 +32,7 @@
                     <p class="ml-2">{{ $recipe->created_at->toDateString() }}</p>
                 </div>
 
+                <!-- portions -->
                 <div class="flex">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
@@ -42,7 +44,18 @@
 
                     <p class="ml-2">{{ $recipe->portions }} {{ __('portion(s)') }}</p>
                 </div>
-            </div>
+            </section>
+
+            <!-- Tags -->
+            <section class="text-center">
+                <ul class="flex">
+                    @foreach ($recipe->tags as $tag)
+                        <li class="py-0.5 px-2 mx-1 bg-green-200 border border-green-800 text-green-800 rounded">
+                            <a href="#">{{ $tag->name }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </section>
 
             {{-- Only show image if available--}}
             @if ( isset($recipe->cover) )
