@@ -11,7 +11,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
             @forelse ($recipes as $recipe)
                 <!-- Recipe card -->
-                    <div class="p-6 bg-white rounded shadow">
+                    <section class="p-6 bg-white rounded shadow">
                         <div class="flex items-center">
                             <!-- Recipe image -->
                             <img
@@ -40,7 +40,18 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                        <!-- tags -->
+                        <div class="text-center mt-4">
+                            <ul class="flex flex justify-start">
+                                @foreach ($recipe->tags as $tag)
+                                    <li class="py-0.5 px-2 mx-1 bg-green-200 border border-green-800 text-green-800 rounded">
+                                        <a href="#">{{ $tag->name }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </section>
                     <!-- Recipe card -->
                 @empty
                     <p class="text-lg text-green-600">{{__('No recipes are available yet!')}}</p>

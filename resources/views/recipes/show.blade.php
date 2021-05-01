@@ -9,7 +9,7 @@
                 </p>
             </section>
 
-            <!-- Recipe cook, date created & portions -->
+            <!-- Recipe cook -->
             <section class="my-2 p-2 w-full flex justify-evenly">
                 <div class="flex">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -21,6 +21,7 @@
                     <a href="#" class="ml-2 text-green-400 hover:text-green-600">{{ $recipe->user->name }}</a>
                 </div>
 
+                <!-- created date -->
                 <div class="flex">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
@@ -31,6 +32,7 @@
                     <p class="ml-2">{{ $recipe->created_at->toDateString() }}</p>
                 </div>
 
+                <!-- portions -->
                 <div class="flex">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
@@ -48,7 +50,9 @@
             <section class="text-center">
                 <ul class="flex">
                     @foreach ($recipe->tags as $tag)
-                    <li class="py-0.5 px-2 mx-1 bg-green-200 border border-green-800 text-green-800 rounded">{{ $tag->name }}</li>
+                        <li class="py-0.5 px-2 mx-1 bg-green-200 border border-green-800 text-green-800 rounded">
+                            <a href="#">{{ $tag->name }}</a>
+                        </li>
                     @endforeach
                 </ul>
             </section>
