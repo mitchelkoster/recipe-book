@@ -43,7 +43,7 @@ class RecipeController extends Controller
      */
     public function create()
     {
-        abort(404);
+        return view('recipes.create');
     }
 
     /**
