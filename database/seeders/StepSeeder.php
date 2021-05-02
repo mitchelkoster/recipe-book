@@ -14,6 +14,6 @@ class StepSeeder extends Seeder
      */
     public function run()
     {
-        Step::factory(rand(3, 12))->create();
+        Step::factory(100)->create();
     }
 }
