@@ -50,7 +50,7 @@
             <section class="text-center">
                 <ul class="flex">
                     @foreach ($recipe->tags as $tag)
-                        <li class="py-0.5 px-2 mx-1 bg-green-200 border border-green-800 text-green-800 rounded">
+                        <li class="py-0.5 px-2 mx-1 bg-green-200 text-green-800 rounded">
                             <a href="#">{{ $tag->name }}</a>
                         </li>
                     @endforeach
