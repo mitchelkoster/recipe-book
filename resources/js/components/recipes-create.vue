@@ -8,7 +8,7 @@
 
                 <input id="title"
                        class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                       type="text" name="title" required
+                       type="text" name="title" placeholder="Cold pasta salad" required
                        autofocus/>
             </label>
         </div>
@@ -20,7 +20,7 @@
 
                 <textarea id="description" rows="5"
                           class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' block mt-1 w-full"
-                          type="email" name="description" required></textarea>
+                          type="email" name="description" placeholder="This Italian cold pasta salad used Olives to..." required></textarea>
             </label>
         </div>
 
@@ -36,7 +36,7 @@
 
                         <input id="ingredient"
                                class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                               type="text" list="ingredients" name="ingredient" required
+                               type="text" list="ingredients" name="ingredient" placeholder="Search for ingredients..." required
                                autofocus/>
                     </label>
 
@@ -86,7 +86,7 @@
 
                         <input id="step-title"
                                class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                               type="text" name="title" required
+                               type="text" name="title" placeholder="Prepping the veggies" required
                                autofocus/>
                     </label>
                 </div>
@@ -98,7 +98,7 @@
 
                         <textarea id="step-description" rows="5"
                                   class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' block mt-1 w-full"
-                                  type="email" name="description" required></textarea>
+                                  type="email" name="description" placeholder="Dice up one carrot in large chunks..." required></textarea>
                     </label>
                 </div>
             </fieldset>
