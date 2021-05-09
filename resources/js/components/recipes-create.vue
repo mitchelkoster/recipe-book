@@ -26,7 +26,7 @@
 
         <!-- Ingredients -->
         <div class="mt-4">
-            <fieldset class="border px-4">
+            <fieldset class="border px-4 rounded">
                 <legend class="text-2xl text-green-600 px-8">Ingredients</legend>
 
                 <div class="my-4 flex flex-col md:flex-row justify-center items-stretch">
@@ -72,7 +72,7 @@
 
         <!-- Steps -->
         <div class="mt-4">
-            <fieldset class="border px-4">
+            <fieldset class="border px-4 rounded">
                 <legend class="text-2xl text-green-600 px-8">Steps</legend>
 
                 <!-- Step title -->
