@@ -37,11 +37,10 @@
                            autofocus/>
 
                     <datalist id="ingredients">
+                        <option v-for="ingredient in ingredients" :key="ingredient.id">
+                            {{ ingredient.name}}
+                        </option>
                         <option value="Carrot"/>
-                        <option value="Apple"/>
-                        <option value="Ginger"/>
-                        <option value="Tumeric"/>
-                        <option value="Lentils"/>
                     </datalist>
 
                     <!-- Ingredient quantity -->
