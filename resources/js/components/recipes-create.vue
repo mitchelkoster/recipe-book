@@ -29,41 +29,51 @@
             <fieldset class="border px-4 rounded">
                 <legend class="text-2xl text-green-600 px-8">Ingredients</legend>
 
-                <div class="my-4 flex flex-col md:flex-row justify-center items-stretch">
-                    <!-- Ingredient name -->
-                    <input id="ingredient"
-                           class="mb-4 md:mb-0 md:w-3/6 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                           type="text" list="ingredients" name="ingredient" placeholder="Search ingredient" required
-                           autofocus/>
+                <div v-for="i in ingredientCount">
+                    <div class="my-4 flex flex-col md:flex-row justify-center items-stretch">
+                        <!-- Ingredient name -->
+                        <input
+                            class="mb-4 md:mb-0 md:w-3/6 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            type="text" list="ingredients" name="ingredient" placeholder="Search ingredient" required
+                            autofocus/>
 
-                    <datalist id="ingredients">
-                        <option v-for="ingredient in ingredients" :key="ingredient.id">
-                            {{ ingredient.name}}
-                        </option>
-                        <option value="Carrot"/>
-                    </datalist>
+                        <datalist>
+                            <option v-for="ingredient in ingredients" :key="ingredient.id">
+                                {{ ingredient.name}}
+                            </option>
+                        </datalist>
 
-                    <!-- Ingredient quantity -->
-                    <input id="qty"
-                       class="mb-4 md:mb-0 md:mx-2 md:w-1/6 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                       type="number" name="qty" value="1" step="1" required
-                       autofocus/>
+                        <!-- Ingredient quantity -->
+                        <input
+                        class="mb-4 md:mb-0 md:mx-2 md:w-1/6 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        type="number" name="qty" value="1" step="1" required
+                        autofocus/>
 
-                    <!-- Measurement -->
-                    <select
-                        class="md:w-2/6 form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        <option>Grams (Metric)</option>
-                        <option>Cups (Imperial)</option>
-                    </select>
+                        <!-- Measurement -->
+                        <select
+                            class="md:w-2/6 form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <option>Grams (Metric)</option>
+                            <option>Cups (Imperial)</option>
+                        </select>
+                    </div>
                 </div>
 
-                <!-- Add additional ingredient -->
-                <div class="flex items-center justify-end my-4">
-                    <a class="inline-flex items-center text-green-600 hover:text-green-500" href="#">
+                <!-- Add and remove ingredient actions -->
+                <div class="flex justify-end items-center my-4">
+                    <!-- Add additional ingredient -->
+                    <a class="inline-flex items-center text-green-600 hover:text-green-500" href="#" v-on:click.prevent="addIngredient">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
                         Add
+                    </a>
+
+                    <!-- Remove additional ingredient -->
+                    <a class="inline-flex items-center text-green-600 hover:text-green-500" href="#" v-on:click.prevent="removeIngredient">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" />
+                    </svg>
+                        Remove
                     </a>
                 </div>
             </fieldset>
@@ -119,6 +129,7 @@
 export default {
     data() {
         return {
+            ingredientCount: 1,
             ingredients: {}
         }
     },
@@ -126,6 +137,13 @@ export default {
         this.getIngredients()
     },
     methods: {
+        addIngredient() {
+            this.ingredientCount += 1
+        },
+        removeIngredient() {
+            if (this.ingredientCount > 1)
+                this.ingredientCount -= 1
+        },
         getIngredients() {
             let url = `${window.location.origin}/api/ingredients`
             
