@@ -28,6 +28,14 @@
         <div class="mt-4">
             <fieldset class="border px-4 rounded">
                 <legend class="text-2xl text-green-600 px-8">Ingredients</legend>
+                    <div class="my-4 flex flex-col md:flex-row justify-end items-stretch">
+                        <select
+                            class="md:w-2/6 form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            v-model="selectedSystem" @change="updateSystem">
+                            <option>Metric</option>
+                            <option>Imperial</option>
+                        </select>
+                    </div>
 
                 <div v-for="i in ingredientCount">
                     <div class="my-4 flex flex-col md:flex-row justify-center items-stretch">
@@ -37,14 +45,8 @@
                             type="text" list="ingredients" name="ingredient" placeholder="Search ingredient" required
                             autofocus/>
 
-                        <datalist>
-                            <option v-for="ingredient in ingredients" :key="ingredient.id">
-                                {{ ingredient.name}}
-                            </option>
-                        </datalist>
-
                         <!-- Ingredient quantity -->
-                        <input
+                        <input 
                         class="mb-4 md:mb-0 md:mx-2 md:w-1/6 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                         type="number" name="qty" value="1" step="1" required
                         autofocus/>
@@ -52,11 +54,20 @@
                         <!-- Measurement -->
                         <select
                             class="md:w-2/6 form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                            <option>Grams (Metric)</option>
-                            <option>Cups (Imperial)</option>
+                            <option selected disabled value="">Measurement</option>
+                            <option v-for="measurement in measurements" :value="measurement.id">
+                                {{ measurement.type }}
+                            </option>
                         </select>
                     </div>
                 </div>
+
+                <!-- Shared data list for all ingredients -->
+                <datalist id="ingredients">
+                    <option v-for="ingredient in ingredients" :key="ingredient.id">
+                        {{ ingredient.name}}
+                    </option>
+                </datalist>
 
                 <!-- Add and remove ingredient actions -->
                 <div class="flex justify-end items-center my-4">
@@ -130,11 +141,14 @@ export default {
     data() {
         return {
             ingredientCount: 1,
-            ingredients: {}
+            selectedSystem: 'Metric',
+            ingredients: {},
+            measurements: {}
         }
     },
     beforeMount() {
         this.getIngredients()
+        this.getMeasurements(this.selectedSystem)
     },
     methods: {
         addIngredient() {
@@ -154,6 +168,20 @@ export default {
             .catch((error) => {
                 console.error(error);
             })
+        },
+        getMeasurements(system) {
+            let url = `${window.location.origin}/api/measurements/${system.toLowerCase()}`
+            
+            this.$http.get(url).
+            then((response) => {
+                this.measurements = response.data
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+        },
+        updateSystem() {
+            this.getMeasurements(this.selectedSystem)
         }
     }
 }

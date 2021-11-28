@@ -15,7 +15,7 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        return Ingredient::all();
+        return Ingredient::all('id', 'name');
     }
 
     /**

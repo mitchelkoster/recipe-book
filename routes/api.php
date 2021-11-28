@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\IngredientController;
+use App\Http\Controllers\Api\MeasurementsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('ingredients', [IngredientController::class, 'index']);
 Route::post('ingredients', [IngredientController::class, 'store']);
+Route::get('measurements/{system}', [MeasurementsController::class, 'index']);
