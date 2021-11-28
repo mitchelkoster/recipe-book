@@ -5,7 +5,7 @@
 
         <!-- Handed down to VueJS -->
         <div id="app">
-            <app></app>
+            <add-recipe></add-recipe>
         </div>
     </div>
 </x-guest-layout>

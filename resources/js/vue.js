@@ -1,7 +1,10 @@
-// Import Vue
-import { createApp } from 'vue';
+import { createApp } from 'vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
-// Import components & bind to application
-import App from './components/recipes-create';
-createApp(App).mount("#app");
+import recipesCreate from './components/recipes-create';
 
+const app = createApp({});
+app.use(VueAxios, axios)
+app.component('add-recipe', recipesCreate);
+app.mount('#app');

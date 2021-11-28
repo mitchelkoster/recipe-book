@@ -116,3 +116,28 @@
 
     </form>
 </template>
+<script>
+export default {
+    data() {
+        return {
+            ingredients: {}
+        }
+    },
+    beforeMount() {
+        this.getIngredients()
+    },
+    methods: {
+        getIngredients() {
+            let url = `${window.location.origin}/api/ingredients`
+            
+            this.$http.get(url).
+            then((response) => {
+                this.ingredients = response.data
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+        }
+    }
+}
+</script>
