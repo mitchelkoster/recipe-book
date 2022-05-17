@@ -72,6 +72,8 @@ sail php artisan migrate:fresh --seed
 
 # Install front-end dependencies
 sail npm install
+sail npm update vue-loader
+npx browserslist@latest --update-db
 sail npm run dev
 
 # Run all tests

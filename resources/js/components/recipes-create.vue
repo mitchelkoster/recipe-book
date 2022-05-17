@@ -1,5 +1,16 @@
 <template xmlns="http://www.w3.org/1999/html">
-    <form method="POST" action="#">
+	<!-- Validation Errors -->
+	<div class="mb-4">
+		<div class="font-medium text-red-600">Whoops! Something went wrong.</div>
+
+		<ul v-for="(value, propertyName)  in errors" class="mt-3 list-disc list-inside text-sm text-red-600">
+
+			<li>{{ propertyName }}: {{ value }}</li>
+		</ul>
+	</div>
+
+    <!-- Action is handled by JS -->
+    <form method="POST" action="#" @submit.prevent="onSubmit">
 
         <!-- Title -->
         <div>
@@ -9,7 +20,9 @@
                 <input id="title"
                        class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
                        type="text" name="title" placeholder="Cold pasta salad" required
-                       autofocus/>
+                       autofocus
+                       v-model="recipe.title"
+                />
             </label>
         </div>
 
@@ -20,7 +33,22 @@
 
                 <textarea id="description" rows="5"
                           class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' block mt-1 w-full"
-                          type="email" name="description" placeholder="This Italian cold pasta salad used Olives to..." required></textarea>
+                          type="email" name="description" placeholder="This Italian cold pasta salad used Olives to..." required
+                          v-model="recipe.description"></textarea>
+            </label>
+        </div>
+
+        <!-- Portions -->
+        <div class="mt-4">
+            <label class="block rounded">
+                <span class="block font-semibold text-md text-gray-700">Portions</span>
+
+                <input 
+                class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
+                type="number" name="qty" step="1" required
+                autofocus
+                v-model="recipe.portions"
+                />
             </label>
         </div>
 
@@ -129,6 +157,8 @@
             </a>
 
             <button
+                type="submit"
+                @click="createRecipe"
                 class="inline-flex items-center px-4 py-2 bg-green-800 text-green-50 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none disabled:opacity-25 transition ease-in-out duration-150 ml-4">
                 Add Recipe
             </button>
@@ -143,7 +173,15 @@ export default {
             ingredientCount: 1,
             selectedSystem: 'Metric',
             ingredients: {},
-            measurements: {}
+            measurements: {},
+            baseUrl: window.location.origin,
+			errors: [],
+            recipe: {
+                title: '',
+                description: '',
+                portions: 1,
+                cover: null
+            }
         }
     },
     beforeMount() {
@@ -159,7 +197,7 @@ export default {
                 this.ingredientCount -= 1
         },
         getIngredients() {
-            let url = `${window.location.origin}/api/ingredients`
+            let url = `${window.location.origin}/api/ingredients`;
             
             this.$http.get(url).
             then((response) => {
@@ -170,11 +208,11 @@ export default {
             })
         },
         getMeasurements(system) {
-            let url = `${window.location.origin}/api/measurements/${system.toLowerCase()}`
+            let url = `${this.baseUrl}/api/measurements/${system.toLowerCase()}`;
             
             this.$http.get(url).
             then((response) => {
-                this.measurements = response.data
+                this.measurements = response.data;
             })
             .catch((error) => {
                 console.error(error);
@@ -182,6 +220,24 @@ export default {
         },
         updateSystem() {
             this.getMeasurements(this.selectedSystem)
+        },
+        createRecipe() {
+            let url = `${window.location.origin}/api/recipes`;    
+            let data = {
+                title: this.recipe.title,
+                description: this.recipe.description,
+                portions: this.recipe.portions,
+                cover: this.recipe.cover
+            };      
+            
+            this.$http.post(url, data).
+            then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.error(error);
+				this.errors = error.errors; // errors from response
+            })
         }
     }
 }
