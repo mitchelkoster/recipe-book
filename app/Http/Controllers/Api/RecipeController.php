@@ -17,13 +17,10 @@ class RecipeController extends Controller
      */
     public function store(StoreRecipeRequest $request)
     {
+        // Make sure we are recieving JSON
         if ( ! $request->expectsJson()) {
             abort(400);
         }
-
-        $errors = $validator->errors();
-
-        dd($errors);
 
         // Save recipe
         $recipe = new Recipe();
