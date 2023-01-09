@@ -24,10 +24,11 @@ class StoreRecipeRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|unique:recipes,title|max:255',
+            'title' => 'required|string|unique:recipes,title',
             'description' => 'required|string',
-            'portions' => 'required|integer|max:255',
-            'user_id' => 'required|integer'
+            'portions' => 'required|integer',
+            'ingredients' => 'required|json',
+            'steps' => 'required|json'
         ];
     }
 }

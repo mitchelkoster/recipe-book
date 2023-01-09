@@ -77,7 +77,7 @@
                         <!-- Ingredient name -->
                         <input
                             class="mb-4 md:mb-0 md:w-3/6 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            type="text" list="ingredients" name="ingredient" placeholder="Search ingredient" required
+                            type="text" list="ingredients" name="ingredients" placeholder="Search ingredient" required
                             autofocus/>
 
                         <!-- Ingredient quantity -->
@@ -88,7 +88,8 @@
 
                         <!-- Measurement -->
                         <select
-                            class="md:w-2/6 form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            class="md:w-2/6 form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            name="measurement">
                             <option selected disabled value="">Measurement</option>
                             <option v-for="measurement in measurements" :value="measurement.id">
                                 {{ measurement.type }}
@@ -143,7 +144,7 @@
                     <div class="mt-4 mb-8">
                         <textarea id="step-description" rows="5"
                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                            type="email" name="description" placeholder="Dice up one carrot in large chunks, quarter a pepper, etc." required></textarea>
+                            type="email" name="step-descriptions" placeholder="Dice up one carrot in large chunks, quarter a pepper, etc." required></textarea>
                     </div>
                 </div>
 
@@ -248,7 +249,9 @@ export default {
                 title: this.recipe.title,
                 description: this.recipe.description,
                 portions: this.recipe.portions,
-                cover: this.recipe.cover
+                cover: this.recipe.cover,
+                ingredients: [],
+                steps: []
             };
             console.log(data); 
             
