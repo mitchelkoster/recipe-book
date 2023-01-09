@@ -72,24 +72,28 @@
                         </select>
                     </div>
 
-                <div v-for="_ in ingredientCount">
+                <div v-for="(find, index) in recipe.ingredients">
                     <div class="my-4 flex flex-col md:flex-row justify-center items-stretch">
                         <!-- Ingredient name -->
                         <input
                             class="mb-4 md:mb-0 md:w-3/6 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             type="text" list="ingredients" name="ingredients" placeholder="Search ingredient" required
-                            autofocus/>
+                            autofocus
+                            v-model="find.name"/>
 
                         <!-- Ingredient quantity -->
                         <input 
                         class="mb-4 md:mb-0 md:mx-2 md:w-1/6 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        type="number" name="qty" value="1" step="1" required
-                        autofocus/>
+                        type="number" name="qty" step="1" required
+                        autofocus
+                        v-model="find.qty"/>
 
                         <!-- Measurement -->
                         <select
                             class="md:w-2/6 form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            name="measurement">
+                            name="measurement"
+                            autofocus
+                            v-model="find.type">
                             <option selected disabled value="">Measurement</option>
                             <option v-for="measurement in measurements" :value="measurement.id">
                                 {{ measurement.type }}
@@ -116,7 +120,7 @@
                     </a>
 
                     <!-- Remove additional ingredient -->
-                    <a class="inline-flex items-center text-green-600 hover:text-green-500" href="#" v-on:click.prevent="removeIngredient">
+                    <a class="inline-flex items-center text-green-600 hover:text-green-500" href="#" v-on:click.prevent="removeIngredient(i)">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" />
                     </svg>
@@ -184,7 +188,6 @@
 export default {
     data() {
         return {
-            ingredientCount: 1,
             stepCount: 1,
             selectedSystem: 'Metric',
             ingredients: {},
@@ -195,7 +198,11 @@ export default {
                 title: '',
                 description: '',
                 portions: 1,
-                cover: null
+                cover: null,
+                ingredients: [
+                    {name: '', qty: 0, type: ''}
+                ],
+                steps: []
             }
         }
     },
@@ -204,19 +211,22 @@ export default {
         this.getMeasurements(this.selectedSystem)
     },
     methods: {
-        addIngredient() {
-            this.ingredientCount += 1
-        },
-        removeIngredient() {
-            if (this.ingredientCount > 1)
-                this.ingredientCount -= 1
-        },
         addStep() {
-            this.stepCount += 1
+            this.stepCount += 1;
         },
         removeStep() {
             if (this.stepCount > 1)
-                this.stepCount -= 1
+                this.stepCount -= 1;
+        },
+        addIngredient() {
+            this.recipe.ingredients.push({
+                name: null,
+                qty: null,
+                type: null
+            });
+        },
+        removeIngredient(index) {
+            this.recipe.ingredients.splice(index, 1);
         },
         getIngredients() {
             let url = `${window.location.origin}/api/ingredients`;
@@ -250,10 +260,11 @@ export default {
                 description: this.recipe.description,
                 portions: this.recipe.portions,
                 cover: this.recipe.cover,
-                ingredients: [],
+                ingredients: JSON.parse(JSON.stringify(this.recipe.ingredients)),
                 steps: []
             };
-            console.log(data); 
+            console.log(data);
+            return;
             
             this.$http.post(url, data).
             then((response) => {
