@@ -135,25 +135,28 @@
             <fieldset class="border px-4 rounded">
                 <legend class="text-2xl text-green-600 px-8">Steps</legend>
 
-                <div v-for="_ in stepCount">
+                <div v-for="(find, index) in recipe.steps">
                     <!-- Step title -->
                     <div class="mt-4">
                         <input id="step-title"
                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
                             type="text" name="title" placeholder="Vegetable prep (optional)"
-                            autofocus/>
+                            autofocus
+                            v-model="find.title"/>
                     </div>
 
                     <!-- Step description -->
                     <div class="mt-4 mb-8">
                         <textarea id="step-description" rows="5"
                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                            type="email" name="step-descriptions" placeholder="Dice up one carrot in large chunks, quarter a pepper, etc." required></textarea>
+                            type="email" name="step-descriptions" placeholder="Dice up one carrot in large chunks, quarter a pepper, etc." required
+                            autofocus
+                            v-model="find.description"></textarea>
                     </div>
                 </div>
 
-                <!-- Add additional step -->
                 <div class="flex justify-end items-center my-4">
+                    <!-- Add additional step -->
                     <a class="inline-flex items-center text-green-600 hover:text-green-500" href="#" v-on:click.prevent="addStep">
                         <div class="flex items-center justify-end my-4">
                             <a class="inline-flex items-center ml-2 text-green-600 hover:text-green-500" href="#">
@@ -163,6 +166,14 @@
                                 Add
                             </a>
                         </div>
+                    </a>
+
+                    <!-- Remove additional ingredient -->
+                    <a class="inline-flex items-center text-green-600 hover:text-green-500" href="#" v-on:click.prevent="removeStep(i)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" />
+                    </svg>
+                        Remove
                     </a>
                 </div>
             </fieldset>
@@ -188,7 +199,6 @@
 export default {
     data() {
         return {
-            stepCount: 1,
             selectedSystem: 'Metric',
             ingredients: {},
             measurements: {},
@@ -202,7 +212,9 @@ export default {
                 ingredients: [
                     {name: '', qty: 0, type: ''}
                 ],
-                steps: []
+                steps: [
+                    {title: '', description: ''}
+                ]
             }
         }
     },
@@ -212,17 +224,19 @@ export default {
     },
     methods: {
         addStep() {
-            this.stepCount += 1;
+            this.recipe.steps.push({
+                title: '',
+                description: ''
+            });
         },
-        removeStep() {
-            if (this.stepCount > 1)
-                this.stepCount -= 1;
+        removeStep(index) {
+            this.recipe.steps.splice(index, 1);
         },
         addIngredient() {
             this.recipe.ingredients.push({
-                name: null,
-                qty: null,
-                type: null
+                name: '',
+                qty: 0,
+                type: ''
             });
         },
         removeIngredient(index) {
@@ -260,16 +274,13 @@ export default {
                 description: this.recipe.description,
                 portions: this.recipe.portions,
                 cover: this.recipe.cover,
-                ingredients: JSON.parse(JSON.stringify(this.recipe.ingredients)),
-                steps: []
+                ingredients: JSON.parse(JSON.stringify(this.recipe.ingredients)), // Required black magic for proxy element
+                steps: JSON.parse(JSON.stringify(this.recipe.steps)) // Required black magic for proxy element
             };
-            console.log(data);
-            return;
             
             this.$http.post(url, data).
             then((response) => {
                 console.log(response);
-                alert("success")
             })
             .catch((error) => {
 				this.errors = error.response.data; // errors from response
