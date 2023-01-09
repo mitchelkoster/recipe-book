@@ -1,11 +1,18 @@
 <template xmlns="http://www.w3.org/1999/html">
 	<!-- Validation Errors -->
 	<div class="mb-4">
-		<div class="font-medium text-red-600">Whoops! Something went wrong.</div>
+        <!-- Display error message -->
+		<div class="font-semibold text-red-600">{{ errors.message }}</div>
 
-		<ul v-for="(value, propertyName)  in errors" class="mt-3 list-disc list-inside text-sm text-red-600">
+        <!-- Show all errors based on field -->
+		<ul v-for="(errorList, field) in errors.errors" class="ml-3 mt-3 text-sm text-red-600">
 
-			<li>{{ propertyName }}: {{ value }}</li>
+			<li class="font-semibold">{{ field }}</li>
+
+            <!-- One field might have multiple errors -->
+            <ul v-for="error in errorList" class="ml-6 italic">
+                <li>{{ error }}</li>
+            </ul>
 		</ul>
 	</div>
 
@@ -228,15 +235,19 @@ export default {
                 description: this.recipe.description,
                 portions: this.recipe.portions,
                 cover: this.recipe.cover
-            };      
+            };
+            console.log(data); 
             
             this.$http.post(url, data).
             then((response) => {
                 console.log(response);
+                alert("success")
             })
             .catch((error) => {
-                console.error(error);
-				this.errors = error.errors; // errors from response
+				this.errors = error.response.data; // errors from response
+
+                // Scroll to top of page
+                document.body.scrollTop = document.documentElement.scrollTop = 0;
             })
         }
     }
