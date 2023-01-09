@@ -5,6 +5,7 @@ import VueAxios from 'vue-axios'
 import recipesCreate from './components/recipes-create';
 
 const app = createApp({});
-app.use(VueAxios, axios)
+app.config.devtools = true;
+app.use(VueAxios, axios);
 app.component('add-recipe', recipesCreate);
 app.mount('#app');
