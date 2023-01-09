@@ -26,9 +26,9 @@ class StoreRecipeRequest extends FormRequest
         return [
             'title' => 'required|string|unique:recipes,title',
             'description' => 'required|string',
-            'portions' => 'required|integer',
-            'ingredients' => 'required|json',
-            'steps' => 'required|json'
+            'portions' => 'required|integer|max:255',
+            'ingredients' => 'required',
+            'steps' => 'required'
         ];
     }
 }
