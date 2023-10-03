@@ -5,7 +5,7 @@
 
         <!-- Handed down to VueJS -->
         <div id="app">
-            <add-recipe></add-recipe>
+            <add-recipe apikey="{{ $apikey }}"></add-recipe>
         </div>
     </div>
 </x-guest-layout>

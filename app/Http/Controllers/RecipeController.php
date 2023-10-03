@@ -43,7 +43,8 @@ class RecipeController extends Controller
      */
     public function create()
     {
-        return view('recipes.create');
+        $apiKey = auth()->user()->api_token;
+        return view('recipes.create', ['apikey' => $apiKey]);
     }
 
     /**

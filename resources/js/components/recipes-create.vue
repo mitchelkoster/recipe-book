@@ -50,7 +50,7 @@
             <label class="block rounded">
                 <span class="block font-semibold text-md text-gray-700">Portions</span>
 
-                <input 
+                <input
                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
                 type="number" name="qty" step="1" required
                 autofocus
@@ -82,7 +82,7 @@
                             v-model="find.name"/>
 
                         <!-- Ingredient quantity -->
-                        <input 
+                        <input
                         class="mb-4 md:mb-0 md:mx-2 md:w-1/6 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                         type="number" name="qty" step="1" required
                         autofocus
@@ -197,6 +197,11 @@
 </template>
 <script>
 export default {
+    inheritAttrs:false,
+    props: ['apikey'],
+    setup(props) {
+        console.log(props.apikey)
+    },
     data() {
         return {
             selectedSystem: 'Metric',
@@ -244,8 +249,14 @@ export default {
         },
         getIngredients() {
             let url = `${window.location.origin}/api/ingredients`;
-            
-            this.$http.get(url).
+            let config = {
+                headers:{
+                    Authorization: `Bearer ${this.apikey}`,
+                    Accept: 'application/json'
+                }
+            };
+
+            this.$http.get(url, config).
             then((response) => {
                 this.ingredients = response.data
             })
@@ -255,8 +266,14 @@ export default {
         },
         getMeasurements(system) {
             let url = `${this.baseUrl}/api/measurements/${system.toLowerCase()}`;
-            
-            this.$http.get(url).
+            let config = {
+                headers:{
+                    Authorization: `Bearer ${this.apikey}`,
+                    Accept: 'application/json'
+                }
+            };
+
+            this.$http.get(url, config).
             then((response) => {
                 this.measurements = response.data;
             })
@@ -268,7 +285,7 @@ export default {
             this.getMeasurements(this.selectedSystem)
         },
         createRecipe() {
-            let url = `${window.location.origin}/api/recipes`;    
+            let url = `${window.location.origin}/api/recipes`;
             let data = {
                 title: this.recipe.title,
                 description: this.recipe.description,
@@ -277,8 +294,14 @@ export default {
                 ingredients: JSON.parse(JSON.stringify(this.recipe.ingredients)), // Required black magic for proxy element
                 steps: JSON.parse(JSON.stringify(this.recipe.steps)) // Required black magic for proxy element
             };
-            
-            this.$http.post(url, data).
+            let config = {
+                headers:{
+                    Authorization: `Bearer ${this.apikey}`,
+                    Accept: 'application/json'
+                }
+            };
+
+            this.$http.post(url, data, config).
             then((response) => {
                 console.log(response);
             })

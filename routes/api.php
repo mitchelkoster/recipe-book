@@ -17,10 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// All API functions are behind authentication
+Route::middleware('auth:api')->group(function () {
+    Route::get('ingredients', [IngredientController::class, 'index']);
+    Route::get('measurements/{system}', [MeasurementsController::class, 'index']);
+    Route::post('recipes', [RecipeController::class, 'store']);
 });
-
-Route::get('ingredients', [IngredientController::class, 'index']);
-Route::get('measurements/{system}', [MeasurementsController::class, 'index']);
-Route::post('recipes', [RecipeController::class, 'store']);
