@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Recipe;
+use App\Models\User;
+use App\Models\Ingredient;
+use App\Models\Step;
 use App\Http\Requests\StoreRecipeRequest;
 
 class RecipeController extends Controller
@@ -24,16 +27,38 @@ class RecipeController extends Controller
 
         // Save recipe
         $recipe = new Recipe();
+        $recipe->cover = $request->input('cover');
         $recipe->title = $request->input('title');
         $recipe->description = $request->input('description');
         $recipe->portions = $request->input('portions');
-        $recipe->user_id = 1; // TODO: Replace this once authentication is in place
-    
-        $recipe->save();
 
-        // dd($request->input('title'));
-        return response()->json();
-        
-        abort(200);
+        // TODO: See if ingredients exist and add to table if not
+        // foreach ($request->input('ingredients') as $ingredient) {
+        //     if ( ! Ingredient::where(['name'=>'x'])->first()) {
+        //         $steps = new Ingredient([
+        //             'description' => $step['description'],
+        //             'instructions' => $step['title']
+        //         ]);
+        //     }
+        // }
+
+        // Fetch all steps for the recipe
+        $steps = [];
+        foreach ($request->input('steps') as $step) {
+            $steps[] = new Step([
+                'description' => $step['description'],
+                'instructions' => $step['title']
+            ]);
+        }
+
+        // Fetch the user ID
+        $apikey = $request->header('Authorization');
+        $apikey = explode('Bearer ', $apikey)[1];
+        $recipe->user_id = User::where(['api_token' => $apikey])->first()->id;
+
+        $recipe->save();
+        $recipe->steps()->saveMany($steps);
+
+        return response($recipe, 201);
     }
 }

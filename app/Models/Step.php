@@ -12,6 +12,12 @@ class Step extends Model
     // Timestamp is not required
     public $timestamps = false;
 
+    protected $fillable = [
+        'description',
+        'instructions',
+        'picture'
+    ];
+
     /**
      * Get the recipe the step belongs to
      */
