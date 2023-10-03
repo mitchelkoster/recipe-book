@@ -39,7 +39,7 @@ yes | sudo usermod -aG docker $USER
 To install composer on Linux run the following commands:
 
 ```bash
-sudo apt install php 7.4 php7.4-curl php-xml composer
+sudo apt install php 8.1 php8.1-curl php8.1-xml composer
 ```
 
 ## Getting started
