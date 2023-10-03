@@ -33,14 +33,16 @@ class RecipeController extends Controller
         $recipe->portions = $request->input('portions');
 
         // TODO: See if ingredients exist and add to table if not
-        // foreach ($request->input('ingredients') as $ingredient) {
-        //     if ( ! Ingredient::where(['name'=>'x'])->first()) {
-        //         $steps = new Ingredient([
-        //             'description' => $step['description'],
-        //             'instructions' => $step['title']
-        //         ]);
-        //     }
-        // }
+        $ingredients = [];
+        foreach ($request->input('ingredients') as $ingredient) {
+            if ( ! Ingredient::where(['name'=>'x'])->first()) {
+                $ingredients[] = new Ingredient([
+                    'name' => $ingredient['name'],
+                    'qty' => $ingredient['qty'],
+                    'measurement_id' => $ingredient['type']
+                ]);
+            }
+        }
 
         // Fetch all steps for the recipe
         $steps = [];
@@ -58,7 +60,8 @@ class RecipeController extends Controller
 
         $recipe->save();
         $recipe->steps()->saveMany($steps);
+        $recipe->ingredients()->saveMany($ingredients);
 
-        return response($recipe, 201);
+        return response(NULL, 201);
     }
 }

@@ -20819,6 +20819,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  inheritAttrs: false,
+  props: ['apikey'],
+  setup: function setup(props) {
+    console.log(props.apikey);
+  },
   data: function data() {
     return {
       selectedSystem: 'Metric',
@@ -20870,7 +20875,13 @@ __webpack_require__.r(__webpack_exports__);
     getIngredients: function getIngredients() {
       var _this = this;
       var url = "".concat(window.location.origin, "/api/ingredients");
-      this.$http.get(url).then(function (response) {
+      var config = {
+        headers: {
+          Authorization: "Bearer ".concat(this.apikey),
+          Accept: 'application/json'
+        }
+      };
+      this.$http.get(url, config).then(function (response) {
         _this.ingredients = response.data;
       })["catch"](function (error) {
         console.error(error);
@@ -20879,7 +20890,13 @@ __webpack_require__.r(__webpack_exports__);
     getMeasurements: function getMeasurements(system) {
       var _this2 = this;
       var url = "".concat(this.baseUrl, "/api/measurements/").concat(system.toLowerCase());
-      this.$http.get(url).then(function (response) {
+      var config = {
+        headers: {
+          Authorization: "Bearer ".concat(this.apikey),
+          Accept: 'application/json'
+        }
+      };
+      this.$http.get(url, config).then(function (response) {
         _this2.measurements = response.data;
       })["catch"](function (error) {
         console.error(error);
@@ -20901,7 +20918,13 @@ __webpack_require__.r(__webpack_exports__);
         steps: JSON.parse(JSON.stringify(this.recipe.steps)) // Required black magic for proxy element
       };
 
-      this.$http.post(url, data).then(function (response) {
+      var config = {
+        headers: {
+          Authorization: "Bearer ".concat(this.apikey),
+          Accept: 'application/json'
+        }
+      };
+      this.$http.post(url, data, config).then(function (response) {
         console.log(response);
       })["catch"](function (error) {
         _this3.errors = error.response.data; // errors from response
