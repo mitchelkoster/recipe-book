@@ -12,6 +12,13 @@ class Ingredient extends Model
     // Timestamp is not required
     public $timestamps = false;
 
+
+    protected $fillable = [
+        'name',
+        'qty',
+        'measurement_id'
+    ];
+
     /**
      * Thre recipies that are made with an ingredient
      */
