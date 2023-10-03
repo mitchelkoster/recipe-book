@@ -1,48 +1,7 @@
 # Recipe
 A simple recipe website because I am tired of remembering everything.
 
-## Prerequisites
-To run this project in a development you need to install [Docker](https://www.docker.com/), [Composer](https://getcomposer.org/) and [Laraval Sail](https://laravel.com/docs/8.x/sail).
-
-**Installing Docker**
-To install Docker on Linux run the following commands:
-
-```bash
-# Remove old installations
-yes | sudo apt remove docker docker-engine docker.io containerd runc
-
-# Install dependencies
-yes | sudo apt install \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg-agent \
-    software-properties-common
-
-# Add docker repository
-yes | curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-yes | sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) \
-  stable"
-
-# Install Docker
-yes | sudo apt update
-yes | sudo apt install docker-ce docker-ce-cli containerd.io
-
-# Add a group so docker does not have to be run as sudo
-yes | sudo groupadd docker
-yes | sudo usermod -aG docker $USER
-```
-
-**Installing Composer**
-To install composer on Linux run the following commands:
-
-```bash
-sudo apt install php 8.1 php8.1-curl php8.1-xml composer
-```
-
-## Getting started
+## Setting up a Development Environment
 It is recommended to create a bash alias for `sail`:
 ```bash
 # Add to ~/.bashrc
