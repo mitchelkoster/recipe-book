@@ -54,13 +54,18 @@ To get started first install all depedencies
 ```bash
 # Install back-end dependencies
 composer update
+
+# If you use Docker
+docker run --rm --interactive --tty \
+  --volume $PWD:/app \
+  composer install
 ```
 
 With all dependencies installed you can now bring up the containers configure the project
 
 ```bash
 cp .env.docker .env
-./vendor/bin/sail up -d
+sail up -d
 ```
 
 Once the docker containers are running you can configure Laravel, populate the database & install front-end dependencies
@@ -85,6 +90,8 @@ sail test --filter RecipeTest
 
 Outside of the containers over your project make sure you have the right permissions:
 
-`sudo chown -R $USER:$USER .`
+```bash
+sudo chown -R $USER:$USER .
+```
 
-You should not be able to visit the website on `http://localhost`.
+You should not be able to visit the website on [http://localhost](http://localhost).
