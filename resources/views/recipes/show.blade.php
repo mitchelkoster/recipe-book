@@ -72,6 +72,14 @@
         <main class="flex items-center flex-col bg-white rounded">
             <h1 class="text-2xl text-gray-800 mt-4">{{ __('Ingredients') }}</h1>
 
+            <section class="flex items-center flex-col bg-white rounded my-2">
+                <ul class="mt-2 text-gray-600 px-36 list-disc">
+                    @foreach(explode('\n', $recipe->ingredients) as $ingredient)
+                        <li>{{ str_replace('\\n', '', $ingredient) }}</li>
+                    @endforeach
+                </ul>
+            </section>
+
             <!-- Show all steps -->
             <div class="flex items-center flex-col bg-white rounded mb-8">
                 <h1 class="text-2xl text-gray-800 mt-4">{{ __('Steps') }}</h1>

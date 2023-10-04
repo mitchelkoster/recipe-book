@@ -74,6 +74,15 @@
                             v-model="find.title"/>
                     </div>
 
+                    <!-- Step ingredients -->
+                    <div class="mt-4 mb-8">
+                        <textarea id="ingredients" rows="5"
+                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
+                            type="email" name="ingredients" placeholder="Dice up one carrot in large chunks, quarter a pepper, etc." required
+                            autofocus
+                            v-model="find.ingredients"></textarea>
+                    </div>
+
                     <!-- Step description -->
                     <div class="mt-4 mb-8">
                         <textarea id="step-description" rows="5"
@@ -128,9 +137,6 @@
 export default {
     inheritAttrs:false,
     props: ['apikey'],
-    setup(props) {
-        console.log(props.apikey)
-    },
     data() {
         return {
             baseUrl: window.location.origin,
@@ -138,6 +144,7 @@ export default {
             recipe: {
                 title: '',
                 description: '',
+                ingredients: '',
                 portions: 1,
                 cover: null,
                 steps: [
