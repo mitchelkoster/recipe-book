@@ -13,14 +13,6 @@ class Recipe extends Model
     protected $guarded = [];
 
     /**
-     * The ingredients that are required for a recipe
-     */
-    public function ingredients()
-    {
-        return $this->belongsToMany(Ingredient::class, 'recipe_ingredients');
-    }
-
-    /**
      * Get all steps to follow from a recipe
      */
     public function steps()

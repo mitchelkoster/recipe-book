@@ -72,12 +72,6 @@
         <main class="flex items-center flex-col bg-white rounded">
             <h1 class="text-2xl text-gray-800 mt-4">{{ __('Ingredients') }}</h1>
 
-            <ul class="list-disc text-gray-600 mt-4">
-                @foreach ($recipe->ingredients as $ingredient)
-                <li>{{$ingredient->qty}} {{$ingredient->measurement->type}} of <span class="underline capitalize italic">{{$ingredient->name}}</span></li>
-                @endforeach
-            </ul>
-
             <!-- Show all steps -->
             <div class="flex items-center flex-col bg-white rounded mb-8">
                 <h1 class="text-2xl text-gray-800 mt-4">{{ __('Steps') }}</h1>

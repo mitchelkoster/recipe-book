@@ -59,77 +59,6 @@
             </label>
         </div>
 
-        <!-- Ingredients -->
-        <div class="mt-4">
-            <fieldset class="border px-4 rounded">
-                <legend class="text-2xl text-green-600 px-8">Ingredients</legend>
-                    <div class="my-4 flex flex-col md:flex-row justify-end items-stretch">
-                        <select
-                            class="md:w-2/6 form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            v-model="selectedSystem" @change="updateSystem">
-                            <option>Metric</option>
-                            <option>Imperial</option>
-                        </select>
-                    </div>
-
-                <div v-for="(find, index) in recipe.ingredients">
-                    <div class="my-4 flex flex-col md:flex-row justify-center items-stretch">
-                        <!-- Ingredient name -->
-                        <input
-                            class="mb-4 md:mb-0 md:w-3/6 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            type="text" list="ingredients" name="ingredients" placeholder="Search ingredient" required
-                            autofocus
-                            v-model="find.name"/>
-
-                        <!-- Ingredient quantity -->
-                        <input
-                        class="mb-4 md:mb-0 md:mx-2 md:w-1/6 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        type="number" name="qty" step="1" required
-                        autofocus
-                        v-model="find.qty"/>
-
-                        <!-- Measurement -->
-                        <select
-                            class="md:w-2/6 form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            name="measurement"
-                            autofocus
-                            v-model="find.type">
-                            <option selected disabled value="">Measurement</option>
-                            <option v-for="measurement in measurements" :value="measurement.id">
-                                {{ measurement.type }}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Shared data list for all ingredients -->
-                <datalist id="ingredients">
-                    <option v-for="ingredient in ingredients" :key="ingredient.id">
-                        {{ ingredient.name}}
-                    </option>
-                </datalist>
-
-                <!-- Add and remove ingredient actions -->
-                <div class="flex justify-end items-center my-4">
-                    <!-- Add additional ingredient -->
-                    <a class="inline-flex items-center text-green-600 hover:text-green-500" href="#" v-on:click.prevent="addIngredient">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                        Add
-                    </a>
-
-                    <!-- Remove additional ingredient -->
-                    <a class="inline-flex items-center text-green-600 hover:text-green-500" href="#" v-on:click.prevent="removeIngredient(i)">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" />
-                    </svg>
-                        Remove
-                    </a>
-                </div>
-            </fieldset>
-        </div>
-
         <!-- Steps -->
         <div class="mt-4">
             <fieldset class="border px-4 rounded">
@@ -168,7 +97,7 @@
                         </div>
                     </a>
 
-                    <!-- Remove additional ingredient -->
+                    <!-- Remove additional step -->
                     <a class="inline-flex items-center text-green-600 hover:text-green-500" href="#" v-on:click.prevent="removeStep(i)">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" />
@@ -204,9 +133,6 @@ export default {
     },
     data() {
         return {
-            selectedSystem: 'Metric',
-            ingredients: {},
-            measurements: {},
             baseUrl: window.location.origin,
 			errors: [],
             recipe: {
@@ -214,18 +140,11 @@ export default {
                 description: '',
                 portions: 1,
                 cover: null,
-                ingredients: [
-                    {name: '', qty: 0, type: ''}
-                ],
                 steps: [
                     {title: '', description: ''}
                 ]
             }
         }
-    },
-    beforeMount() {
-        this.getIngredients()
-        this.getMeasurements(this.selectedSystem)
     },
     methods: {
         addStep() {
@@ -237,53 +156,6 @@ export default {
         removeStep(index) {
             this.recipe.steps.splice(index, 1);
         },
-        addIngredient() {
-            this.recipe.ingredients.push({
-                name: '',
-                qty: 0,
-                type: ''
-            });
-        },
-        removeIngredient(index) {
-            this.recipe.ingredients.splice(index, 1);
-        },
-        getIngredients() {
-            let url = `${window.location.origin}/api/ingredients`;
-            let config = {
-                headers:{
-                    Authorization: `Bearer ${this.apikey}`,
-                    Accept: 'application/json'
-                }
-            };
-
-            this.$http.get(url, config).
-            then((response) => {
-                this.ingredients = response.data
-            })
-            .catch((error) => {
-                console.error(error);
-            })
-        },
-        getMeasurements(system) {
-            let url = `${this.baseUrl}/api/measurements/${system.toLowerCase()}`;
-            let config = {
-                headers:{
-                    Authorization: `Bearer ${this.apikey}`,
-                    Accept: 'application/json'
-                }
-            };
-
-            this.$http.get(url, config).
-            then((response) => {
-                this.measurements = response.data;
-            })
-            .catch((error) => {
-                console.error(error);
-            })
-        },
-        updateSystem() {
-            this.getMeasurements(this.selectedSystem)
-        },
         createRecipe() {
             let url = `${window.location.origin}/api/recipes`;
             let data = {
@@ -291,7 +163,6 @@ export default {
                 description: this.recipe.description,
                 portions: this.recipe.portions,
                 cover: this.recipe.cover,
-                ingredients: JSON.parse(JSON.stringify(this.recipe.ingredients)), // Required black magic for proxy element
                 steps: JSON.parse(JSON.stringify(this.recipe.steps)) // Required black magic for proxy element
             };
             let config = {
