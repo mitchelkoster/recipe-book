@@ -23,18 +23,19 @@ class RecipeFactory extends Factory
      */
     public function definition()
     {
-        $description = Str::of($this->faker->paragraph())->limit(150);
-
-        $randomUserId = User::inRandomOrder()
-            ->firstOrFail()
-            ->id;
+        // Create ingredients
+        $ingredients = [];
+        for ($i = 0; $i < rand(3, 8); $i++) {
+            $ingredients[] = strval($this->faker->randomDigit(1)) . ' ' . $this->faker->word();
+        }
 
         return [
             'title' => $this->faker->unique()->sentence(),
-            'description' => $description,
+            'description' => Str::of($this->faker->paragraph())->limit(150),
+            'ingredients' => implode('\\n', $ingredients),
             'cover' => NULL,
             'portions' => rand(1, 6),
-            'user_id' => $randomUserId
+            'user_id' => User::inRandomOrder()->firstOrFail()->id
         ];
     }
 }

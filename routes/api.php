@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\IngredientController;
-use App\Http\Controllers\Api\MeasurementsController;
 use App\Http\Controllers\Api\RecipeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +17,5 @@ use Illuminate\Support\Facades\Route;
 
 // All API functions are behind authentication
 Route::middleware('auth:api')->group(function () {
-    Route::get('ingredients', [IngredientController::class, 'index']);
-    Route::get('measurements/{system}', [MeasurementsController::class, 'index']);
     Route::post('recipes', [RecipeController::class, 'store']);
 });

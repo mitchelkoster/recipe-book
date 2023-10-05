@@ -17,6 +17,7 @@ class CreateRecipesTable extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->string('description');
+            $table->text('ingredients');
             $table->string('cover')->nullable(); // This is an image path
             $table->tinyInteger('portions');
             $table->foreignId('user_id')->constrained();

@@ -10,8 +10,8 @@
             </section>
 
             <!-- Recipe cook -->
-            <section class="my-2 p-2 w-full flex justify-evenly">
-                <div class="flex">
+            <section class="my-2 flex flex-col md:flex-row md:justify-between">
+                <div class="flex my-1 mx-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -22,7 +22,7 @@
                 </div>
 
                 <!-- created date -->
-                <div class="flex">
+                <div class="flex my-1 mx-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -33,7 +33,7 @@
                 </div>
 
                 <!-- portions -->
-                <div class="flex">
+                <div class="flex my-1 mx-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -72,11 +72,13 @@
         <main class="flex items-center flex-col bg-white rounded">
             <h1 class="text-2xl text-gray-800 mt-4">{{ __('Ingredients') }}</h1>
 
-            <ul class="list-disc text-gray-600 mt-4">
-                @foreach ($recipe->ingredients as $ingredient)
-                <li>{{$ingredient->qty}} {{$ingredient->measurement->type}} of <span class="underline capitalize italic">{{$ingredient->name}}</span></li>
-                @endforeach
-            </ul>
+            <section class="flex items-center flex-col bg-white rounded my-2">
+                <ul class="mt-2 text-gray-600 px-36 list-disc">
+                    @foreach(explode('\n', $recipe->ingredients) as $ingredient)
+                        <li>{{ str_replace('\\n', '', $ingredient) }}</li>
+                    @endforeach
+                </ul>
+            </section>
 
             <!-- Show all steps -->
             <div class="flex items-center flex-col bg-white rounded mb-8">

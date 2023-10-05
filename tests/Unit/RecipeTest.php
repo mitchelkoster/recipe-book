@@ -2,12 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Models\Tag;
 use App\Models\User;
-use Database\Seeders\IngredientSeeder;
-use Database\Seeders\MeasurementSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -126,33 +123,6 @@ class RecipeTest extends TestCase
 
         // Fetch recipes
         $this->assertInstanceOf(User::class, $recipe->firstOrFail()->user);
-    }
-
-    /**
-     * See if a recipe has ingredients
-     *
-     * @return void
-     */
-    public function test_recipe_has_ingredients()
-    {
-        // Create a recipe with ingredients
-        $user = User::factory()->create();
-        $recipe = Recipe::factory()->create([
-            'user_id' => $user->id
-        ]);
-        $this->seed(MeasurementSeeder::class);
-        $ingredients = Ingredient::factory(3)->create();
-
-        // Link ingredients to recipes on ORM
-        foreach ($ingredients as $ingredient) {
-            $recipe->firstOrFail()->ingredients()->attach($ingredient);
-        }
-
-        // See if a database relations are created
-        $this->assertDatabaseHas('recipe_ingredients', [
-            'recipe_id' => $recipe->firstOrFail()->id,
-            'ingredient_id' => $ingredient->id
-        ]);
     }
 
     /**

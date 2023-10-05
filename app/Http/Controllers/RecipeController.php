@@ -67,8 +67,7 @@ class RecipeController extends Controller
     public function show(Recipe $recipe)
     {
         $recipe = Recipe::with([
-            'user', 'steps', 'tags',
-            'ingredients', 'ingredients.measurement',
+            'user', 'steps', 'tags'
         ])->find($recipe->id);
 
         return view('recipes.show', compact('recipe'));
@@ -94,7 +93,7 @@ class RecipeController extends Controller
      */
     public function update(Request $request, Recipe $recipe)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -105,6 +104,6 @@ class RecipeController extends Controller
      */
     public function destroy(Recipe $recipe)
     {
-        //
+        abort(404);
     }
 }
