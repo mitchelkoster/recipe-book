@@ -23,7 +23,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/recipes', [RecipeController::class, 'store ']);
     Route::get('/recipes/create', [RecipeController::class, 'create']);
-    Route::get('/recipes/edit/{recipe}', [RecipeController::class, 'edit']);
+    Route::get('/recipes/{recipe}/edit', [RecipeController::class, 'edit']);
+    Route::patch('/recipes/{recipe}', [RecipeController::class, 'update']);
     Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy']);
 });
 

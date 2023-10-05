@@ -2,7 +2,9 @@
     <div class="max-w-6xl mx-auto mt-6 px-6 py-4 sm:px-6 lg:px-8 bg-white shadow-md overflow-hidden sm:rounded-lg">
         <h1 class="text-2xl text-gray-800 mb-2"> {{ __('Edit Recipe') }}</h1>
 
-        <form method="POST" action="#">
+        <form method="POST" action="{{ url('/recipes').'/'.$recipe->id }}">
+            @csrf
+            @method("PATCH")
             <!-- Title -->
             <div>
                 <label class="block rounded">

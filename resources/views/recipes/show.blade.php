@@ -8,7 +8,7 @@
                     <button type="submit" class="px-4 py-2 bg-red-600 text-red-50 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none disabled:opacity-25 transition ease-in-out duration-150 ml-4 ml-4">{{ __('Remove Recipe') }}</button>
                 </form>
                 <span class="mt-1">or</span>
-                <a class="mt-1 underline text-sm text-gray-600 hover:text-gray-900" href="{{ url('/recipes') .'/edit/' . $recipe->id }}">
+                <a class="mt-1 underline text-sm text-gray-600 hover:text-gray-900" href="{{ url('/recipes').'/'.$recipe->id.'/edit'}}">
                     {{ __('Edit Recipe') }}
                 </a>
             </div>
