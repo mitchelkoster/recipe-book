@@ -104,6 +104,9 @@ class RecipeController extends Controller
      */
     public function destroy(Recipe $recipe)
     {
-        abort(404);
+        $recipe = Recipe::find($recipe->id)->firstOrFail();
+        $recipe->steps()->delete();
+        $recipe->delete();
+        return redirect()->route('recipes');
     }
 }
