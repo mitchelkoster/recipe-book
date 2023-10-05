@@ -14,14 +14,21 @@ use App\Http\Controllers\RecipeController;
 |
 */
 
+// Home page
 Route::get('/', [RecipeController::class, 'latest']);
 
-// Recipe routes
-Route::get('/latest', [RecipeController::class, 'latest']);
-Route::resource('/recipes', RecipeController::class);
+// Authenticated routes
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+    Route::get('/recipes/create', [RecipeController::class, 'create']);
+    Route::post('/recipes', [RecipeController::class, 'store ']);
+});
+
+// public recipe routes
+Route::get('/latest', [RecipeController::class, 'latest']);
+Route::get('/recipes', [RecipeController::class, 'index']);
+Route::get('/recipes/{recipe}', [RecipeController::class, 'show']);
+
 
 require __DIR__.'/auth.php';

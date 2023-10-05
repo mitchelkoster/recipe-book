@@ -93,7 +93,7 @@ class RecipeController extends Controller
      */
     public function update(Request $request, Recipe $recipe)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -104,6 +104,6 @@ class RecipeController extends Controller
      */
     public function destroy(Recipe $recipe)
     {
-        //
+        abort(404);
     }
 }
