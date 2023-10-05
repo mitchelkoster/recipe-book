@@ -10,8 +10,8 @@
             </section>
 
             <!-- Recipe cook -->
-            <section class="my-2 p-2 w-full flex justify-evenly">
-                <div class="flex">
+            <section class="my-2 flex flex-col md:flex-row md:justify-between">
+                <div class="flex my-1 mx-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -22,7 +22,7 @@
                 </div>
 
                 <!-- created date -->
-                <div class="flex">
+                <div class="flex my-1 mx-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -33,7 +33,7 @@
                 </div>
 
                 <!-- portions -->
-                <div class="flex">
+                <div class="flex my-1 mx-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
