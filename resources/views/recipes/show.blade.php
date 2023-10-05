@@ -1,10 +1,15 @@
 <x-guest-layout>
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <header class="flex items-center flex-col bg-white rounded">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="mt-8 px-4 py-2 bg-red-600 text-red-50 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none disabled:opacity-25 transition ease-in-out duration-150 ml-4 ml-4">{{ __('Remove Recipe') }}</button>
+            </form>
+
             <!-- Title and description -->
             <section class="text-center w-full">
                 <h1 class="text-2xl text-gray-800 mt-8 px-8">{{ $recipe->title }}</h1>
-                <p class="mt-2 text-gray-600 px-8">
+                <p class="mt-1 text-gray-600 px-8">
                     {{ $recipe->description }}
                 </p>
             </section>
