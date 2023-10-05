@@ -17,9 +17,9 @@
             <a href="{{ route('dashboard') }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('Dashboard') }}</a>
 
             {{-- Logout form --}}
-            <form method="POST" action="{{ route('logout') }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">
+            <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit">{{ __('Logout') }}</button>
+                <button type="submit" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('Logout') }}</button>
               </form>
         @else
             <a href="{{ route('login') }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('Login') }}</a>
