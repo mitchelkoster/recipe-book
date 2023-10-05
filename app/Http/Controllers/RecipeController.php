@@ -81,7 +81,11 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        abort(404);
+        $recipe = Recipe::with([
+            'user', 'steps', 'tags'
+        ])->find($recipe->id);
+
+        return view('recipes.edit', compact('recipe'));
     }
 
     /**
