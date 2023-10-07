@@ -8,6 +8,7 @@
             </div>
             @endif
 
+            @auth
             <div class="flex flex-row justify-end mt-4 px-8 w-full">
                 <a class="mt-1 underline text-sm text-gray-600 hover:text-gray-900" href="{{ url('/recipes').'/'.$recipe->id.'/edit'}}">
                     <div class="flex items-center">
@@ -28,6 +29,8 @@
                     </button>
                 </form>
             </div>
+            @endauth
+
             <!-- Title and description -->
             <section class="text-center w-full">
                 <h1 class="text-2xl text-gray-800 mt-8 px-8">{{ $recipe->title }}</h1>
