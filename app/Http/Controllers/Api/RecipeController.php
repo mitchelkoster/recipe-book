@@ -46,9 +46,13 @@ class RecipeController extends Controller
         $apikey = explode('Bearer ', $apikey)[1];
         $recipe->user_id = User::where(['api_token' => $apikey])->first()->id;
 
-        // Save recipe & steps
+        // Save recipe
         $recipe->save();
-        $recipe->steps()->saveMany($steps);
+
+        // Save steps if provided
+        if (count($steps) >= 1 && $steps[0]['instructions'] !== null && $steps[0]['description'] !== null) {
+            $recipe->steps()->saveMany($steps);
+        }
 
         return response(['id' => $recipe->id], 201);
     }

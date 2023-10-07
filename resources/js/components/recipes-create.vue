@@ -73,14 +73,14 @@
         <!-- Steps -->
         <div class="mt-4">
             <fieldset class="border px-4 rounded">
-                <legend class="text-2xl text-green-600 px-8">Steps</legend>
+                <legend class="text-2xl text-green-600 px-8">Steps (optional)</legend>
 
                 <div v-for="(find, index) in recipe.steps">
                     <!-- Step title -->
                     <div class="mt-4">
                         <input id="step-title"
                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                            type="text" name="title" placeholder="Vegetable prep (optional)"
+                            type="text" name="title" placeholder="Vegetable prep"
                             autofocus
                             v-model="find.title"/>
                     </div>
