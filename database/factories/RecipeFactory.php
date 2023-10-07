@@ -32,7 +32,7 @@ class RecipeFactory extends Factory
         return [
             'title' => $this->faker->unique()->sentence(),
             'description' => Str::of($this->faker->paragraph())->limit(150),
-            'ingredients' => implode('\\n', $ingredients),
+            'ingredients' => implode("\n", $ingredients),
             'cover' => NULL,
             'portions' => rand(1, 6),
             'user_id' => User::inRandomOrder()->firstOrFail()->id
