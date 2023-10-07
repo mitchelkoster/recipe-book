@@ -85,9 +85,15 @@
 
             <section class="flex items-center flex-col bg-white rounded my-2">
                 <ul class="mt-2 text-gray-600 px-36 list-disc">
-                    @foreach(explode('\n', $recipe->ingredients) as $ingredient)
-                        <li>{{ str_replace('\\n', '', $ingredient) }}</li>
-                    @endforeach
+                    @if (count(explode("\r\n", $recipe->ingredients)) > 1)
+                        @foreach(explode("\r\n", $recipe->ingredients) as $ingredient)
+                            <li>{{ str_replace('\\r\\n', '', $ingredient) }}</li>
+                        @endforeach
+                    @else
+                        @foreach(explode("\n", $recipe->ingredients) as $ingredient)
+                            <li>{{ str_replace('\\n', '', $ingredient) }}</li>
+                        @endforeach
+                    @endif
                 </ul>
             </section>
 
