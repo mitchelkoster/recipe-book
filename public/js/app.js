@@ -20845,8 +20845,8 @@ __webpack_require__.r(__webpack_exports__);
         description: ''
       });
     },
-    removeStep: function removeStep(index) {
-      this.recipe.steps.splice(index, 1);
+    removeStep: function removeStep() {
+      this.recipe.steps.pop();
     },
     createRecipe: function createRecipe() {
       var _this = this;
@@ -21087,7 +21087,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "inline-flex items-center text-green-600 hover:text-green-500",
     href: "#",
     onClick: _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-      return $options.removeStep(_ctx.i);
+      return $options.removeStep();
     }, ["prevent"]))
   }, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Remove ")])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Buttons "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [_hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "submit",
