@@ -1,6 +1,13 @@
 <x-guest-layout>
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <header class="flex items-center flex-col bg-white rounded">
+
+            @if (session('status') and session('status') === 'success')
+            <div class="w-5/6 bg-green-100 border-b-2 text-center border-green-500 text-green-700 p-4 mt-4 rounded" role="alert">
+                <p>Recipe has been updated!</p>
+            </div>
+            @endif
+
             <div class="flex flex-col items-center justify-end mt-8">
                 <form method="POST" action="{{ url('/recipes') .'/' . $recipe->id }}">
                     @csrf

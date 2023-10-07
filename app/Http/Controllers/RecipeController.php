@@ -103,8 +103,6 @@ class RecipeController extends Controller
             abort(400);
         }
 
-        // $foundRecipe->steps()->update($recipe->steps->toArray());
-
         // Update recipe details
         $foundRecipe->title = $request->title;
         $foundRecipe->description = $request->description;
@@ -122,7 +120,7 @@ class RecipeController extends Controller
         $foundRecipe->save();
         $foundRecipe->steps()->saveMany($foundRecipe->steps);
 
-        return redirect('recipes'.'/'.$recipe->id);
+        return redirect('recipes'.'/'.$recipe->id)->with('status', 'success');
     }
 
     /**
