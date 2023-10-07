@@ -1,12 +1,24 @@
 <x-guest-layout>
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <header class="flex items-center flex-col bg-white rounded">
-            <form method="POST" action="{{ url('/recipes') .'/' . $recipe->id }}">
-                @csrf
-                @method("DELETE")
-                <button type="submit" class="mt-8 px-4 py-2 bg-red-600 text-red-50 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none disabled:opacity-25 transition ease-in-out duration-150 ml-4 ml-4">{{ __('Remove Recipe') }}</button>
-            </form>
 
+            @if (session('status'))
+            <div class="w-5/6 bg-green-100 border-b-2 text-center border-green-500 text-green-700 p-4 mt-4 rounded" role="alert">
+                <p>Recipe has been {{ session('status') }}!</p>
+            </div>
+            @endif
+
+            <div class="flex flex-col items-center justify-end mt-8">
+                <form method="POST" action="{{ url('/recipes') .'/' . $recipe->id }}">
+                    @csrf
+                    @method("DELETE")
+                    <button type="submit" class="px-4 py-2 bg-red-600 text-red-50 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none disabled:opacity-25 transition ease-in-out duration-150 ml-4 ml-4">{{ __('Remove Recipe') }}</button>
+                </form>
+                <span class="mt-1">or</span>
+                <a class="mt-1 underline text-sm text-gray-600 hover:text-gray-900" href="{{ url('/recipes').'/'.$recipe->id.'/edit'}}">
+                    {{ __('Edit Recipe') }}
+                </a>
+            </div>
             <!-- Title and description -->
             <section class="text-center w-full">
                 <h1 class="text-2xl text-gray-800 mt-8 px-8">{{ $recipe->title }}</h1>
@@ -80,9 +92,15 @@
 
             <section class="flex items-center flex-col bg-white rounded my-2">
                 <ul class="mt-2 text-gray-600 px-36 list-disc">
-                    @foreach(explode('\n', $recipe->ingredients) as $ingredient)
-                        <li>{{ str_replace('\\n', '', $ingredient) }}</li>
-                    @endforeach
+                    @if (count(explode("\r\n", $recipe->ingredients)) > 1)
+                        @foreach(explode("\r\n", $recipe->ingredients) as $ingredient)
+                            <li>{{ str_replace('\\r\\n', '', $ingredient) }}</li>
+                        @endforeach
+                    @else
+                        @foreach(explode("\n", $recipe->ingredients) as $ingredient)
+                            <li>{{ str_replace('\\n', '', $ingredient) }}</li>
+                        @endforeach
+                    @endif
                 </ul>
             </section>
 

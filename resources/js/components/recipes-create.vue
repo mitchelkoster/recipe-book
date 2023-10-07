@@ -52,10 +52,21 @@
 
                 <input
                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                type="number" name="qty" step="1" required
+                type="number" name="qty" step="1" min="1" max="255" required
                 autofocus
                 v-model="recipe.portions"
                 />
+            </label>
+        </div>
+
+        <!-- Ingredients -->
+        <div class="mt-4">
+            <label class="block rounded">
+                <span class="block font-semibold text-md text-gray-700">Ingredients</span>
+
+                <textarea id="ingredients" rows="5"
+                        class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' block mt-1 w-full"
+                        type="email" name="ingredients" placeholder="1 carrot&#10;2 onions&#10;4 cloves of garlic" required v-model="recipe.ingredients"></textarea>
             </label>
         </div>
 
@@ -74,20 +85,11 @@
                             v-model="find.title"/>
                     </div>
 
-                    <!-- Step ingredients -->
-                    <div class="mt-4 mb-8">
-                        <textarea id="ingredients" rows="5"
-                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                            type="email" name="ingredients" placeholder="Dice up one carrot in large chunks, quarter a pepper, etc." required
-                            autofocus
-                            v-model="find.ingredients"></textarea>
-                    </div>
-
                     <!-- Step description -->
                     <div class="mt-4 mb-8">
                         <textarea id="step-description" rows="5"
                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                            type="email" name="step-descriptions" placeholder="Dice up one carrot in large chunks, quarter a pepper, etc." required
+                            type="text" name="step" placeholder="Dice up one carrot in large chunks, quarter a pepper, etc." required
                             autofocus
                             v-model="find.description"></textarea>
                     </div>
@@ -169,6 +171,7 @@ export default {
                 title: this.recipe.title,
                 description: this.recipe.description,
                 portions: this.recipe.portions,
+                ingredients: this.recipe.ingredients,
                 cover: this.recipe.cover,
                 steps: JSON.parse(JSON.stringify(this.recipe.steps)) // Required black magic for proxy element
             };
@@ -181,7 +184,7 @@ export default {
 
             this.$http.post(url, data, config).
             then((response) => {
-                console.log(response);
+                window.location.replace(`${window.location.origin}/recipes/${response.data.id}`);
             })
             .catch((error) => {
 				this.errors = error.response.data; // errors from response

@@ -81,7 +81,11 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        abort(404);
+        $recipe = Recipe::with([
+            'user', 'steps', 'tags'
+        ])->find($recipe->id);
+
+        return view('recipes.edit', compact('recipe'));
     }
 
     /**
@@ -91,9 +95,32 @@ class RecipeController extends Controller
      * @param  \App\Models\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Recipe $recipe)
+    public function update(Recipe $recipe, Request $request)
     {
-        abort(404);
+        // Fetch existing recipe
+        $foundRecipe = Recipe::find(['id' => $recipe->id])->firstOrFail();
+        if (! $foundRecipe) {
+            abort(400);
+        }
+
+        // Update recipe details
+        $foundRecipe->title = $request->title;
+        $foundRecipe->description = $request->description;
+        $foundRecipe->ingredients = $request->ingredients;
+        $foundRecipe->cover = $request->cover;
+        $foundRecipe->portions = $request->portions;
+
+        // Update steps beloging to a recipe
+        for ($i = 0; $i < count($foundRecipe->steps); $i++) {
+            $foundRecipe->steps[$i]->description = $request->steptitle[$i];
+            $foundRecipe->steps[$i]->instructions = $request->instructions[$i];
+        }
+
+        // Save recipe
+        $foundRecipe->save();
+        $foundRecipe->steps()->saveMany($foundRecipe->steps);
+
+        return redirect('recipes'.'/'.$recipe->id)->with('status', 'modified');
     }
 
     /**
