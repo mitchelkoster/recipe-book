@@ -45,7 +45,7 @@
                               d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                     </svg>
 
-                    <a href="#" class="ml-2 text-green-400 hover:text-green-600">{{ $recipe->user->name }}</a>
+                    <p class="ml-2">{{ $recipe->user->name }}</p>
                 </div>
 
                 <!-- created date -->
@@ -97,8 +97,8 @@
         </header>
 
         <main class="flex items-center flex-col bg-white rounded">
-            <section class="flex items-center flex-col bg-white rounded my-2">
-                <h1 class="text-2xl text-gray-800 mt-4">{{ __('Ingredients') }}</h1>
+            <section class="flex items-center flex-col bg-white rounded my-2 my-2 w-11/12 border-t">
+                <h1 class="text-2xl text-gray-800 mt-4 border-">{{ __('Ingredients') }}</h1>
 
                 <ul class="mt-2 text-gray-600 px-36 list-disc">
                     @if (count(explode("\r\n", $recipe->ingredients)) > 1)
@@ -114,8 +114,8 @@
             </section>
 
             <!-- Show all steps -->
-            <section class="flex items-center flex-col bg-white rounded mb-8">
-                <h1 class="text-2xl text-gray-800 mt-4">{{ __('Steps') }}</h1>
+            <section class="flex items-center flex-col bg-white rounded mb-8 my-2 w-11/12 border-t">
+                <h1 class="text-2xl text-gray-800 mt-4 border-y">{{ __('Steps') }}</h1>
 
                 @forelse ($recipe->steps as $step)
                     <div class="flex items-center flex-col bg-white rounded my-2">
