@@ -30,13 +30,14 @@ class RecipeController extends Controller
         $recipe->title = $request->input('title');
         $recipe->description = $request->input('description');
         $recipe->portions = $request->input('portions');
+        $recipe->ingredients = $request->input('ingredients');
 
         // Fetch all steps for the recipe
         $steps = [];
         foreach ($request->input('steps') as $step) {
             $steps[] = new Step([
-                'description' => $step['description'],
-                'instructions' => $step['title']
+                'description' => $step['title'],
+                'instructions' => $step['description']
             ]);
         }
 
@@ -45,9 +46,10 @@ class RecipeController extends Controller
         $apikey = explode('Bearer ', $apikey)[1];
         $recipe->user_id = User::where(['api_token' => $apikey])->first()->id;
 
+        // Save recipe & steps
         $recipe->save();
         $recipe->steps()->saveMany($steps);
 
-        return response(NULL, 201);
+        return response(['id' => $recipe->id], 201);
     }
 }

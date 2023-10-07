@@ -120,7 +120,7 @@ class RecipeController extends Controller
         $foundRecipe->save();
         $foundRecipe->steps()->saveMany($foundRecipe->steps);
 
-        return redirect('recipes'.'/'.$recipe->id)->with('status', 'success');
+        return redirect('recipes'.'/'.$recipe->id)->with('status', 'modified');
     }
 
     /**
