@@ -1,6 +1,19 @@
 # Recipe
 A simple recipe website because I am tired of remembering everything.
 
+## Running in Production
+Build and push a new docker image to use online:
+
+```bash
+docker build -t thunarez/recipe-cookbook:1.0.0 .
+docker push thunarez/recipe-cookbook:1.0.0
+```
+Run the docker latest image after copying the production `.env` file:
+
+```bash
+docker run -d -p 8080:80 --env-file .env thunarez/recipe-cookbook:latest
+```
+
 ## Setting up a Development Environment
 It is recommended to create a bash alias for `sail`:
 ```bash

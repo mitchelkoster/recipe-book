@@ -21,19 +21,29 @@ RUN npm ci
 RUN npm run production
 
 # PHP image that will host Laravel
-FROM php:8.2-fpm
+FROM php:8.2-apache
 
 WORKDIR /var/www/html
 
 # Install system dependencies
 RUN apt-get update \
-    && apt-get install --quiet --yes --no-install-recommends libzip-dev unzip \
+    && apt-get install --quiet --yes --no-install-recommends libzip-dev unzip libmemcached-dev \
     && docker-php-ext-install bcmath ctype pdo_mysql zip
+
+# Configure Virtual Hosts
+COPY docker/laravel.conf /etc/apache2/sites-available/laravel.conf
+RUN a2enmod rewrite \
+    && a2dissite 000-default.conf \
+    && a2ensite laravel.conf \
+    && service apache2 restart
 
 # Copy over composer & npm dependencies
 COPY --chown=www-data --from=composer-build /var/www/html/vendor/ /var/www/html/vendor/
 COPY --chown=www-data --from=npm-build /var/www/html/public/ /var/www/html/public/
 COPY --chown=www-data . /var/www/html
 
-# Expose port
-EXPOSE 9000
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+RUN composer dump -o && composer check-platform-reqs
+
+# Expose web port
+EXPOSE 80
