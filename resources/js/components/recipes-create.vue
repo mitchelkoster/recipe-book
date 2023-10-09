@@ -73,14 +73,14 @@
         <!-- Steps -->
         <div class="mt-4">
             <fieldset class="border px-4 rounded">
-                <legend class="text-2xl text-green-600 px-8">Steps</legend>
+                <legend class="text-2xl text-green-600 px-8">Steps (optional)</legend>
 
                 <div v-for="(find, index) in recipe.steps">
                     <!-- Step title -->
                     <div class="mt-4">
                         <input id="step-title"
                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                            type="text" name="title" placeholder="Vegetable prep (optional)"
+                            type="text" name="title" placeholder="Vegetable prep"
                             autofocus
                             v-model="find.title"/>
                     </div>
@@ -109,7 +109,7 @@
                     </a>
 
                     <!-- Remove additional step -->
-                    <a class="inline-flex items-center text-green-600 hover:text-green-500" href="#" v-on:click.prevent="removeStep(i)">
+                    <a class="inline-flex items-center text-green-600 hover:text-green-500" href="#" v-on:click.prevent="removeStep()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" />
                     </svg>
@@ -162,8 +162,8 @@ export default {
                 description: ''
             });
         },
-        removeStep(index) {
-            this.recipe.steps.splice(index, 1);
+        removeStep() {
+            this.recipe.steps.pop();
         },
         createRecipe() {
             let url = `${window.location.origin}/api/recipes`;

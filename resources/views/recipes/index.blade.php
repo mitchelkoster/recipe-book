@@ -23,23 +23,23 @@
                         >
 
                         <!-- Recipe details -->
-                        <div class="ml-4 leading-7 font-semibold w-full">
+                        <div class="ml-4 leading-7 font-semibold flex-col items-center">
                             <a href="{{ url('/recipes', $recipe->id) }}" class="underline text-green-600 ">
                                 {{ $recipe->title }}
                             </a>
 
-                            <div class="flex flex-col md:flex-row md:justify-between">
-                                <div class="flex mt-2">
+                            <div class="flex flex-col sm:flex-row">
+                                <div class="flex mt-2 mx-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                          stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                               d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                     </svg>
 
-                                    <a href="#" class="ml-2 text-green-400 hover:text-green-600">{{ $recipe->user->name }}</a>
+                                    <p class="ml-2 mt-1 text-sm">{{ $recipe->user->name }}</p>
                                 </div>
 
-                                <div class="flex text-sm mb-4 mt-2 text-gray-500">
+                                <div class="flex text-sm mt-2 mx-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                          stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -48,12 +48,12 @@
 
                                     </svg>
 
-                                    <p class="ml-2">{{ $recipe->portions }} {{ __('portion(s)') }}</p>
+                                    <p class="ml-2 mt-1">{{ $recipe->portions }} {{ __('portion(s)') }}</p>
                                 </div>
                             </div>
 
                             <!-- description -->
-                            <div class="mt-2 w-60 text-gray-600 text-sm w-full">
+                            <div class="mt-4 w-60 text-gray-600 text-sm w-full">
                                 {{ $recipe->description }}
                             </div>
                         </div>
