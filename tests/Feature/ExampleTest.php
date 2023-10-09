@@ -7,6 +7,9 @@ use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
+    // Reset the database after each test
+    use RefreshDatabase;
+
     /**
      * A basic test example.
      *

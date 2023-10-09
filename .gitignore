@@ -1,3 +1,11 @@
+# Ignore bundled CSS/JS files
+/public/js/app.js
+/public/css/app.css
+
+# IDE
+.idea
+
+# Laravel
 /node_modules
 /public/hot
 /public/storage
