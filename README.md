@@ -1,16 +1,22 @@
 # Recipe
 A simple recipe website because I am tired of remembering everything.
 
-## Running in Production
-Build and push a new docker image to use online:
+## Pushing a new image
+Release a new docker image:
 
 ```bash
+docker login
 docker build -t thunarez/recipe-cookbook:1.0.0 .
+docker build -t thunarez/recipe-cookbook:latest .
 docker push thunarez/recipe-cookbook:1.0.0
+docker push thunarez/recipe-cookbook:latest
 ```
-Run the docker latest image after copying the production `.env` file:
+
+## Running in Production
+Pull the latest image fromt the Docker registry and run the container  after copying the production `.env` file.
 
 ```bash
+docker pull thunarez/recipe-cookbook:1.0.0
 docker run -d -p 8080:80 --env-file .env thunarez/recipe-cookbook:latest
 ```
 
