@@ -103,7 +103,7 @@
             <section class="flex items-center flex-col bg-white rounded my-2 my-2 w-11/12 border-t">
                 <h1 class="text-2xl text-gray-800 mt-4 border-">{{ __('Ingredients') }}</h1>
 
-                <ul class="mt-2 text-gray-600 px-36 list-disc">
+                <ul class="mt-2 text-gray-600 list-disc">
                     @if (count(explode("\r\n", $recipe->ingredients)) > 1)
                         @foreach(explode("\r\n", $recipe->ingredients) as $ingredient)
                             <li>{{ str_replace('\\r\\n', '', $ingredient) }}</li>
