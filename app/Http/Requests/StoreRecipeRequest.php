@@ -24,8 +24,8 @@ class StoreRecipeRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|unique:recipes,title',
-            'description' => 'required|string',
+            'title' => 'required|string|unique:recipes,title|max:255',
+            'description' => 'required|string||max:255',
             'portions' => 'required|integer|max:255'
         ];
     }

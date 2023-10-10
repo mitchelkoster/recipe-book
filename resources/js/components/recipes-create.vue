@@ -26,7 +26,7 @@
 
                 <input id="title"
                        class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                       type="text" name="title" placeholder="Cold pasta salad" required
+                       type="text" name="title" placeholder="Cold pasta salad" maxlength="255" required
                        autofocus
                        v-model="recipe.title"
                 />
@@ -40,7 +40,7 @@
 
                 <textarea id="description" rows="5"
                           class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' block mt-1 w-full"
-                          type="email" name="description" placeholder="This Italian cold pasta salad used Olives to..." required
+                          type="email" name="description" placeholder="This Italian cold pasta salad used Olives to..." maxlength="255" required
                           v-model="recipe.description"></textarea>
             </label>
         </div>

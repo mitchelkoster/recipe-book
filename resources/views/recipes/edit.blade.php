@@ -17,7 +17,7 @@
 
                     <input id="title"
                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                        type="text" name="title" value="{{ $recipe->title }}" required autofocus />
+                        type="text" name="title" value="{{ $recipe->title }}" maxlength="255" required autofocus />
                 </label>
             </div>
 
@@ -28,7 +28,7 @@
 
                     <textarea id="description" rows="5"
                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' block mt-1 w-full"
-                            type="email" name="description" required>{{ $recipe->description }}</textarea>
+                            type="email" name="description" maxlength="255" required>{{ $recipe->description }}</textarea>
                 </label>
             </div>
 
