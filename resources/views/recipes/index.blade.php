@@ -72,7 +72,7 @@
                 </section>
                 <!-- Recipe card -->
                 @empty
-                    <p class="text-lg text-green-600">{{__('No recipes are available yet!')}}</p>
+                    <p class="mx-8 text-lg text-green-600">{{__('No recipes are available yet!')}}</p>
                 @endforelse
             </div>
 
