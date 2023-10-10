@@ -101,7 +101,7 @@
 
         <main class="flex items-center flex-col bg-white rounded">
             <section class="flex items-center flex-col bg-white rounded my-2 my-2 w-11/12 border-t">
-                <h1 class="text-2xl text-gray-800 mt-4 border-">{{ __('Ingredients') }}</h1>
+                <h1 class="text-2xl text-gray-800 mt-4 border-y text-green-600">{{ __('Ingredients') }}</h1>
 
                 <ul class="mt-2 text-gray-600 list-disc">
                     @if (count(explode("\r\n", $recipe->ingredients)) > 1)
@@ -118,7 +118,7 @@
 
             <!-- Show all steps -->
             <section class="flex items-center flex-col bg-white rounded mb-8 my-2 w-11/12 border-t">
-                <h1 class="text-2xl text-gray-800 mt-4 border-y">{{ __('Steps') }}</h1>
+                <h1 class="text-2xl text-green-600 mt-4 border-y">{{ __('Steps') }}</h1>
 
                 @forelse ($recipe->steps as $step)
                     <section class="flex items-center flex-col bg-white rounded my-2">
