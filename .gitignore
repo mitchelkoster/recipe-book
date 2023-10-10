@@ -1,6 +1,6 @@
 # Ignore bundled CSS/JS files
-/public/js/app.js
-/public/css/app.css
+public/js/app.js
+public/css/app.css
 
 # IDE
 .idea
