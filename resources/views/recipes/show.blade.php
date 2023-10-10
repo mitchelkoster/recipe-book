@@ -122,7 +122,7 @@
 
                 @forelse ($recipe->steps as $step)
                     <section class="flex items-center flex-col bg-white rounded my-2">
-                        <h2 class="text-xl text-gray-800 mt-4 px-4">{{ $step->description }}</h2>
+                        <h2 class="text-xl text-gray-800 mt-4 px-8 text-center">{{ $step->description }}</h2>
 
                         @foreach(explode("\n", $step->instructions) as $instruction)
                             <p class="mt-2 text-gray-600 px-8 text-justify">{{ $instruction }}</p>
