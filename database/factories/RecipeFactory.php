@@ -26,7 +26,7 @@ class RecipeFactory extends Factory
         // Create ingredients
         $ingredients = [];
         for ($i = 0; $i < rand(3, 8); $i++) {
-            $ingredients[] = strval($this->faker->randomDigit(1)) . ' ' . $this->faker->word();
+            $ingredients[] = strval($this->faker->randomDigit(1)) . ' ' . $this->faker->words(3, true);
         }
 
         return [
