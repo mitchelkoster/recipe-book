@@ -8,6 +8,11 @@
 
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="mt-8 overflow-hidden sm:rounded-lg">
+            <!-- Pagination -->
+            <div class="w-full flex justify-end mb-10 pr-4">
+                {{ $recipes->links('pagination::tailwind') }}
+            </div>
+
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
             @forelse ($recipes as $recipe)
                 <!-- Recipe card -->
