@@ -24,11 +24,11 @@
 
                         <!-- Recipe details -->
                         <div class="ml-4 leading-7 font-semibold flex-col items-center">
-                            <a href="{{ url('/recipes', $recipe->id) }}" class="underline text-green-600 ">
+                            <a href="{{ url('/recipes', $recipe->id) }}" class="underline text-green-600 flex flex-col sm:flex-row items-center text-center sm:text-left">
                                 {{ $recipe->title }}
                             </a>
 
-                            <div class="flex flex-col sm:flex-row">
+                            <div class="flex flex-col sm:flex-row items-center text-gray-500">
                                 <div class="flex mt-2 mx-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                          stroke="currentColor">
@@ -53,7 +53,7 @@
                             </div>
 
                             <!-- description -->
-                            <div class="mt-4 w-60 text-gray-600 text-sm w-full">
+                            <div class="mt-4 w-60 text-gray-600 text-sm w-full text-center sm:text-left">
                                 {{ $recipe->description }}
                             </div>
                         </div>
@@ -77,7 +77,7 @@
             </div>
 
             <!-- Pagination -->
-            <div class="w-full flex justify-end mb-10">
+            <div class="w-full flex justify-end mb-10 pr-4">
                 {{ $recipes->links('pagination::tailwind') }}
             </div>
         </div>
