@@ -7,9 +7,7 @@ Release a new docker image:
 ```bash
 docker login
 docker build -t thunarez/recipe-cookbook:1.0.0 .
-docker build -t thunarez/recipe-cookbook:latest .
 docker push thunarez/recipe-cookbook:1.0.0
-docker push thunarez/recipe-cookbook:latest
 ```
 
 ## Running in Production
