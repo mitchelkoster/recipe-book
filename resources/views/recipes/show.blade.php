@@ -121,9 +121,12 @@
                 <h1 class="text-2xl text-gray-800 mt-4 border-y">{{ __('Steps') }}</h1>
 
                 @forelse ($recipe->steps as $step)
-                    <div class="flex items-center flex-col bg-white rounded my-2">
+                    <section class="flex items-center flex-col bg-white rounded my-2">
                         <h2 class="text-xl text-gray-800 mt-4 px-4">{{ $step->description }}</h2>
-                        <p class="mt-2 text-gray-600 px-8 text-justify">{{ $step->instructions }}</p>
+
+                        @foreach(explode("\n", $step->instructions) as $instruction)
+                            <p class="mt-2 text-gray-600 px-8 text-justify">{{ $instruction }}</p>
+                        @endforeach
 
                         @if ( isset($step->picture) )
                             <img
@@ -134,7 +137,7 @@
                                 width="150"
                             >
                         @endif
-                    </div>
+                    </section>
                 @empty
                     <p class="text-lg text-green-600 mt-4">{{__('This recipe just contains ingredients for now!')}}</p>
                 @endforelse
