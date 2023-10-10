@@ -176,7 +176,7 @@ export default {
             this.recipe.steps.pop();
         },
         createRecipe() {
-            const url = `${baseUrl}/api/recipes`;
+            const url = `${this.baseUrl}/api/recipes`;
             const data = {
                 title: this.recipe.title,
                 description: this.recipe.description,
@@ -194,7 +194,7 @@ export default {
 
             this.$http.post(url, data, config).
             then((response) => {
-                window.location.replace(`${baseUrl}/recipes/${response.data.id}`);
+                window.location.replace(`${this.baseUrl}/recipes/${response.data.id}`);
             })
             .catch((error) => {
 				this.errors = error.response.data; // errors from response
