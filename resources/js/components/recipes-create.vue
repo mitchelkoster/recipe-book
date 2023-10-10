@@ -121,7 +121,7 @@
 
         <!-- Buttons -->
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900" href="#">
+            <a class="underline text-sm text-gray-600 hover:text-gray-900" v-bind:href="baseUrl">
                 Go back
             </a>
 
@@ -141,7 +141,6 @@ export default {
     props: ['apikey'],
     data() {
         return {
-            baseUrl: window.location.origin,
 			errors: [],
             recipe: {
                 title: '',
@@ -155,6 +154,17 @@ export default {
             }
         }
     },
+    computed: {
+        baseUrl() {
+            // See if we are hosted on a sub-path (Array(3) [ "", "recipes", "create" ])
+            let baseUrl = window.location.origin;
+            if (window.location.pathname.split('/').length > 3) {
+                baseUrl.splice(1, 1);
+            }
+
+            return baseUrl;
+        }
+    },
     methods: {
         addStep() {
             this.recipe.steps.push({
@@ -166,13 +176,7 @@ export default {
             this.recipe.steps.pop();
         },
         createRecipe() {
-            // See if we are hosted on a sub-path (Array(3) [ "", "recipes", "create" ])
-            this.baseUrl = window.location.origin;
-            if (window.location.pathname.split('/').length > 3) {
-                this.baseUrl.splice(1, 1);
-            }
-
-            const url = `${this.baseUrl}/api/recipes`;
+            const url = `${baseUrl}/api/recipes`;
             const data = {
                 title: this.recipe.title,
                 description: this.recipe.description,
@@ -190,7 +194,7 @@ export default {
 
             this.$http.post(url, data, config).
             then((response) => {
-                window.location.replace(`${this.baseUrl}/recipes/${response.data.id}`);
+                window.location.replace(`${baseUrl}/recipes/${response.data.id}`);
             })
             .catch((error) => {
 				this.errors = error.response.data; // errors from response
