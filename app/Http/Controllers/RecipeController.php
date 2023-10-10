@@ -120,7 +120,10 @@ class RecipeController extends Controller
         $foundRecipe->save();
         $foundRecipe->steps()->saveMany($foundRecipe->steps);
 
-        return redirect('recipes'.'/'.$recipe->id)->with('status', 'modified');
+        return redirect('recipes'.'/'.$recipe->id)->with('alert', [
+            'type' => 'success',
+            'message' => 'Recipe has been changed!'
+        ]);
     }
 
     /**
@@ -134,6 +137,10 @@ class RecipeController extends Controller
         $recipe = Recipe::find($recipe->id)->firstOrFail();
         $recipe->steps()->delete();
         $recipe->delete();
-        return redirect()->route('recipes');
+
+        return redirect()->route('recipes')->with('alert', [
+            'type' => 'danger',
+            'message' => 'Recipe has been removed!'
+        ]);
     }
 }
