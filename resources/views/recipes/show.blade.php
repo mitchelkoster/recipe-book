@@ -101,7 +101,7 @@
 
         <main class="flex items-center flex-col bg-white rounded">
             <section class="flex items-center flex-col bg-white rounded my-2 my-2 w-11/12 border-t">
-                <h1 class="text-2xl text-gray-800 mt-4 border-">{{ __('Ingredients') }}</h1>
+                <h1 class="text-2xl text-gray-800 mt-4 border-y text-green-600">{{ __('Ingredients') }}</h1>
 
                 <ul class="mt-2 text-gray-600 list-disc">
                     @if (count(explode("\r\n", $recipe->ingredients)) > 1)
@@ -118,12 +118,15 @@
 
             <!-- Show all steps -->
             <section class="flex items-center flex-col bg-white rounded mb-8 my-2 w-11/12 border-t">
-                <h1 class="text-2xl text-gray-800 mt-4 border-y">{{ __('Steps') }}</h1>
+                <h1 class="text-2xl text-green-600 mt-4 border-y">{{ __('Steps') }}</h1>
 
                 @forelse ($recipe->steps as $step)
-                    <div class="flex items-center flex-col bg-white rounded my-2">
-                        <h2 class="text-xl text-gray-800 mt-4 px-4">{{ $step->description }}</h2>
-                        <p class="mt-2 text-gray-600 px-8 text-justify">{{ $step->instructions }}</p>
+                    <section class="flex flex-col bg-white rounded my-2 text-left">
+                        <h2 class="text-xl text-gray-800 mt-4 px-8">{{ $step->description }}</h2>
+
+                        @foreach(explode("\n", $step->instructions) as $instruction)
+                            <p class="mt-2 text-gray-600 px-8">{{ $instruction }}</p>
+                        @endforeach
 
                         @if ( isset($step->picture) )
                             <img
@@ -134,7 +137,7 @@
                                 width="150"
                             >
                         @endif
-                    </div>
+                    </section>
                 @empty
                     <p class="text-lg text-green-600 mt-4">{{__('This recipe just contains ingredients for now!')}}</p>
                 @endforelse

@@ -26,7 +26,7 @@
 
                 <input id="title"
                        class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                       type="text" name="title" placeholder="Cold pasta salad" required
+                       type="text" name="title" placeholder="Cold pasta salad" maxlength="255" required
                        autofocus
                        v-model="recipe.title"
                 />
@@ -40,7 +40,7 @@
 
                 <textarea id="description" rows="5"
                           class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' block mt-1 w-full"
-                          type="email" name="description" placeholder="This Italian cold pasta salad used Olives to..." required
+                          type="email" name="description" placeholder="This Italian cold pasta salad used Olives to..." maxlength="255" required
                           v-model="recipe.description"></textarea>
             </label>
         </div>
@@ -121,7 +121,7 @@
 
         <!-- Buttons -->
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900" href="#">
+            <a class="underline text-sm text-gray-600 hover:text-gray-900" v-bind:href="baseUrl">
                 Go back
             </a>
 
@@ -141,7 +141,6 @@ export default {
     props: ['apikey'],
     data() {
         return {
-            baseUrl: window.location.origin,
 			errors: [],
             recipe: {
                 title: '',
@@ -155,6 +154,17 @@ export default {
             }
         }
     },
+    computed: {
+        baseUrl() {
+            // See if we are hosted on a sub-path (Array(3) [ "", "recipes", "create" ])
+            let baseUrl = window.location.origin;
+            if (window.location.pathname.split('/').length > 3) {
+                baseUrl.splice(1, 1);
+            }
+
+            return baseUrl;
+        }
+    },
     methods: {
         addStep() {
             this.recipe.steps.push({
@@ -166,8 +176,8 @@ export default {
             this.recipe.steps.pop();
         },
         createRecipe() {
-            let url = `${window.location.origin}/api/recipes`;
-            let data = {
+            const url = `${this.baseUrl}/api/recipes`;
+            const data = {
                 title: this.recipe.title,
                 description: this.recipe.description,
                 portions: this.recipe.portions,
@@ -175,7 +185,7 @@ export default {
                 cover: this.recipe.cover,
                 steps: JSON.parse(JSON.stringify(this.recipe.steps)) // Required black magic for proxy element
             };
-            let config = {
+            const config = {
                 headers:{
                     Authorization: `Bearer ${this.apikey}`,
                     Accept: 'application/json'
@@ -184,7 +194,7 @@ export default {
 
             this.$http.post(url, data, config).
             then((response) => {
-                window.location.replace(`${window.location.origin}/recipes/${response.data.id}`);
+                window.location.replace(`${this.baseUrl}/recipes/${response.data.id}`);
             })
             .catch((error) => {
 				this.errors = error.response.data; // errors from response

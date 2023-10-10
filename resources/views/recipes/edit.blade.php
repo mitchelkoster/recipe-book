@@ -17,7 +17,7 @@
 
                     <input id="title"
                         class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                        type="text" name="title" value="{{ $recipe->title }}" required autofocus />
+                        type="text" name="title" value="{{ $recipe->title }}" maxlength="255" required autofocus />
                 </label>
             </div>
 
@@ -28,7 +28,7 @@
 
                     <textarea id="description" rows="5"
                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' block mt-1 w-full"
-                            type="email" name="description" required>{{ $recipe->description }}</textarea>
+                            type="email" name="description" maxlength="255" required>{{ $recipe->description }}</textarea>
                 </label>
             </div>
 
@@ -85,16 +85,16 @@
             <!-- Buttons -->
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ url('recipes/'.$recipe->id) }}">
-                    Go back
+                    {{ __('Go back') }}
                 </a>
 
                 <button
                     type="submit"
+                    onclick="return confirm('{{ __('Are you sure you want to modify this recipe?') }}')"
                     class="inline-flex items-center px-4 py-2 bg-green-800 text-green-50 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none disabled:opacity-25 transition ease-in-out duration-150 ml-4">
-                    Edit Recipe
+                    {{ __('Edit Recipe') }}
                 </button>
             </div>
-
         </form>
     </div>
 </x-guest-layout>
