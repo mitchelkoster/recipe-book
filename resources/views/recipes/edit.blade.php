@@ -85,16 +85,16 @@
             <!-- Buttons -->
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ url('recipes/'.$recipe->id) }}">
-                    Go back
+                    {{ __('Go back') }}
                 </a>
 
                 <button
                     type="submit"
+                    onclick="return confirm('{{ __('Are you sure you want to modify this recipe?') }}')"
                     class="inline-flex items-center px-4 py-2 bg-green-800 text-green-50 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none disabled:opacity-25 transition ease-in-out duration-150 ml-4">
-                    Edit Recipe
+                    {{ __('Edit Recipe') }}
                 </button>
             </div>
-
         </form>
     </div>
 </x-guest-layout>

@@ -2,7 +2,7 @@
     <div class="max-w-6xl mx-auto">
         <h1 class="text-2xl text-gray-800 px-8">{{__('Latest recipes')}}</h1>
         <p class="mt-2 text-gray-600 text-sm px-8">
-            {{__('This page shows the latest recipes added. This is awesome for inspiration or to remnind yourself how that
+            {{__('This page shows the latest recipes added. This is awesome for inspiration or to remind yourself how that
              new dish was made again.')}}
         </p>
     </div>
