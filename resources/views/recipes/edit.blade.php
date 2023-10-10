@@ -1,7 +1,12 @@
 <x-guest-layout>
-    <div class="max-w-6xl mx-auto mt-6 px-6 py-4 sm:px-6 lg:px-8 bg-white shadow-md overflow-hidden sm:rounded-lg">
-        <h1 class="text-2xl text-gray-800 mb-2"> {{ __('Edit Recipe') }}</h1>
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-2xl text-gray-800 px-8">{{ __('Edit Recipe') }}</h1>
+        <p class="mt-2 text-gray-600 text-sm px-8">
+            {{__('This page allows you to modify a recipe.')}}
+        </p>
+    </div>
 
+    <div class="max-w-6xl mx-auto mt-6 px-6 py-4 sm:px-6 lg:px-8 bg-white shadow-md overflow-hidden sm:rounded-lg">
         <form method="POST" action="{{ url('/recipes').'/'.$recipe->id}}">
             @csrf
             @method("PATCH")
