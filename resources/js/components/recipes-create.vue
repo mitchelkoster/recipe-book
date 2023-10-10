@@ -166,8 +166,14 @@ export default {
             this.recipe.steps.pop();
         },
         createRecipe() {
-            let url = `${window.location.origin}/api/recipes`;
-            let data = {
+            // See if we are hosted on a sub-path (Array(3) [ "", "recipes", "create" ])
+            this.baseUrl = window.location.origin;
+            if (window.location.pathname.split('/').length > 3) {
+                this.baseUrl.splice(1, 1);
+            }
+
+            const url = `${this.baseUrl}/api/recipes`;
+            const data = {
                 title: this.recipe.title,
                 description: this.recipe.description,
                 portions: this.recipe.portions,
@@ -175,7 +181,7 @@ export default {
                 cover: this.recipe.cover,
                 steps: JSON.parse(JSON.stringify(this.recipe.steps)) // Required black magic for proxy element
             };
-            let config = {
+            const config = {
                 headers:{
                     Authorization: `Bearer ${this.apikey}`,
                     Accept: 'application/json'
@@ -184,7 +190,7 @@ export default {
 
             this.$http.post(url, data, config).
             then((response) => {
-                window.location.replace(`${window.location.origin}/recipes/${response.data.id}`);
+                window.location.replace(`${this.baseUrl}/recipes/${response.data.id}`);
             })
             .catch((error) => {
 				this.errors = error.response.data; // errors from response
