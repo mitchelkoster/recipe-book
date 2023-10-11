@@ -15,7 +15,7 @@ Pull the latest image fromt the Docker registry and run the container  after cop
 
 ```bash
 docker pull thunarez/recipe-cookbook:1.0.0
-docker run -d -p 8080:80 --env-file .env thunarez/recipe-cookbook:latest
+docker run -d -p 8080:80 --env-file .env thunarez/recipe-cookbook:1.0.0
 ```
 
 ## Setting up a Development Environment
