@@ -158,8 +158,11 @@ export default {
         baseUrl() {
             // See if we are hosted on a sub-path (Array(3) [ "", "recipes", "create" ])
             let baseUrl = window.location.origin;
-            if (window.location.pathname.split('/').length > 3) {
-                baseUrl.splice(1, 1);
+            let urlPathParts = window.location.pathname.split('/');
+
+            if (urlPathParts.length > 3) {
+                urlPathParts.splice(2, 2);
+                baseUrl = baseUrl + urlPathParts.join('/');
             }
 
             return baseUrl;
