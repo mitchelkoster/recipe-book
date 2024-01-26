@@ -48,17 +48,6 @@ class RecipeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        abort(404);
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Recipe  $recipe
@@ -85,45 +74,8 @@ class RecipeController extends Controller
             'user', 'steps', 'tags'
         ])->find($recipe->id);
 
-        return view('recipes.edit', compact('recipe'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Recipe  $recipe
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Recipe $recipe, Request $request)
-    {
-        // Fetch existing recipe
-        $foundRecipe = Recipe::find(['id' => $recipe->id])->firstOrFail();
-        if (! $foundRecipe) {
-            abort(400);
-        }
-
-        // Update recipe details
-        $foundRecipe->title = $request->title;
-        $foundRecipe->description = $request->description;
-        $foundRecipe->ingredients = $request->ingredients;
-        $foundRecipe->cover = $request->cover;
-        $foundRecipe->portions = $request->portions;
-
-        // Update steps beloging to a recipe
-        for ($i = 0; $i < count($foundRecipe->steps); $i++) {
-            $foundRecipe->steps[$i]->description = $request->steptitle[$i];
-            $foundRecipe->steps[$i]->instructions = $request->instructions[$i];
-        }
-
-        // Save recipe
-        $foundRecipe->save();
-        $foundRecipe->steps()->saveMany($foundRecipe->steps);
-
-        return redirect('recipes'.'/'.$recipe->id)->with('alert', [
-            'type' => 'success',
-            'message' => 'Recipe has been changed!'
-        ]);
+        $apiKey = auth()->user()->api_token;
+        return view('recipes.edit', ['apikey' => $apiKey, 'recipe' => $recipe]);
     }
 
     /**
