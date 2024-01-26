@@ -195,6 +195,10 @@ export default {
             this.recipe.steps.pop();
         },
         editRecipe() {
+            if ( ! confirm('Are you sure you want to modify this recipe?')) {
+                return;
+            }
+
             const url = `${this.baseUrl}/api/recipes/${this.decodedRecipe.id}`;
             const data = {
                 title: this.recipe.title,
