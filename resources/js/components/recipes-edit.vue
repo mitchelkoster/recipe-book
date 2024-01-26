@@ -218,10 +218,27 @@ export default {
 
             this.$http.patch(url, data, config).
             then((response) => {
-                window.location.replace(`${this.baseUrl}/recipes/${this.decodedRecipe.id}`);
+                // Show flash message
+                document.getElementById('alert').style = 'display: block';
+                document.getElementById('alert').classList.value = 'max-w-6xl mx-auto bg-green-100 border-b-2 text-center border-green-500 text-green-700 p-4 mt-4 rounded';
+                document.getElementById('alert').getElementsByTagName('p')[0].innerText = 'Your recipe has been modified. You will be redirected shortly...';
+
+                // Scroll to top of page
+                document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+                // Redirect after timeout
+                window.setTimeout(() => {
+                    window.location.replace(`${this.baseUrl}/recipes/${this.decodedRecipe.id}`);
+                }, 5000)
             })
             .catch((error) => {
-				this.errors = error.response.data; // errors from response
+                // Show form errors
+				this.errors = error.response.data;
+
+                // Show flash message
+                document.getElementById('alert').style = 'display: block';
+                document.getElementById('alert').classList.value = 'max-w-6xl mx-auto bg-red-100 border-b-2 text-center border-red-500 text-red-700 p-4 mt-4 rounded';
+                document.getElementById('alert').getElementsByTagName('p')[0].innerText = 'Your recipe could not be created.';
 
                 // Scroll to top of page
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
