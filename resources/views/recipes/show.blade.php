@@ -1,13 +1,6 @@
 <x-guest-layout>
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <header class="flex items-center flex-col bg-white rounded">
-
-            @if (session('status'))
-            <div class="w-5/6 bg-green-100 border-b-2 text-center border-green-500 text-green-700 p-4 mt-4 rounded" role="alert">
-                <p>Recipe has been {{ session('status') }}!</p>
-            </div>
-            @endif
-
             @auth
             <div class="flex flex-row justify-end mt-4 px-8 w-full">
                 <a class="mt-1 underline text-sm text-gray-600 hover:text-gray-900" href="{{ url('/recipes').'/'.$recipe->id.'/edit'}}">
