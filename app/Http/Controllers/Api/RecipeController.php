@@ -72,31 +72,21 @@ class RecipeController extends Controller
             abort(400);
         }
 
-        // Update recipe details
-        $foundRecipe->title = $request->title;
-        $foundRecipe->description = $request->description;
-        $foundRecipe->ingredients = $request->ingredients;
-        $foundRecipe->cover = $request->cover;
-        $foundRecipe->portions = $request->portions;
+        // Update recipe
+        $foundRecipe->title = $request->input('title');
+        $foundRecipe->description = $request->input('description');
+        $foundRecipe->ingredients = $request->input('ingredients');
+        $foundRecipe->cover = $request->input('cover');
+        $foundRecipe->portions = $request->input('portions');
 
-        // Update steps beloging to a recipe
-        for ($i = 0; $i < count($foundRecipe->steps); $i++) {
-            // TODO: Trying to access array offset on value of type null
-            $foundRecipe->steps[$i]->description = $request->description[$i];
-            $foundRecipe->steps[$i]->instructions = $request->instructions[$i];
-        }
-
-        // Fetch the user ID
-        $apikey = $request->header('Authorization');
-        $apikey = explode('Bearer ', $apikey)[1];
-        $recipe->user_id = User::where(['api_token' => $apikey])->first()->id;
-
-        // Save recipe
         $foundRecipe->save();
 
-        // Save steps if provided
-        if (count($steps) >= 1 && $steps[0]['instructions'] !== null && $steps[0]['description'] !== null) {
-            $recipe->steps()->saveMany($steps);
+        // Fetch all steps for the recipe
+        foreach ($request->input('steps') as $step) {
+            Step::updateOrCreate(
+                ['id' => $step['id'], 'recipe_id' => $recipe->id],
+                ['description' => $step['title'], 'instructions' => $step['description'], 'recipe_id' => $recipe->id]
+            );
         }
 
         return response(NULL, 200);

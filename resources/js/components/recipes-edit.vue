@@ -82,7 +82,7 @@
                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
                             type="text" name="title" placeholder="Vegetable prep"
                             autofocus
-                            v-model="find.description"/>
+                            v-model="find.title"/>
                     </div>
 
                     <!-- Step description -->
@@ -91,7 +91,7 @@
                             class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
                             type="text" name="step" placeholder="Dice up one carrot in large chunks, quarter a pepper, etc." required
                             autofocus
-                            v-model="find.instructions"></textarea>
+                            v-model="find.description"></textarea>
                     </div>
                 </div>
 
@@ -176,12 +176,17 @@ export default {
         this.recipe.portions = this.decodedRecipe.portions
 
         this.decodedRecipe.steps.forEach(step => {
-            this.recipe.steps.push(step);
+            this.recipe.steps.push({
+                id: step.id ? step.id : null,
+                title: step.description,
+                description: step.instructions
+            });
         });
     },
     methods: {
         addStep() {
             this.recipe.steps.push({
+                id: null,
                 title: '',
                 description: ''
             });
@@ -208,7 +213,7 @@ export default {
 
             this.$http.patch(url, data, config).
             then((response) => {
-                window.location.replace(`${this.baseUrl}/recipes/${response.data.id}`);
+                window.location.replace(`${this.baseUrl}/recipes/${this.decodedRecipe.id}`);
             })
             .catch((error) => {
 				this.errors = error.response.data; // errors from response
