@@ -127,9 +127,9 @@
 
             <button
                 type="submit"
-                @click="createRecipe"
+                @click="editRecipe"
                 class="inline-flex items-center px-4 py-2 bg-green-800 text-green-50 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none disabled:opacity-25 transition ease-in-out duration-150 ml-4">
-                Add Recipe
+                Edit Recipe
             </button>
         </div>
 
@@ -138,7 +138,7 @@
 <script>
 export default {
     inheritAttrs:false,
-    props: ['apikey'],
+    props: ['apikey', 'originalRecipe'],
     data() {
         return {
 			errors: [],
@@ -148,29 +148,45 @@ export default {
                 ingredients: '',
                 portions: 1,
                 cover: null,
-                steps: [
-                    {title: '', description: ''}
-                ]
+                steps: []
             }
         }
     },
     computed: {
         baseUrl() {
-            // See if we are hosted on a sub-path (Array(3) [ "", "recipes", "create" ])
+            // See if we are hosted on a sub-path (Array(4) [[ "", "recipes", "33", "edit" ])
             let baseUrl = window.location.origin;
             let urlPathParts = window.location.pathname.split('/');
 
-            if (urlPathParts.length > 3) {
+            if (urlPathParts.length > 4) {
                 urlPathParts.splice(2, 2);
                 baseUrl = baseUrl + urlPathParts.join('/');
             }
 
             return baseUrl;
+        },
+        decodedRecipe() {
+            return JSON.parse(this.originalRecipe);
         }
+    },
+    created() {
+        this.recipe.title = this.decodedRecipe.title;
+        this.recipe.description = this.decodedRecipe.description;
+        this.recipe.ingredients = this.decodedRecipe.ingredients;
+        this.recipe.portions = this.decodedRecipe.portions
+
+        this.decodedRecipe.steps.forEach(step => {
+            this.recipe.steps.push({
+                id: step.id ? step.id : null,
+                title: step.description,
+                description: step.instructions
+            });
+        });
     },
     methods: {
         addStep() {
             this.recipe.steps.push({
+                id: null,
                 title: '',
                 description: ''
             });
@@ -178,8 +194,12 @@ export default {
         removeStep() {
             this.recipe.steps.pop();
         },
-        createRecipe() {
-            const url = `${this.baseUrl}/api/recipes`;
+        editRecipe() {
+            if ( ! confirm('Are you sure you want to modify this recipe?')) {
+                return;
+            }
+
+            const url = `${this.baseUrl}/api/recipes/${this.decodedRecipe.id}`;
             const data = {
                 title: this.recipe.title,
                 description: this.recipe.description,
@@ -196,19 +216,19 @@ export default {
                 }
             };
 
-            this.$http.post(url, data, config).
+            this.$http.patch(url, data, config).
             then((response) => {
                 // Show flash message
                 document.getElementById('alert').style = 'display: block';
                 document.getElementById('alert').classList.value = 'max-w-6xl mx-auto bg-green-100 border-b-2 text-center border-green-500 text-green-700 p-4 mt-4 rounded';
-                document.getElementById('alert').getElementsByTagName('p')[0].innerText = 'Your recipe has been created. You will be redirected shortly...';
+                document.getElementById('alert').getElementsByTagName('p')[0].innerText = 'Your recipe has been modified. You will be redirected shortly...';
 
                 // Scroll to top of page
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
 
                 // Redirect after timeout
                 window.setTimeout(() => {
-                    window.location.replace(`${this.baseUrl}/recipes/${response.data.id}`);
+                    window.location.replace(`${this.baseUrl}/recipes/${this.decodedRecipe.id}`);
                 }, 5000)
             })
             .catch((error) => {
@@ -218,7 +238,7 @@ export default {
                 // Show flash message
                 document.getElementById('alert').style = 'display: block';
                 document.getElementById('alert').classList.value = 'max-w-6xl mx-auto bg-red-100 border-b-2 text-center border-red-500 text-red-700 p-4 mt-4 rounded';
-                document.getElementById('alert').getElementsByTagName('p')[0].innerText = 'Your recipe could not be created. You will be redirected shortly...';
+                document.getElementById('alert').getElementsByTagName('p')[0].innerText = 'Your recipe could not be created.';
 
                 // Scroll to top of page
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
