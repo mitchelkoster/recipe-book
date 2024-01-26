@@ -20,6 +20,7 @@ Route::get('/', [RecipeController::class, 'latest']);
 // Authenticated routes
 Route::middleware('auth')->group(function () {
     Route::post('/recipes', [RecipeController::class, 'store ']);
+    Route::get('/recipes/create', [RecipeController::class, 'create']);
     Route::get('/recipes/{recipe}/edit', [RecipeController::class, 'edit']);
     Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy']);
 });
