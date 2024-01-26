@@ -56,4 +56,49 @@ class RecipeController extends Controller
 
         return response(['id' => $recipe->id], 201);
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Recipe  $recipe
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Recipe $recipe, Request $request)
+    {
+        // Fetch existing recipe
+        $foundRecipe = Recipe::find(['id' => $recipe->id])->firstOrFail();
+        if (! $foundRecipe) {
+            abort(400);
+        }
+
+        // Update recipe details
+        $foundRecipe->title = $request->title;
+        $foundRecipe->description = $request->description;
+        $foundRecipe->ingredients = $request->ingredients;
+        $foundRecipe->cover = $request->cover;
+        $foundRecipe->portions = $request->portions;
+
+        // Update steps beloging to a recipe
+        for ($i = 0; $i < count($foundRecipe->steps); $i++) {
+            // TODO: Trying to access array offset on value of type null
+            $foundRecipe->steps[$i]->description = $request->description[$i];
+            $foundRecipe->steps[$i]->instructions = $request->instructions[$i];
+        }
+
+        // Fetch the user ID
+        $apikey = $request->header('Authorization');
+        $apikey = explode('Bearer ', $apikey)[1];
+        $recipe->user_id = User::where(['api_token' => $apikey])->first()->id;
+
+        // Save recipe
+        $foundRecipe->save();
+
+        // Save steps if provided
+        if (count($steps) >= 1 && $steps[0]['instructions'] !== null && $steps[0]['description'] !== null) {
+            $recipe->steps()->saveMany($steps);
+        }
+
+        return response(NULL, 200);
+    }
 }
