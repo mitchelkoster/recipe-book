@@ -17,5 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 // All API functions are behind authentication
 Route::middleware('auth:api')->group(function () {
-    Route::post('recipes', [RecipeController::class, 'store']);
+    Route::post('/recipes', [RecipeController::class, 'store']);
+    Route::patch('/recipes/{recipe}', [RecipeController::class, 'update']);
 });

@@ -127,9 +127,9 @@
 
             <button
                 type="submit"
-                @click="createRecipe"
+                @click="editRecipe"
                 class="inline-flex items-center px-4 py-2 bg-green-800 text-green-50 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none disabled:opacity-25 transition ease-in-out duration-150 ml-4">
-                Add Recipe
+                Edit Recipe
             </button>
         </div>
 
@@ -138,7 +138,7 @@
 <script>
 export default {
     inheritAttrs:false,
-    props: ['apikey'],
+    props: ['apikey', 'originalRecipe'],
     data() {
         return {
 			errors: [],
@@ -148,29 +148,45 @@ export default {
                 ingredients: '',
                 portions: 1,
                 cover: null,
-                steps: [
-                    {title: '', description: ''}
-                ]
+                steps: []
             }
         }
     },
     computed: {
         baseUrl() {
-            // See if we are hosted on a sub-path (Array(3) [ "", "recipes", "create" ])
+            // See if we are hosted on a sub-path (Array(4) [[ "", "recipes", "33", "edit" ])
             let baseUrl = window.location.origin;
             let urlPathParts = window.location.pathname.split('/');
 
-            if (urlPathParts.length > 3) {
+            if (urlPathParts.length > 4) {
                 urlPathParts.splice(2, 2);
                 baseUrl = baseUrl + urlPathParts.join('/');
             }
 
             return baseUrl;
+        },
+        decodedRecipe() {
+            return JSON.parse(this.originalRecipe);
         }
+    },
+    created() {
+        this.recipe.title = this.decodedRecipe.title;
+        this.recipe.description = this.decodedRecipe.description;
+        this.recipe.ingredients = this.decodedRecipe.ingredients;
+        this.recipe.portions = this.decodedRecipe.portions
+
+        this.decodedRecipe.steps.forEach(step => {
+            this.recipe.steps.push({
+                id: step.id ? step.id : null,
+                title: step.description,
+                description: step.instructions
+            });
+        });
     },
     methods: {
         addStep() {
             this.recipe.steps.push({
+                id: null,
                 title: '',
                 description: ''
             });
@@ -178,8 +194,12 @@ export default {
         removeStep() {
             this.recipe.steps.pop();
         },
-        createRecipe() {
-            const url = `${this.baseUrl}/api/recipes`;
+        editRecipe() {
+            if ( ! confirm('Are you sure you want to modify this recipe?')) {
+                return;
+            }
+
+            const url = `${this.baseUrl}/api/recipes/${this.decodedRecipe.id}`;
             const data = {
                 title: this.recipe.title,
                 description: this.recipe.description,
@@ -196,9 +216,9 @@ export default {
                 }
             };
 
-            this.$http.post(url, data, config).
+            this.$http.patch(url, data, config).
             then((response) => {
-                window.location.replace(`${this.baseUrl}/recipes/${response.data.id}`);
+                window.location.replace(`${this.baseUrl}/recipes/${this.decodedRecipe.id}`);
             })
             .catch((error) => {
 				this.errors = error.response.data; // errors from response
