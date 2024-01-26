@@ -190,8 +190,9 @@ export default {
             };
             const config = {
                 headers:{
-                    Authorization: `Bearer ${this.apikey}`,
-                    Accept: 'application/json'
+                    'Authorization': `Bearer ${this.apikey}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             };
 
