@@ -117,7 +117,7 @@
             </section>
 
             <!-- Show all steps -->
-            <section class="flex items-center flex-col bg-white rounded mb-8 my-2 w-11/12 border-t">
+            <section class="flex items-center flex-col bg-white rounded mb-8 my-2 w-11/12 border-t w-full">
                 <h1 class="text-2xl text-green-600 mt-4 border-y">{{ __('Steps') }}</h1>
 
                 @forelse ($recipe->steps as $step)
