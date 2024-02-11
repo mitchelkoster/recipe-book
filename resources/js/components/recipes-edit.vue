@@ -159,11 +159,10 @@ export default {
             let urlPathParts = window.location.pathname.split('/');
 
             if (urlPathParts.length > 4) {
-                urlPathParts.splice(2, 2);
-                baseUrl = baseUrl + urlPathParts.join('/');
+                urlPathParts.slice(1, 4);
             }
 
-            return baseUrl;
+            return baseUrl + urlPathParts.join('/');
         },
         decodedRecipe() {
             return JSON.parse(this.originalRecipe);
