@@ -14,14 +14,14 @@
                 <!-- Recipe card -->
                 <section class="p-6 bg-white rounded shadow">
                     <div class="flex sm:flex-row flex-col items-center">
-                        <!-- Recipe image -->
+                        {{-- <!-- Recipe image -->
                         <img
                             src="{{ asset('img/placeholder_recipe.png') }}"
                             alt="Random recipe"
                             class="mr-2 mb-4 sm:mb-0"
                             height="150"
                             width="150"
-                        >
+                        > --}}
 
                         <!-- Recipe details -->
                         <div class="ml-4 leading-7 font-semibold flex-col items-center">
