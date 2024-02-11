@@ -160,6 +160,7 @@ export default {
             let baseUrl = window.location.origin;
             let urlPathParts = window.location.pathname.split('/');
 
+            // NOTE: This assumes you are hosting on a sub URL. E.g. "https://example.com/recipe-book/"
             if (urlPathParts.length > 3) {
                 urlPathParts.splice(2, 2);
                 baseUrl = baseUrl + urlPathParts.join('/');
