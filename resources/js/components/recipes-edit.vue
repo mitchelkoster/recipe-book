@@ -121,7 +121,7 @@
 
         <!-- Buttons -->
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900" v-bind:href="baseUrl">
+            <a class="underline text-sm text-gray-600 hover:text-gray-900" v-bind:href="recipeUrl">
                 Go back
             </a>
 
@@ -158,12 +158,26 @@ export default {
             let baseUrl = window.location.origin;
             let urlPathParts = window.location.pathname.split('/');
 
+            // TODO: This should be abstracted to a general function
+            // NOTE: This assumes you are hosting on a sub URL. E.g. "https://example.com/recipe-book/"
             if (urlPathParts.length > 4) {
-                urlPathParts.splice(2, 2);
+                urlPathParts.splice(2, 3);
                 baseUrl = baseUrl + urlPathParts.join('/');
             }
 
             return baseUrl;
+        },
+        recipeUrl() {
+            // See if we are hosted on a sub-path (Array(4) [[ "", "recipes", "33", "edit" ])
+            let baseUrl = window.location.origin;
+            let urlPathParts = window.location.pathname.split('/');
+
+            // This should be abstracted to a general function
+            // NOTE: This assumes you are hosting on a sub URL. E.g. "https://example.com/recipe-book/"
+            if (urlPathParts.length > 4) urlPathParts.slice(0, 4);
+            else urlPathParts = urlPathParts.slice(0,3)
+
+            return baseUrl + urlPathParts.join('/');
         },
         decodedRecipe() {
             return JSON.parse(this.originalRecipe);
