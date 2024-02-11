@@ -144,6 +144,7 @@ export default {
 			errors: [],
             recipe: {
                 title: '',
+                slug: '',
                 description: '',
                 ingredients: '',
                 portions: 1,
@@ -170,7 +171,19 @@ export default {
             return baseUrl;
         }
     },
+    watch: {
+        'recipe.title'(newTitle) {
+            this.createSlug(newTitle);
+        }
+    },
     methods: {
+        createSlug() {
+            this.recipe.slug = this.recipe.title
+            .toLowerCase() // LowerCase
+            .replace(/\s+/g, "-") // space to -
+            .replace(/&/g, `-and-`) // & to and
+            .replace(/--/g, `-`); // -- to -
+        },
         addStep() {
             this.recipe.steps.push({
                 title: '',
@@ -184,6 +197,7 @@ export default {
             const url = `${this.baseUrl}/api/recipes`;
             const data = {
                 title: this.recipe.title,
+                slug: this.slug,
                 description: this.recipe.description,
                 portions: this.recipe.portions,
                 ingredients: this.recipe.ingredients,
@@ -210,8 +224,8 @@ export default {
 
                 // Redirect after timeout
                 window.setTimeout(() => {
-                    window.location.replace(`${this.baseUrl}/recipes/${response.data.id}`);
-                }, 5000)
+                    window.location.replace(`${this.baseUrl}/recipes/${this.recipe.slug}`);
+                }, 3000)
             })
             .catch((error) => {
                 // Show form errors

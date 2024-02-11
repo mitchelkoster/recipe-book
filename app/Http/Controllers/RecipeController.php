@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Recipe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RecipeController extends Controller
 {
@@ -86,7 +87,7 @@ class RecipeController extends Controller
      */
     public function destroy(Recipe $recipe)
     {
-        $recipe = Recipe::find($recipe->id)->firstOrFail();
+        $recipe = Recipe::where('slug', $recipe->slug)->firstOrFail();
         $recipe->steps()->delete();
         $recipe->delete();
 

@@ -29,8 +29,10 @@ class RecipeFactory extends Factory
             $ingredients[] = strval($this->faker->randomDigit(1)) . ' ' . $this->faker->words(3, true);
         }
 
+        $title = $this->faker->unique()->sentence();
         return [
-            'title' => $this->faker->unique()->sentence(),
+            'title' => $title,
+            'slug' => Str::slug($title, '-'),
             'description' => Str::of($this->faker->paragraph())->limit(150),
             'ingredients' => implode("\n", $ingredients),
             'cover' => NULL,

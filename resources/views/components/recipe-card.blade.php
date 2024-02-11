@@ -1,7 +1,7 @@
 @props(['recipe'])
 
 <div class="ml-4 leading-7 font-semibold flex-col items-center">
-    <a href="{{ url('/recipes', $recipe->id) }}" class="mx-1 underline text-green-600 flex flex-col sm:flex-row items-center text-center sm:text-left">
+    <a href="{{ url('/recipes', $recipe) }}" class="mx-1 underline text-green-600 flex flex-col sm:flex-row items-center text-center sm:text-left">
         {{ $recipe->title }}
     </a>
 
