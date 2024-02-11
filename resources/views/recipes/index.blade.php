@@ -16,6 +16,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
             @forelse ($recipes as $recipe)
                 <!-- Recipe card -->
+                {{-- TODO: This could be a component? --}}
                 <section class="p-6 bg-white rounded shadow">
                     <div class="flex sm:flex-row flex-col items-center">
                         {{-- <!-- Recipe image -->
@@ -29,12 +30,12 @@
 
                         <!-- Recipe details -->
                         <div class="ml-4 leading-7 font-semibold flex-col items-center">
-                            <a href="{{ url('/recipes', $recipe->id) }}" class="underline text-green-600 flex flex-col sm:flex-row items-center text-center sm:text-left">
+                            <a href="{{ url('/recipes', $recipe->id) }}" class="mx-1 underline text-green-600 flex flex-col sm:flex-row items-center text-center sm:text-left">
                                 {{ $recipe->title }}
                             </a>
 
                             <div class="flex flex-col sm:flex-row items-center text-gray-500">
-                                <div class="flex mt-2 mx-2">
+                                <div class="flex mt-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                          stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -58,7 +59,7 @@
                             </div>
 
                             <!-- description -->
-                            <div class="mt-4 w-60 text-gray-600 text-sm w-full text-center sm:text-left">
+                            <div class="mt-4 mx-1 w-60 text-gray-600 text-sm w-full text-center sm:text-left">
                                 {{ $recipe->description }}
                             </div>
                         </div>
