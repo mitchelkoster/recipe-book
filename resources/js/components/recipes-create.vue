@@ -210,7 +210,7 @@ export default {
 
                 // Redirect after timeout
                 window.setTimeout(() => {
-                    window.location.replace(`${this.baseUrl}/recipes/${response.data.id}`);
+                    window.location.replace(`${this.baseUrl}/recipes/${response.data.slug}`);
                 }, 5000)
             })
             .catch((error) => {

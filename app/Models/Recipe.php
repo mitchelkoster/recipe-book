@@ -14,6 +14,14 @@ class Recipe extends Model
     protected $guarded = [];
 
     /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    /**
      * Get all steps to follow from a recipe
      */
     public function steps()

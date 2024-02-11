@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\Recipe;
 use App\Models\User;
 use App\Models\Step;
@@ -28,6 +29,7 @@ class RecipeController extends Controller
         $recipe = new Recipe();
         $recipe->cover = $request->input('cover');
         $recipe->title = $request->input('title');
+        $recipe->slug = Str::slug($request->input('title'), '-');
         $recipe->description = $request->input('description');
         $recipe->portions = $request->input('portions');
         $recipe->ingredients = $request->input('ingredients');
@@ -74,6 +76,7 @@ class RecipeController extends Controller
 
         // Update recipe
         $foundRecipe->title = $request->input('title');
+        $foundRecipe->slug = Str::slug($request->input('title'), '-');
         $foundRecipe->description = $request->input('description');
         $foundRecipe->ingredients = $request->input('ingredients');
         $foundRecipe->cover = $request->input('cover');
