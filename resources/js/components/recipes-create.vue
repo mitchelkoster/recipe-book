@@ -225,7 +225,7 @@ export default {
                 // Redirect after timeout
                 window.setTimeout(() => {
                     window.location.replace(`${this.baseUrl}/recipes/${this.recipe.slug}`);
-                }, 5000)
+                }, 3000)
             })
             .catch((error) => {
                 // Show form errors
