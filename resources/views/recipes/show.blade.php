@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <header class="flex items-center flex-col bg-white rounded">
-            @auth
+            @if (auth()->check() && $recipe->user_id === auth()->user()->id)
             <div class="flex flex-row justify-end mt-4 px-8 w-full">
                 <a class="mt-1 underline text-sm text-gray-600 hover:text-gray-900" href="{{ url('/recipes').'/'.$recipe->slug.'/edit'}}">
                     <div class="flex items-center">
@@ -22,7 +22,7 @@
                     </button>
                 </form>
             </div>
-            @endauth
+            @endif
 
             <!-- Title and description -->
             <section class="text-center w-full">

@@ -71,6 +71,11 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
+        // Authorize the user to update the recipe
+        if ( ! $recipe->canBeUpdatedBy(auth()->user(), $recipe)) {
+            abort(403, 'Unauthorized');
+        }
+
         $recipe = Recipe::with([
             'user', 'steps', 'tags'
         ])->find($recipe->id);
@@ -87,6 +92,11 @@ class RecipeController extends Controller
      */
     public function destroy(Recipe $recipe)
     {
+        // Authorize the user to update the recipe
+        if ( ! $recipe->canBeUpdatedBy(auth()->user(), $recipe)) {
+            abort(403, 'Unauthorized');
+        }
+
         $recipe = Recipe::where('slug', $recipe->slug)->firstOrFail();
         $recipe->steps()->delete();
         $recipe->delete();
