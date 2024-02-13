@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\User;
 
 class Recipe extends Model
 {
@@ -12,6 +13,11 @@ class Recipe extends Model
 
     // Allow mass assignment
     protected $guarded = [];
+
+    public function canBeUpdatedBy(User $user, $recipe)
+    {
+        return $user->id === $recipe->user_id;
+    }
 
     /**
      * Get the route key for the model.
