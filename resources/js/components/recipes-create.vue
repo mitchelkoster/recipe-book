@@ -144,6 +144,7 @@ export default {
 			errors: [],
             recipe: {
                 title: '',
+                slug: '',
                 description: '',
                 ingredients: '',
                 portions: 1,
@@ -160,6 +161,8 @@ export default {
             let baseUrl = window.location.origin;
             let urlPathParts = window.location.pathname.split('/');
 
+            // This should be abstracted to a general function
+            // NOTE: This assumes you are hosting on a sub URL. E.g. "https://example.com/recipe-book/"
             if (urlPathParts.length > 3) {
                 urlPathParts.splice(2, 2);
                 baseUrl = baseUrl + urlPathParts.join('/');
@@ -168,7 +171,19 @@ export default {
             return baseUrl;
         }
     },
+    watch: {
+        'recipe.title'(newTitle) {
+            this.createSlug(newTitle);
+        }
+    },
     methods: {
+        createSlug() {
+            this.recipe.slug = this.recipe.title
+            .toLowerCase() // LowerCase
+            .replace(/\s+/g, "-") // space to -
+            .replace(/&/g, `-and-`) // & to and
+            .replace(/--/g, `-`); // -- to -
+        },
         addStep() {
             this.recipe.steps.push({
                 title: '',
@@ -182,6 +197,7 @@ export default {
             const url = `${this.baseUrl}/api/recipes`;
             const data = {
                 title: this.recipe.title,
+                slug: this.slug,
                 description: this.recipe.description,
                 portions: this.recipe.portions,
                 ingredients: this.recipe.ingredients,
@@ -208,8 +224,8 @@ export default {
 
                 // Redirect after timeout
                 window.setTimeout(() => {
-                    window.location.replace(`${this.baseUrl}/recipes/${response.data.id}`);
-                }, 5000)
+                    window.location.replace(`${this.baseUrl}/recipes/${this.recipe.slug}`);
+                }, 3000)
             })
             .catch((error) => {
                 // Show form errors

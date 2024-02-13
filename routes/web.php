@@ -21,14 +21,14 @@ Route::get('/', [RecipeController::class, 'latest']);
 Route::middleware('auth')->group(function () {
     Route::post('/recipes', [RecipeController::class, 'store ']);
     Route::get('/recipes/create', [RecipeController::class, 'create']);
-    Route::get('/recipes/{recipe}/edit', [RecipeController::class, 'edit']);
-    Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy']);
+    Route::get('/recipes/{recipe:slug}/edit', [RecipeController::class, 'edit']);
+    Route::delete('/recipes/{recipe:slug}', [RecipeController::class, 'destroy']);
 });
 
 // public recipe routes
 Route::get('/latest', [RecipeController::class, 'latest']);
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes');
-Route::get('/recipes/{recipe}', [RecipeController::class, 'show']);
+Route::get('/recipes/{recipe:slug}', [RecipeController::class, 'show']);
 
 
 require __DIR__.'/auth.php';

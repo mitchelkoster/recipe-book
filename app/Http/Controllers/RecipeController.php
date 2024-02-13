@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Recipe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RecipeController extends Controller
 {
@@ -70,6 +71,11 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
+        // Authorize the user to update the recipe
+        if ( ! $recipe->canBeUpdatedBy(auth()->user(), $recipe)) {
+            abort(403, 'Unauthorized');
+        }
+
         $recipe = Recipe::with([
             'user', 'steps', 'tags'
         ])->find($recipe->id);
@@ -86,7 +92,12 @@ class RecipeController extends Controller
      */
     public function destroy(Recipe $recipe)
     {
-        $recipe = Recipe::find($recipe->id)->firstOrFail();
+        // Authorize the user to update the recipe
+        if ( ! $recipe->canBeUpdatedBy(auth()->user(), $recipe)) {
+            abort(403, 'Unauthorized');
+        }
+
+        $recipe = Recipe::where('slug', $recipe->slug)->firstOrFail();
         $recipe->steps()->delete();
         $recipe->delete();
 
