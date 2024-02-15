@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use \App\Models\Step;
+use \App\Models\Recipe;
 
 class StepSeeder extends Seeder
 {
@@ -14,6 +15,12 @@ class StepSeeder extends Seeder
      */
     public function run()
     {
-        Step::factory(100)->create();
+        // Retrieve all recipes from the database
+        $recipes = Recipe::all();
+
+        // Iterate over each recipe and create steps for it
+        $recipes->each(function ($recipe) {
+            Step::factory(3)->create(['recipe_id' => $recipe->id]);
+        });
     }
 }
