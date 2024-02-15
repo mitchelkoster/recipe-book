@@ -1,4 +1,4 @@
-<template xmlns="http://www.w3.org/1999/html">
+<template>
 	<!-- Validation Errors -->
 	<div class="mb-4">
         <!-- Display error message -->
