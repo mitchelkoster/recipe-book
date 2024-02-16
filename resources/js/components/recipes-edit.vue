@@ -119,6 +119,14 @@
             </fieldset>
         </div>
 
+        <!-- Tags -->
+        <div class="mt-4">
+            <fieldset class="border px-4 rounded">
+                <legend class="text-2xl text-green-600 px-8">Tags (optional)</legend>
+                <tags-create @tags-updated="updateTags"></tags-create>
+            </fieldset>
+        </div>
+
         <!-- Buttons -->
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900" v-bind:href="recipeUrl">
@@ -126,7 +134,7 @@
             </a>
 
             <button
-                type="submit"
+                type="button"
                 @click="editRecipe"
                 class="inline-flex items-center px-4 py-2 bg-green-800 text-green-50 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none disabled:opacity-25 transition ease-in-out duration-150 ml-4">
                 Edit Recipe
@@ -209,6 +217,9 @@ export default {
         }
     },
     methods: {
+        updateTags(tags) {
+            console.log('Updated tags:', tags);
+        },
         createSlug() {
             this.recipe.slug = this.recipe.title
             .toLowerCase() // LowerCase
