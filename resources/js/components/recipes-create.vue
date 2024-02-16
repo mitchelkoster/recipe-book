@@ -185,7 +185,7 @@ export default {
     },
     methods: {
         updateTags(tags) {
-            console.log('Updated tags:', tags);
+            this.tags = tags;
         },
         createSlug() {
             this.recipe.slug = this.recipe.title
@@ -208,6 +208,7 @@ export default {
             const data = {
                 title: this.recipe.title,
                 slug: this.slug,
+                tags: this.tags,
                 description: this.recipe.description,
                 portions: this.recipe.portions,
                 ingredients: this.recipe.ingredients,
