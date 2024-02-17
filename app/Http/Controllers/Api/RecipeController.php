@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\Recipe;
 use App\Models\User;
 use App\Models\Step;
+use App\Models\Tag;
 use App\Http\Requests\StoreRecipeRequest;
 
 class RecipeController extends Controller
@@ -25,35 +26,34 @@ class RecipeController extends Controller
             abort(400);
         }
 
-        // Save recipe
-        $recipe = new Recipe();
-        $recipe->cover = $request->input('cover');
-        $recipe->title = $request->input('title');
-        $recipe->slug = Str::slug($request->input('title'), '-');
-        $recipe->description = $request->input('description');
-        $recipe->portions = $request->input('portions');
-        $recipe->ingredients = $request->input('ingredients');
-
-        // Fetch all steps for the recipe
-        $steps = [];
-        foreach ($request->input('steps') as $step) {
-            $steps[] = new Step([
-                'description' => $step['title'],
-                'instructions' => $step['description']
-            ]);
-        }
-
         // Fetch the user ID
         $apikey = $request->header('Authorization');
         $apikey = explode('Bearer ', $apikey)[1];
-        $recipe->user_id = User::where(['api_token' => $apikey])->first()->id;
+        $userId = User::firstOrFail()->where(['api_token' => $apikey])->get('id');
 
         // Save recipe
-        $recipe->save();
+        $recipe = Recipe::create([
+            'user_id' => $userId[0]->id,
+            'title' => $request->input('title'),
+            'slug' => Str::slug($request->input('title'), '-'),
+            'description' => $request->input('description'),
+            'portions' => $request->input('portions'),
+            'ingredients' => $request->input('ingredients')
+        ]);
 
-        // Save steps if provided
-        if (count($steps) >= 1 && $steps[0]['instructions'] !== null && $steps[0]['description'] !== null) {
-            $recipe->steps()->saveMany($steps);
+        $steps = collect($request->input('steps'))->map(function ($step) {
+            return new Step([
+                'description' => $step['title'],
+                'instructions' => $step['description']
+
+            ]);
+        });
+        $recipe->steps()->saveMany($steps);
+
+        // Fetch all tags for recipe
+        foreach ($request->input('tags') as $tagName) {
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $recipe->tags()->attach($tag->id);
         }
 
         return response(['id' => $recipe->id], 201);
