@@ -123,7 +123,7 @@
         <div class="mt-4">
             <fieldset class="border px-4 rounded">
                 <legend class="text-2xl text-green-600 px-8">Tags (optional)</legend>
-                <tags-create @tags-updated="updateTags"></tags-create>
+                <tags-create @tags-updated="updateTags" :original-tags="recipe.tags"></tags-create>
             </fieldset>
         </div>
 
@@ -156,8 +156,8 @@ export default {
                 description: '',
                 ingredients: '',
                 portions: 1,
-                cover: null,
-                steps: []
+                steps: [],
+                tags: []
             }
         }
     },
@@ -200,8 +200,9 @@ export default {
         this.recipe.title = this.decodedRecipe.title;
         this.recipe.description = this.decodedRecipe.description;
         this.recipe.ingredients = this.decodedRecipe.ingredients;
-        this.recipe.portions = this.decodedRecipe.portions
-        this.recipe.slug = this.decodedRecipe.slug
+        this.recipe.portions = this.decodedRecipe.portions;
+        this.recipe.slug = this.decodedRecipe.slug;
+        this.recipe.tags = this.decodedRecipe.tags.map(tag => tag.name);
 
         this.decodedRecipe.steps.forEach(step => {
             this.recipe.steps.push({
@@ -218,7 +219,7 @@ export default {
     },
     methods: {
         updateTags(tags) {
-            console.log('Updated tags:', tags);
+            this.recipe.tags = tags;
         },
         createSlug() {
             this.recipe.slug = this.recipe.title
@@ -245,10 +246,10 @@ export default {
             const url = `${this.baseUrl}/api/recipes/${this.decodedRecipe.slug}`; // Original slug
             const data = {
                 title: this.recipe.title,
+                tags: this.recipe.tags,
                 description: this.recipe.description,
                 portions: this.recipe.portions,
                 ingredients: this.recipe.ingredients,
-                cover: this.recipe.cover,
                 steps: JSON.parse(JSON.stringify(this.recipe.steps)) // Required black magic for proxy element
             };
             const config = {
@@ -260,7 +261,7 @@ export default {
             };
 
             this.$http.patch(url, data, config).
-            then((response) => {
+            then(() => {
                 // Show flash message
                 document.getElementById('alert').style = 'display: block';
                 document.getElementById('alert').classList.value = 'max-w-6xl mx-auto bg-green-100 border-b-2 text-center border-green-500 text-green-700 p-4 mt-4 rounded';

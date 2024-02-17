@@ -21,11 +21,15 @@
 
 <script>
 export default {
+    props: ['originalTags'],
     data() {
         return {
             tagInput: '',
             tags: []
         };
+    },
+    created() {
+        this.tags = this.originalTags;
     },
     methods: {
         addTag() {
