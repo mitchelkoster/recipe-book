@@ -33,7 +33,7 @@
             </section>
 
             <!-- Recipe cook -->
-            <section class="my-2 flex flex-col md:flex-row md:justify-between">
+            <section class="mt-2 flex flex-col md:flex-row md:justify-between">
                 <div class="flex my-1 mx-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
@@ -70,14 +70,8 @@
             </section>
 
             <!-- Tags -->
-            <section class="text-center">
-                <ul class="flex">
-                    @foreach ($recipe->tags as $tag)
-                        <li class="py-0.5 px-2 mx-1 bg-green-200 text-green-800 rounded">
-                            <a href="#">{{ $tag->name }}</a>
-                        </li>
-                    @endforeach
-                </ul>
+            <section class="text-center mb-2">
+                <x-tags :tags="$recipe->tags"/>
             </section>
 
             {{-- Only show image if available--}}
