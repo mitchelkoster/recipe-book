@@ -158,7 +158,8 @@ export default {
                 cover: null,
                 steps: [
                     {title: '', description: ''}
-                ]
+                ],
+                tags: []
             }
         }
     },
@@ -185,7 +186,7 @@ export default {
     },
     methods: {
         updateTags(tags) {
-            this.tags = tags;
+            this.recipe.tags = tags;
         },
         createSlug() {
             this.recipe.slug = this.recipe.title
@@ -207,8 +208,8 @@ export default {
             const url = `${this.baseUrl}/api/recipes`;
             const data = {
                 title: this.recipe.title,
-                slug: this.slug,
-                tags: this.tags,
+                slug: this.recipe.slug,
+                tags: this.recipe.tags,
                 description: this.recipe.description,
                 portions: this.recipe.portions,
                 ingredients: this.recipe.ingredients,
@@ -224,7 +225,7 @@ export default {
             };
 
             this.$http.post(url, data, config).
-            then((response) => {
+            then(() => {
                 // Show flash message
                 document.getElementById('alert').style = 'display: block';
                 document.getElementById('alert').classList.value = 'max-w-6xl mx-auto bg-green-100 border-b-2 text-center border-green-500 text-green-700 p-4 mt-4 rounded';
