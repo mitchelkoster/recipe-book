@@ -91,24 +91,18 @@ class RecipeController extends Controller
             $foundRecipe->portions = $request->input('portions');
             $foundRecipe->save();
 
-            // Update all steps in the recipe
-            $currentStepIds = [];
-            foreach ($request->input('steps') as $step) {
-                $tmp = Step::updateOrCreate(
-                    ['id' => $step['id'], 'recipe_id' => $recipe->id],
-                    ['description' => $step['title'], 'instructions' => $step['description'], 'recipe_id' => $recipe->id]
-                );
+            // Update steps
+            $steps = collect($request->input('steps'))->reject(function ($step) {
+                return $step['title'] === null || $step['description'] === null;
+            })->map(function ($step) {
+                return new Step([
+                    'description' => $step['title'],
+                    'instructions' => $step['description']
+                ]);
+            });
 
-                $currentStepIds[] = $tmp['id'];
-            }
-
-            // See which ID's no longer exist compared to the original so the steps can be removed
-            $stepsToRemove = $foundRecipe->steps->filter(function ($step) use ($currentStepIds) {
-                return !in_array($step['id'], $currentStepIds);
-            })->pluck('id');
-
-            // Remove steps
-            Step::destroy($stepsToRemove);
+            $recipe->steps()->delete();
+            $recipe->steps()->saveMany($steps);
 
             // Update tags in the recipe
             $tagIds = [];
