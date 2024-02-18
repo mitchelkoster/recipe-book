@@ -26,7 +26,12 @@ class StoreRecipeRequest extends FormRequest
         return [
             'title' => 'required|string|unique:recipes,title|max:255',
             'description' => 'required|string||max:255',
-            'portions' => 'required|integer|max:255'
+            'portions' => 'required|integer|max:255',
+            'tags' => 'array',
+            'tags.*' => 'string|max:255',
+            'steps' => 'array',
+            'steps.*.description' => 'string',
+            'steps.*.instructions' => 'string'
         ];
     }
 }

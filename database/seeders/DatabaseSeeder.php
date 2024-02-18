@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             RecipeSeeder::class,
+            TagSeeder::class,
             StepSeeder::class,
-            TagSeeder::class
         ]);
     }
 }

@@ -1,4 +1,4 @@
-<template xmlns="http://www.w3.org/1999/html">
+<template>
 	<!-- Validation Errors -->
 	<div class="mb-4">
         <!-- Display error message -->
@@ -119,6 +119,14 @@
             </fieldset>
         </div>
 
+        <!-- Tags -->
+        <div class="mt-4">
+            <fieldset class="border px-4 rounded">
+                <legend class="text-2xl text-green-600 px-8">Tags (optional)</legend>
+                <tags-create @tags-updated="updateTags"></tags-create>
+            </fieldset>
+        </div>
+
         <!-- Buttons -->
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900" v-bind:href="baseUrl">
@@ -126,13 +134,12 @@
             </a>
 
             <button
-                type="submit"
+                type="button"
                 @click="createRecipe"
                 class="inline-flex items-center px-4 py-2 bg-green-800 text-green-50 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none disabled:opacity-25 transition ease-in-out duration-150 ml-4">
                 Add Recipe
             </button>
         </div>
-
     </form>
 </template>
 <script>
@@ -151,7 +158,8 @@ export default {
                 cover: null,
                 steps: [
                     {title: '', description: ''}
-                ]
+                ],
+                tags: []
             }
         }
     },
@@ -177,6 +185,9 @@ export default {
         }
     },
     methods: {
+        updateTags(tags) {
+            this.recipe.tags = tags;
+        },
         createSlug() {
             this.recipe.slug = this.recipe.title
             .toLowerCase() // LowerCase
@@ -197,7 +208,8 @@ export default {
             const url = `${this.baseUrl}/api/recipes`;
             const data = {
                 title: this.recipe.title,
-                slug: this.slug,
+                slug: this.recipe.slug,
+                tags: this.recipe.tags,
                 description: this.recipe.description,
                 portions: this.recipe.portions,
                 ingredients: this.recipe.ingredients,
@@ -213,7 +225,7 @@ export default {
             };
 
             this.$http.post(url, data, config).
-            then((response) => {
+            then(() => {
                 // Show flash message
                 document.getElementById('alert').style = 'display: block';
                 document.getElementById('alert').classList.value = 'max-w-6xl mx-auto bg-green-100 border-b-2 text-center border-green-500 text-green-700 p-4 mt-4 rounded';

@@ -29,20 +29,10 @@
                             width="150"
                         > --}}
 
-                        {{-- Recipe details --}}
                         <x-recipe-card :recipe="$recipe"/>
                     </div>
 
-                    {{-- tags --}}
-                    <div class="text-center mt-4">
-                        <ul class="flex flex justify-start">
-                            @foreach ($recipe->tags as $tag)
-                                <li class="py-0.5 px-2 mx-1 bg-green-200 text-green-800 rounded">
-                                    <a href="#">{{ $tag->name }}</a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+                    <x-tags :tags="$recipe->tags"/>
                 </section>
                 {{-- Recipe card --}}
                 @empty
