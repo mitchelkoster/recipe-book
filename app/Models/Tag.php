@@ -14,6 +14,14 @@ class Tag extends Model
     ];
 
     /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'name';
+    }
+
+    /**
      * The recipes that belong to a tag
      */
     public function recipes()

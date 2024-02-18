@@ -15,7 +15,7 @@ class RecipeController extends Controller
      */
     public function latest()
     {
-        $recipes = Recipe::with('user')
+        $recipes = Recipe::with(['user', 'tags'])
             ->orderByDesc('created_at')
             ->limit(6)
             ->get();
@@ -30,7 +30,7 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        $recipes = Recipe::with('user')
+        $recipes = Recipe::with(['user', 'tags'])
             ->orderBy('title', 'asc')
             ->paginate(10);
 
