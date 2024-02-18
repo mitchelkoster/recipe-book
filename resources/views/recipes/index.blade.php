@@ -14,27 +14,8 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
-            @forelse ($recipes as $recipe)
-                {{-- Recipe card --}}
-                {{-- TODO: This could be a component? --}}
-                <section class="p-6 bg-white rounded shadow">
-                    <div class="flex sm:flex-row flex-col items-center">
-                        {{-- Recipe image --}}
-                        {{--
-                        <img
-                            src="{{ asset('img/placeholder_recipe.png') }}"
-                            alt="Random recipe"
-                            class="mr-2 mb-4 sm:mb-0"
-                            height="150"
-                            width="150"
-                        > --}}
-
-                        <x-recipe-card :recipe="$recipe"/>
-                    </div>
-
-                    <x-tags :tags="$recipe->tags"/>
-                </section>
-                {{-- Recipe card --}}
+                @forelse ($recipes as $recipe)
+                    <x-recipe-card :recipe="$recipe"/>
                 @empty
                     <p class="mx-8 text-lg text-green-600">{{__('No recipes are available yet!')}}</p>
                 @endforelse
