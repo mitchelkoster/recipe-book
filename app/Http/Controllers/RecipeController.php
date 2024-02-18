@@ -32,7 +32,7 @@ class RecipeController extends Controller
     {
         $recipes = Recipe::with(['user', 'tags'])
             ->orderBy('title', 'asc')
-            ->paginate(10);
+            ->paginate(12);
 
         return view('recipes.index', compact('recipes'));
     }

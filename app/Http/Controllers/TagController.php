@@ -27,7 +27,7 @@ class TagController extends Controller
         // Retrieve recipes associated with the tag
         $recipes = Recipe::whereHas('tags', function ($query) use ($tag) {
             $query->where('name', $tag->name);
-        })->with('user')->orderBy('title', 'asc')->paginate(10);
+        })->with('user')->orderBy('title', 'asc')->paginate(12);
 
         return view('tags.show', compact('recipes'), compact('tag'));
     }
