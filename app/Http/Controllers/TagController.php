@@ -22,4 +22,14 @@ class TagController extends Controller
 
         return view('tags.show', compact('recipes'), compact('tag'));
     }
+
+    /**
+     * Show the form for creating searching tags.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        return view('tags.search');
+    }
 }
