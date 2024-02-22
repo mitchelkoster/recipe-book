@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\Tag;
 
 class TagController extends Controller
 {
     public function search(Request $request)
     {
-        return response(NULL, 200);
+        $query = Str::of($request->query('tag'))->lower();
+        $tags = Tag::where('name', 'like', "%{$query}%")->get('name');
+
+        return response($tags, 200);
     }
 }
