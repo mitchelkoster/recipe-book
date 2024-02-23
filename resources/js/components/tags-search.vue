@@ -115,9 +115,11 @@ export default {
     },
     methods: {
         fetchTags() {
-            // Only show tags if at least 3 characters are provided
-            if (this.tag.length < 3) {
-                return;
+            // Make sure we at least have 3 characters to search for
+            if (this.tag.length == 0 || this.tag.length < 3) {
+                this.suggestedRecipes = []
+                this.suggestedTags = []
+                return
             }
 
             // Fetch tags
