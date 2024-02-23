@@ -39,7 +39,7 @@
             <div v-for="recipe in suggestedRecipes" class="p-6 bg-white rounded shadow">
                 <div class="flex sm:flex-row flex-col items-center">
                     <div class="ml-4 leading-7 font-semibold flex-col items-center">
-                        <a href="#"
+                        <a :href="recipeUrl(recipe.slug)"
                             class="mx-1 underline text-green-600 flex flex-col sm:flex-row items-center text-center sm:text-left">
                             {{ recipe.title }}
                         </a>
@@ -78,7 +78,7 @@
                 <div class="text-center mt-4">
                     <ul class="flex flex justify-start">
                         <li v-for="tag in recipe.tags" class="py-0.5 px-2 mx-1 bg-green-200 text-green-800 rounded">
-                            <a href="#">{{ tag.name }}</a>
+                            <a :href="tagUrl(tag.name)">{{ tag.name }}</a>
                         </li>
                     </ul>
                 </div>
@@ -129,7 +129,6 @@ export default {
 
             this.$http.get(url, { params: params }).
                 then((response) => {
-                    console.log(response);
                     this.suggestedTags = response.data.tags;
                     this.suggestedRecipes = response.data.recipes;
                 })
@@ -142,6 +141,9 @@ export default {
         },
         tagUrl(tag) {
             return `${this.baseUrl}/tags/${tag}`;
+        },
+        recipeUrl(slug) {
+            return `${this.baseUrl}/recipes/${slug}`;
         }
     }
 };
