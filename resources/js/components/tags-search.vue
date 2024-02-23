@@ -16,19 +16,76 @@
         </button>
     </div>
 
-    <!-- Show results -->
-    <section v-if="suggestions.length > 0" class="flex items-center flex-col bg-white rounded my-2 my-2 w-11/12 border-t">
+    <!-- Show resulting tags -->
+    <section v-if="suggestedTags.length > 0" class="flex items-center flex-col bg-white rounded my-2 my-2 w-11/12 border-t">
         <h1 class="text-2xl text-gray-800 my-4 border-y text-green-600">Tags</h1>
 
         <div class="text-center mb-4">
             <ul class="flex flex-wrap justify-start px-4 space-x-4 space-y-2">
-                <li v-for="tag in suggestions" :key="tag.id" @click="selectTag(tag)" class="py-0.5 px-2 bg-green-200 text-green-800 rounded min-w-10">
-                    <a :href="tagUrl(tag)">{{ tag.name }}</a>
+                <li v-for="tag in suggestedTags" :key="tag.id" @click="selectTag(tag)"
+                    class="py-0.5 px-2 bg-green-200 text-green-800 rounded min-w-10">
+                    <a :href="tagUrl(tag)">{{ tag }}</a>
                 </li>
             </ul>
         </div>
     </section>
 
+    <!-- Show resulting Recipes -->
+    <section v-if="suggestedRecipes.length > 0"
+        class="flex items-center flex-col bg-white rounded my-2 my-2 w-11/12 border-t">
+        <h1 class="text-2xl text-gray-800 my-4 border-y text-green-600">Recipes</h1>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+            <div v-for="recipe in suggestedRecipes" class="p-6 bg-white rounded shadow">
+                <div class="flex sm:flex-row flex-col items-center">
+                    <div class="ml-4 leading-7 font-semibold flex-col items-center">
+                        <a href="#"
+                            class="mx-1 underline text-green-600 flex flex-col sm:flex-row items-center text-center sm:text-left">
+                            {{ recipe.title }}
+                        </a>
+
+                        <div class="flex flex-col sm:flex-row items-center text-gray-500">
+                            <div class="flex mt-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+
+                                <p class="ml-2 mt-1 text-sm">{{ recipe.user.name }}</p>
+                            </div>
+
+                            <div class="flex text-sm mt-2 mx-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+
+                                </svg>
+
+                                <p class="ml-2 mt-1">{{ recipe.portions }} portion(s)</p>
+                            </div>
+                        </div>
+
+
+                        <div class="mt-4 mx-1 w-60 text-gray-600 text-sm w-full text-center sm:text-left">
+                            {{ recipe.description }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Show tags -->
+                <div class="text-center mt-4">
+                    <ul class="flex flex justify-start">
+                        <li v-for="tag in recipe.tags" class="py-0.5 px-2 mx-1 bg-green-200 text-green-800 rounded">
+                            <a href="#">{{ tag.name }}</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
 </template>
 
 <script>
@@ -36,7 +93,8 @@ export default {
     data() {
         return {
             tag: '',
-            suggestions: []
+            suggestedTags: [],
+            suggestedRecipes: []
         };
     },
     computed: {
@@ -70,17 +128,18 @@ export default {
             this.$http.get(url, { params: params }).
                 then((response) => {
                     console.log(response);
-                    this.suggestions = response.data;
+                    this.suggestedTags = response.data.tags;
+                    this.suggestedRecipes = response.data.recipes;
                 })
                 .catch((error) => {
                     console.log(error);
                 })
         },
         selectTag(tag) {
-            this.tag = tag.name;
+            this.tag = tag;
         },
         tagUrl(tag) {
-            return `${this.baseUrl}/tags/${tag.name}`;
+            return `${this.baseUrl}/tags/${tag}`;
         }
     }
 };
