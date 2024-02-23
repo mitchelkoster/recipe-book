@@ -17,14 +17,18 @@
     </div>
 
     <!-- Show results -->
-    <div class="text-center mb-4">
-        <ul class="flex flex justify-start">
-            <li v-for="tag in suggestions" :key="tag.id" @click="selectTag(tag)"
-                class="py-0.5 px-2 mx-1 bg-green-200 text-green-800 rounded min-w-10">
-                {{ tag.name }}
-            </li>
-        </ul>
-    </div>
+    <section v-if="suggestions.length > 0" class="flex items-center flex-col bg-white rounded my-2 my-2 w-11/12 border-t">
+        <h1 class="text-2xl text-gray-800 my-4 border-y text-green-600">Tags</h1>
+
+        <div class="text-center mb-4">
+            <ul class="flex flex-wrap justify-start px-4 space-x-4 space-y-2">
+                <li v-for="tag in suggestions" :key="tag.id" @click="selectTag(tag)" class="py-0.5 px-2 bg-green-200 text-green-800 rounded min-w-10">
+                    <a :href="tagUrl(tag)">{{ tag.name }}</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
 </template>
 
 <script>
@@ -53,8 +57,12 @@ export default {
     },
     methods: {
         fetchTags() {
-            console.log('fetch tags...')
+            // Only show tags if at least 3 characters are provided
+            if (this.tag.length < 3) {
+                return;
+            }
 
+            // Fetch tags
             const url = `${this.baseUrl}/api/tags/search`;
             const params = new URLSearchParams();
             params.append('tag', this.tag);
@@ -70,6 +78,9 @@ export default {
         },
         selectTag(tag) {
             this.tag = tag.name;
+        },
+        tagUrl(tag) {
+            return `${this.baseUrl}/tags/${tag.name}`;
         }
     }
 };

@@ -12,7 +12,7 @@ class TagController extends Controller
     public function search(Request $request)
     {
         $query = Str::of($request->query('tag'))->lower();
-        $tags = Tag::where('name', 'like', "%{$query}%")->get('name');
+        $tags = Tag::where('name', 'like', "%{$query}%")->take(12)->get('name');
 
         return response($tags, 200);
     }
