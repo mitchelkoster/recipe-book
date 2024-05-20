@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Step;
 use App\Models\Tag;
 use App\Http\Requests\StoreRecipeRequest;
+use App\Http\Requests\UpdateRecipeRequest;
 
 class RecipeController extends Controller
 {
@@ -68,26 +69,24 @@ class RecipeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Recipe  $recipe
+     * @param  \App\Http\Requests\UpdateRecipeRequest $request
      * @return \Illuminate\Http\Response
      */
-        public function update(Recipe $recipe, StoreRecipeRequest $request)
-        {
+    public function update(UpdateRecipeRequest $request)
+    {
         // Fetch existing recipe
-        $foundRecipe = Recipe::find(['id' => $recipe->id])->firstOrFail();
+        $foundRecipe = Recipe::where('title', $request->input('title'))->firstOrFail();
         if (! $foundRecipe) {
             abort(400);
         }
 
         // Start a database transaction
-        DB::transaction(function () use ($request, $foundRecipe, $recipe) {
+        DB::transaction(function () use ($request, $foundRecipe) {
             // Update recipe
             $foundRecipe->title = $request->input('title');
             $foundRecipe->slug = Str::slug($request->input('title'), '-');
             $foundRecipe->description = $request->input('description');
             $foundRecipe->ingredients = $request->input('ingredients');
-            $foundRecipe->cover = $request->input('cover');
             $foundRecipe->portions = $request->input('portions');
             $foundRecipe->save();
 
@@ -101,8 +100,8 @@ class RecipeController extends Controller
                 ]);
             });
 
-            $recipe->steps()->delete();
-            $recipe->steps()->saveMany($steps);
+            $foundRecipe->steps()->delete();
+            $foundRecipe->steps()->saveMany($steps);
 
             // Update tags in the recipe
             $tagIds = [];
@@ -110,7 +109,7 @@ class RecipeController extends Controller
                 $tag = Tag::firstOrCreate(['name' => $tagName]);
                 $tagIds[] = $tag->id;
             }
-            $recipe->tags()->sync($tagIds);
+            $foundRecipe->tags()->sync($tagIds);
         });
 
         return response(NULL, 200);
