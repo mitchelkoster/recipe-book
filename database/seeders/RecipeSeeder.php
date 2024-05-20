@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Recipe;
+use App\Models\Tag;
 
 class RecipeSeeder extends Seeder
 {
@@ -14,6 +15,9 @@ class RecipeSeeder extends Seeder
      */
     public function run()
     {
-        Recipe::factory(50)->create();
+        Recipe::factory(50)->create()->each(function ($recipe) {
+            $tags = Tag::factory()->count(rand(1, 5))->create();
+            $recipe->tags()->attach($tags);
+        });
     }
 }

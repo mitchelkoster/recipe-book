@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use App\Models\Recipe;
 use App\Models\User;
 use App\Models\Step;
+use App\Models\Tag;
 use App\Http\Requests\StoreRecipeRequest;
 
 class RecipeController extends Controller
@@ -25,38 +27,42 @@ class RecipeController extends Controller
             abort(400);
         }
 
-        // Save recipe
-        $recipe = new Recipe();
-        $recipe->cover = $request->input('cover');
-        $recipe->title = $request->input('title');
-        $recipe->slug = Str::slug($request->input('title'), '-');
-        $recipe->description = $request->input('description');
-        $recipe->portions = $request->input('portions');
-        $recipe->ingredients = $request->input('ingredients');
-
-        // Fetch all steps for the recipe
-        $steps = [];
-        foreach ($request->input('steps') as $step) {
-            $steps[] = new Step([
-                'description' => $step['title'],
-                'instructions' => $step['description']
-            ]);
-        }
-
         // Fetch the user ID
         $apikey = $request->header('Authorization');
         $apikey = explode('Bearer ', $apikey)[1];
-        $recipe->user_id = User::where(['api_token' => $apikey])->first()->id;
+        $userId = User::firstOrFail()->where(['api_token' => $apikey])->get('id');
 
-        // Save recipe
-        $recipe->save();
+        // Start a database transaction
+        DB::transaction(function () use ($request, $userId) {
+            // Save recipe
+            $recipe = Recipe::create([
+                'user_id' => $userId[0]->id,
+                'title' => $request->input('title'),
+                'slug' => Str::slug($request->input('title'), '-'),
+                'description' => $request->input('description'),
+                'portions' => $request->input('portions'),
+                'ingredients' => $request->input('ingredients')
+            ]);
 
-        // Save steps if provided
-        if (count($steps) >= 1 && $steps[0]['instructions'] !== null && $steps[0]['description'] !== null) {
+            $steps = collect($request->input('steps'))->map(function ($step) {
+                return new Step([
+                    'description' => $step['title'],
+                    'instructions' => $step['description']
+
+                ]);
+            });
             $recipe->steps()->saveMany($steps);
-        }
 
-        return response(['id' => $recipe->id], 201);
+            // Fetch all tags for recipe
+            if ($request->input('tags') !== NULL) {
+                foreach ($request->input('tags') as $tagName) {
+                    $tag = Tag::firstOrCreate(['name' => $tagName]);
+                    $recipe->tags()->attach($tag->id);
+                }
+            }
+
+            return response(['id' => $recipe->id], 201);
+        });
     }
 
     /**
@@ -66,41 +72,46 @@ class RecipeController extends Controller
      * @param  \App\Models\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function update(Recipe $recipe, Request $request)
-    {
+        public function update(Recipe $recipe, StoreRecipeRequest $request)
+        {
         // Fetch existing recipe
         $foundRecipe = Recipe::find(['id' => $recipe->id])->firstOrFail();
         if (! $foundRecipe) {
             abort(400);
         }
 
-        // Update recipe
-        $foundRecipe->title = $request->input('title');
-        $foundRecipe->slug = Str::slug($request->input('title'), '-');
-        $foundRecipe->description = $request->input('description');
-        $foundRecipe->ingredients = $request->input('ingredients');
-        $foundRecipe->cover = $request->input('cover');
-        $foundRecipe->portions = $request->input('portions');
-        $foundRecipe->save();
+        // Start a database transaction
+        DB::transaction(function () use ($request, $foundRecipe, $recipe) {
+            // Update recipe
+            $foundRecipe->title = $request->input('title');
+            $foundRecipe->slug = Str::slug($request->input('title'), '-');
+            $foundRecipe->description = $request->input('description');
+            $foundRecipe->ingredients = $request->input('ingredients');
+            $foundRecipe->cover = $request->input('cover');
+            $foundRecipe->portions = $request->input('portions');
+            $foundRecipe->save();
 
-        // Update all steps in the recipe
-        $currentStepIds = [];
-        foreach ($request->input('steps') as $step) {
-            $tmp = Step::updateOrCreate(
-                ['id' => $step['id'], 'recipe_id' => $recipe->id],
-                ['description' => $step['title'], 'instructions' => $step['description'], 'recipe_id' => $recipe->id]
-            );
+            // Update steps
+            $steps = collect($request->input('steps'))->reject(function ($step) {
+                return $step['title'] === null || $step['description'] === null;
+            })->map(function ($step) {
+                return new Step([
+                    'description' => $step['title'],
+                    'instructions' => $step['description']
+                ]);
+            });
 
-            $currentStepIds[] = $tmp['id'];
-        }
+            $recipe->steps()->delete();
+            $recipe->steps()->saveMany($steps);
 
-        // See which ID's no longer exist compared to the original so the steps can be removed
-        $stepsToRemove = $foundRecipe->steps->filter(function ($step) use ($currentStepIds) {
-            return !in_array($step['id'], $currentStepIds);
-        })->pluck('id');
-
-        // Remove steps
-        Step::destroy($stepsToRemove);
+            // Update tags in the recipe
+            $tagIds = [];
+            foreach ($request->input('tags')as $tagName) {
+                $tag = Tag::firstOrCreate(['name' => $tagName]);
+                $tagIds[] = $tag->id;
+            }
+            $recipe->tags()->sync($tagIds);
+        });
 
         return response(NULL, 200);
     }

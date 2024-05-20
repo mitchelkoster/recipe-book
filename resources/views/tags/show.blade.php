@@ -1,8 +1,8 @@
 <x-guest-layout>
     <div class="max-w-6xl mx-auto">
-        <h1 class="text-2xl text-gray-800 px-8">{{__('All recipes')}}</h1>
+        <h1 class="text-2xl text-gray-800 px-8">{{__('Recipes based on tag')}}</h1>
         <p class="mt-2 text-gray-600 text-sm px-8">
-            {{__('An overview of all recipes on this website.')}}
+            {{__('An overview of all recipes filtered on ')}} <span class="bg-green-200 text-green-800 rounded py-1 px-2">{{ $tag->name }}</span>
         </p>
     </div>
 
