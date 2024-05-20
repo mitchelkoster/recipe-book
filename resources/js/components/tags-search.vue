@@ -23,8 +23,8 @@
         <div v-if="suggestedTags.length > 0" class="mb-4 relative mx-auto w-full">
             <ul class="w-full p-3 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block"
                 type="search" name="search" placeholder="bread">
-                <li v-for="tag in suggestedTags" :key="tag.id" class="p-2 hover:bg-green-100 hover:rounded">
-                    <a :href="tagUrl(tag)">{{ tag }}</a>
+                <li v-for="tag in suggestedTags" :key="tag.id" @click="selectTag(tag)" class="cursor-pointer p-2 hover:bg-green-100 hover:rounded">
+                    {{ tag }}
                 </li>
             </ul>
         </div>
