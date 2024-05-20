@@ -31,6 +31,7 @@ Route::get('/latest', [RecipeController::class, 'latest']);
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes');
 Route::get('/recipes/{recipe:slug}', [RecipeController::class, 'show']);
 
+Route::get('/tags/search', [TagController::class, 'search']);
 Route::get('/tags/{tag:name}', [TagController::class, 'show']);
 
 require __DIR__.'/auth.php';
