@@ -75,8 +75,9 @@ class RecipeController extends Controller
     public function update(UpdateRecipeRequest $request)
     {
         // Fetch existing recipe
-        $foundRecipe = Recipe::where('title', $request->input('title'))->firstOrFail();
-        if (! $foundRecipe) {
+        $foundRecipe = Recipe::find($request->input('id'))->firstOrFail();
+
+        if ( ! $foundRecipe) {
             abort(400);
         }
 
@@ -105,7 +106,7 @@ class RecipeController extends Controller
 
             // Update tags in the recipe
             $tagIds = [];
-            foreach ($request->input('tags')as $tagName) {
+            foreach ($request->input('tags') as $tagName) {
                 $tag = Tag::firstOrCreate(['name' => $tagName]);
                 $tagIds[] = $tag->id;
             }
