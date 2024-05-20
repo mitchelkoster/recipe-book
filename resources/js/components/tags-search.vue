@@ -32,7 +32,6 @@
     <!-- Show resulting Recipes -->
     <section v-if="suggestedRecipes.length > 0"
         class="flex items-center flex-col bg-white rounded my-2 my-2 w-full border-t">
-        <h1 class="text-2xl text-gray-800 my-4 border-y text-green-600">Recipes</h1>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
             <div v-for="recipe in suggestedRecipes" class="p-6 bg-white rounded shadow">

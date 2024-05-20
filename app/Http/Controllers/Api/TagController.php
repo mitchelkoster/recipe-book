@@ -48,6 +48,6 @@ class TagController extends Controller
             $query->where('name', $tag->name);
         })->with('user')->orderBy('title', 'asc')->get();
 
-        return response()->json([$recipes]);
+        return response()->json($recipes);
     }
 }
