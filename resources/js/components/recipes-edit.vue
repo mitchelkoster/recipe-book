@@ -245,6 +245,7 @@ export default {
 
             const url = `${this.baseUrl}/api/recipes/${this.decodedRecipe.slug}`; // Original slug
             const data = {
+                id: this.decodedRecipe.id,
                 title: this.recipe.title,
                 tags: this.recipe.tags,
                 description: this.recipe.description,
