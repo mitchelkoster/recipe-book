@@ -123,7 +123,7 @@
         <div class="mt-4">
             <fieldset class="border px-4 rounded">
                 <legend class="text-2xl text-green-600 px-8">Tags (optional)</legend>
-                <tags-create @tags-updated="updateTags"></tags-create>
+                <tags-create @tags-updated="updateTags" :original-tags="recipe.tags"></tags-create>
             </fieldset>
         </div>
 
