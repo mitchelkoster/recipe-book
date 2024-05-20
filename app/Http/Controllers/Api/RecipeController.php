@@ -72,8 +72,8 @@ class RecipeController extends Controller
      * @param  \App\Models\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function update(Recipe $recipe, Request $request)
-    {
+        public function update(Recipe $recipe, StoreRecipeRequest $request)
+        {
         // Fetch existing recipe
         $foundRecipe = Recipe::find(['id' => $recipe->id])->firstOrFail();
         if (! $foundRecipe) {
