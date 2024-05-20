@@ -75,7 +75,7 @@ class RecipeController extends Controller
     public function update(UpdateRecipeRequest $request)
     {
         // Fetch existing recipe
-        $foundRecipe = Recipe::find($request->input('id'))->firstOrFail();
+        $foundRecipe = Recipe::findOrFail($request->input('id'));
 
         if ( ! $foundRecipe) {
             abort(400);
