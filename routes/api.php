@@ -21,4 +21,5 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('/recipes/{recipe:slug}', [RecipeController::class, 'update']);
 });
 
-Route::get('/tags/search', [TagController::class, 'search']);
+Route::get('/tags/suggestion', [TagController::class, 'suggestion']);
+Route::get('/tags/search/{tag}', [TagController::class, 'search']);

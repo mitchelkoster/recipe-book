@@ -18,8 +18,6 @@
         </div>
 
         <!-- Show resulting tags -->
-        <!-- <section v-if="suggestedTags.length > 0" class="flex items-center flex-col bg-white rounded my-2 my-2 w-11/12 border-t"></section> -->
-
         <div v-if="suggestedTags.length > 0" class="mb-4 relative mx-auto w-full">
             <ul class="w-full p-3 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block"
                 type="search" name="search" placeholder="bread">
@@ -117,20 +115,18 @@ export default {
         fetchTags() {
             // Make sure we at least have 3 characters to search for
             if (this.tag.length == 0 || this.tag.length < 3) {
-                this.suggestedRecipes = []
                 this.suggestedTags = []
-                return
+                return;
             }
 
             // Fetch tags
-            const url = `${this.baseUrl}/api/tags/search`;
+            const url = `${this.baseUrl}/api/tags/suggestion`;
             const params = new URLSearchParams();
             params.append('tag', this.tag);
 
             this.$http.get(url, { params: params }).
                 then((response) => {
                     this.suggestedTags = response.data.tags;
-                    this.suggestedRecipes = response.data.recipes;
                 })
                 .catch((error) => {
                     console.log(error);
@@ -138,6 +134,22 @@ export default {
         },
         selectTag(tag) {
             this.tag = tag;
+            this.suggestedRecipes = [];
+
+            // Fetch recipes
+            const url = `${this.baseUrl}/api/tags/search/${this.tag}`;
+            // TODO: Keep for future search with multiple taghs
+            // const params = new URLSearchParams();
+            // params.append('tag', this.tag);
+
+            // this.$http.get(url, { params: params }).
+            this.$http.get(url).
+                then((response) => {
+                    this.suggestedRecipes = response.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         },
         tagUrl(tag) {
             return `${this.baseUrl}/tags/${tag}`;
