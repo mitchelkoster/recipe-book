@@ -24,7 +24,9 @@
                 </form>
             @else
                 <a href="{{ route('login') }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('Login') }}</a>
+                @if ( Config::get('registration.registration_enabled'))
                 <a href="{{ route('register') }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('Register') }}</a>
+                @endif
             @endauth
         </div>
     </div>
@@ -56,7 +58,9 @@
                 </form>
                 @else
                     <a href="{{ route('login') }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('Login') }}</a>
-                    <a href="{{ route('register') }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('Register') }}</a>
+                    @if ( Config::get('registration.registration_enabled'))
+                        <a href="{{ route('register') }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('Register') }}</a>
+                    @endif
                 @endauth
             </div>
         </div>
