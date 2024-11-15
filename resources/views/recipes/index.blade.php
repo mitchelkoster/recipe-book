@@ -14,11 +14,10 @@
 
                 <div class="flex flex-col items-center justify-between">
                     <p class="hidden sm:block text-sm text-gray-700 leading-5">{{ __('# Results') }}</p>
-                    <select class="relative w-full h-full items-center ml-4 pr-8 sm:mt-2 text-sm font-bold text-green-600 bg-white border border-gray-300 leading-5 border border-gray-300 cursor-default rounded-md text-center leading-5">
-                        <option class="text-green-600" selected="">10</option>
-                        <option class="text-gray-600">20</option>
-                        <option class="text-gray-600">50</option>
-                        <option class="text-gray-600">100</option>
+                    <select id="resultsPerPage" onchange="changedResultCount(this.value)" class="relative w-full h-full items-center ml-4 pr-8 sm:mt-2 text-sm font-bold text-green-600 bg-white border border-gray-300 leading-5 border border-gray-300 cursor-default rounded-md text-center leading-5">
+                        <option value="20" class="text-gray-600">20</option>
+                        <option value="50" class="text-gray-600">50</option>
+                        <option value="100" class="text-gray-600">100</option>
                     </select>
                 </div>
             </div>
@@ -37,4 +36,34 @@
             </div>
         </div>
     </div>
+
+    <script>
+    function changedResultCount(option) {
+        let params = new URLSearchParams(location.search);
+        params.set('recipe-count', option);
+
+        window.location.search = params.toString();
+    }
+
+    function setSelectFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const paramValue = urlParams.get('recipe-count');
+
+        if (paramValue) {
+            const selectElement = document.getElementById('resultsPerPage');
+            const options = selectElement.options;
+
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].value === paramValue) {
+                    selectElement.selectedIndex = i;
+                    break;
+                }
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        setSelectFromUrl();
+    });
+    </script>
 </x-guest-layout>
