@@ -26,13 +26,20 @@ class RecipeController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        // Handle custom pagination
+        $paginationCount = 20;
+        if ($request->integer("recipe-count") > 0) {
+            $paginationCount = $request->integer("recipe-count");
+        }
+
         $recipes = Recipe::with(['user', 'tags'])
             ->orderBy('title', 'asc')
-            ->paginate(12);
+            ->paginate($paginationCount);
 
         return view('recipes.index', compact('recipes'));
     }
