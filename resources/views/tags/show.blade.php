@@ -9,11 +9,11 @@
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="mt-8 overflow-hidden sm:rounded-lg">
             {{-- Pagination --}}
-            <div class="w-full flex justify-end mb-10 pr-4">
+            <div class="w-full flex justify-end mb-6 pr-4">
                 {{ $recipes->links('pagination::tailwind') }}
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
                 @forelse ($recipes as $recipe)
                     <x-recipe-card :recipe="$recipe"/>
                 @empty
@@ -22,7 +22,7 @@
             </div>
 
             {{-- Pagination --}}
-            <div class="w-full flex justify-end mb-10 pr-4">
+            <div class="w-full flex justify-end mb-4 pr-4">
                 {{ $recipes->links('pagination::tailwind') }}
             </div>
         </div>

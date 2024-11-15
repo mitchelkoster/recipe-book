@@ -1,5 +1,5 @@
 @if ($paginator->hasPages())
-    <nav role="navigation" aria-label="{{ __('Pagination Navigation') }}" class="flex items-center justify-between">
+    <nav role="navigation" aria-label="{{ __('Pagination Navigation') }}" class="flex flex-col items-center justify-between">
         <div class="flex justify-between flex-1 sm:hidden">
             @if ($paginator->onFirstPage())
                 <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5 rounded-md">
@@ -22,18 +22,26 @@
             @endif
         </div>
 
-        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-{{--            <div>--}}
-{{--                <p class="text-sm text-gray-700 leading-5">--}}
-{{--                    {!! __('Showing') !!}--}}
-{{--                    <span class="font-medium">{{ $paginator->firstItem() }}</span>--}}
-{{--                    {!! __('to') !!}--}}
-{{--                    <span class="font-medium">{{ $paginator->lastItem() }}</span>--}}
-{{--                    {!! __('of') !!}--}}
-{{--                    <span class="font-medium">{{ $paginator->total() }}</span>--}}
-{{--                    {!! __('results') !!}--}}
-{{--                </p>--}}
-{{--            </div> --}}
+        <div class="hidden sm:flex-1 sm:flex sm:flex-col sm:items-center sm:justify-between space-y-2">
+           <div>
+               <p class="text-sm text-gray-700 leading-5">
+                   {!! __('Showing') !!}
+                   <span class="font-medium">{{ $paginator->firstItem() }}</span>
+                   {!! __('to') !!}
+                   <span class="font-medium">{{ $paginator->lastItem() }}</span>
+                   {!! __('of') !!}
+                   <span class="font-medium">{{ $paginator->total() }}</span>
+                   {!! __('results') !!}
+               </p>
+           </div>
+
+        {{-- <div>
+            <select class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
+                <option selected="">20</option>
+                <option>50</option>
+                <option>100</option>
+            </select>
+        </div> --}}
 
             <div>
                 <span class="relative z-0 inline-flex shadow-sm rounded-md">
