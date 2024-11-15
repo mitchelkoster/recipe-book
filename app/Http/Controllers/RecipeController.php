@@ -32,7 +32,7 @@ class RecipeController extends Controller
     public function index(Request $request)
     {
         // Handle custom pagination
-        $paginationCount = 16;
+        $paginationCount = 20;
         if ($request->integer("recipe-count") > 0) {
             $paginationCount = $request->integer("recipe-count");
         }
