@@ -11,6 +11,16 @@
             {{-- Pagination --}}
             <div class="w-full flex justify-end mb-6 pr-4">
                 {{ $recipes->links('pagination::tailwind') }}
+
+                <div class="flex flex-col items-center justify-between">
+                    <p class="hidden sm:block text-sm text-gray-700 leading-5">{{ __('# Results') }}</p>
+                    <select class="relative w-full h-full items-center ml-4 pr-8 sm:mt-2 text-sm font-bold text-green-600 bg-white border border-gray-300 leading-5 border border-gray-300 cursor-default rounded-md text-center leading-5">
+                        <option class="text-green-600" selected="">10</option>
+                        <option class="text-gray-600">20</option>
+                        <option class="text-gray-600">50</option>
+                        <option class="text-gray-600">100</option>
+                    </select>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
