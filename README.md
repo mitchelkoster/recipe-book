@@ -37,7 +37,7 @@ docker run --rm --interactive --tty \
   composer install
 ```
 
-With all dependencies installed you can now bring up the containers configure the project
+With all dependencies installed you can now bring up the containers configure the project. You can alter if *registration* is available by modifying the `REGISTRATION_ENABLED` flag
 
 ```bash
 cp .env.docker .env
