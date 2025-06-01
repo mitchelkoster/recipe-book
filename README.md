@@ -18,6 +18,12 @@ docker pull thunarez/recipe-cookbook:1.0.0
 docker run -d -p 8080:80 --env-file .env thunarez/recipe-cookbook:1.0.0
 ```
 
+Because Laravel's scheduler is used, we need to add a single cron configuration to the server that runs the `schedule:run` command every minute.
+
+```bash
+* * * * * cd <your-project> && php artisan schedule:run >> /dev/null 2>&1
+```
+
 ## Setting up a Development Environment
 It is recommended to create a bash alias for `sail`:
 ```bash
