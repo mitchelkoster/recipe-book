@@ -63,6 +63,9 @@ sail npm install
 sail npm update vue-loader
 sail npm run dev
 
+# To keep monitoring for changes
+sail npm run watch
+
 # Run all tests
 sail test
 
