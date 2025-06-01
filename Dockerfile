@@ -21,7 +21,7 @@ RUN npm ci
 RUN npm run production
 
 # PHP image that will host Laravel
-FROM php:8.2-apache
+FROM php:8.3-fpm
 
 WORKDIR /var/www/html
 
