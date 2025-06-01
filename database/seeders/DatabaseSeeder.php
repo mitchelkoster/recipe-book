@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use \App\Models\Recipe;
-use \App\Models\Tag;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             RecipeSeeder::class,
-            TagSeeder::class,
             StepSeeder::class,
         ]);
     }
