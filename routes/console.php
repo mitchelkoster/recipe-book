@@ -21,4 +21,6 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 
-Schedule::command(TagsClean::class)->daily();
+Schedule::command(TagsClean::class)
+    ->daily()
+    ->sendOutputTo(storage_path('logs/tags-clean.log'));
