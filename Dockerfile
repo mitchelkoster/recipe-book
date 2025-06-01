@@ -46,4 +46,4 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN composer dump -o && composer check-platform-reqs
 
 # Expose web port
-EXPOSE 80
+EXPOSE 9000
