@@ -25,6 +25,13 @@ It is recommended to create a bash alias for `sail`:
 alias sail='bash vendor/bin/sail'
 ```
 
+Make sure all permissions are set correctly:
+```bash
+sudo chown -R $USER:$USER .
+sudo chmod -R o+w storage/logs
+sudo chmod -R o+w storage/framework/sessions
+```
+
 To get started first install all depedencies
 
 ```bash
@@ -55,6 +62,9 @@ sail php artisan migrate:fresh --seed
 sail npm install
 sail npm update vue-loader
 sail npm run dev
+
+# To keep monitoring for changes
+sail npm run watch
 
 # Run all tests
 sail test
