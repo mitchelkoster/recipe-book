@@ -6,7 +6,7 @@
 <!-- Navigation links -->
 <nav class="flex w-full justify-between text-lg">
     <!-- Main Menu -->
-    <div class="w-full bg-white z-50 hidden sm:flex md:items-center md:justify-between relative" id="navbar">
+    <div class="w-full z-50 hidden sm:flex md:items-center md:justify-between relative" id="navbar">
         <div class="flex">
             <a href="{{ url("/") }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('Latest') }}</a>
             <a href="{{ url("/recipes") }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('All') }}</a>

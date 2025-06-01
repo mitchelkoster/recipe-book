@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Models\Recipe;
@@ -57,7 +56,7 @@ class RecipeController extends Controller
             // Fetch all tags for recipe
             if ($request->input('tags') !== NULL) {
                 foreach ($request->input('tags') as $tagName) {
-                    $tag = Tag::firstOrCreate(['name' => $tagName]);
+                    $tag = Tag::firstOrCreate(['name' => Str::of($tagName)->lower()]);
                     $recipe->tags()->attach($tag->id);
                 }
             }
@@ -107,7 +106,7 @@ class RecipeController extends Controller
             // Update tags in the recipe
             $tagIds = [];
             foreach ($request->input('tags') as $tagName) {
-                $tag = Tag::firstOrCreate(['name' => $tagName]);
+                $tag = Tag::firstOrCreate(['name' => Str::of($tagName)->lower()]);
                 $tagIds[] = $tag->id;
             }
             $foundRecipe->tags()->sync($tagIds);

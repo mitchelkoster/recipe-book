@@ -71,7 +71,7 @@
 
             <!-- Tags -->
             <section class="text-center mb-2">
-                <x-tags :tags="$recipe->tags"/>
+                <x-tags :tags="$recipe->tags" position="center"/>
             </section>
 
             {{-- Only show image if available--}}

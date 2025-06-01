@@ -224,9 +224,11 @@ export default {
         createSlug() {
             this.recipe.slug = this.recipe.title
             .toLowerCase() // LowerCase
-            .replace(/\s+/g, "-") // space to -
-            .replace(/&/g, `-and-`) // & to and
-            .replace(/--/g, `-`); // -- to -
+            .replace(/\s+/g, "-") // Swap <space> to "-""
+            .replace(/&/g, `-and-`) // Swap & to "and"
+            .replace(/--/g, `-`) // Swap "--"" to "-""
+            .replace(/,/g, ``) // Remove ","
+            .replace(/'/g, ``); // Remove "'"
         },
         addStep() {
             this.recipe.steps.push({

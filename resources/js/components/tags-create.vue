@@ -34,7 +34,7 @@ export default {
     methods: {
         addTag() {
             if (this.tagInput.trim() !== '') {
-                this.tags.push(this.tagInput.trim());
+                this.tags.push(this.tagInput.trim().toLowerCase());
                 this.tagInput = '';
                 this.$emit('tags-updated', this.tags.slice()); // Emitting the 'tags-updated' event with the updated tags array
             }
