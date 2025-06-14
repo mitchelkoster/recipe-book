@@ -21,7 +21,7 @@ RUN npm ci
 RUN npm run production
 
 # PHP image that will host Laravel
-FROM php:8.3-fpm
+FROM php:8.3-apache
 
 WORKDIR /var/www/html
 
@@ -46,4 +46,4 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN composer dump -o && composer check-platform-reqs
 
 # Expose web port
-EXPOSE 9000
+EXPOSE 80
