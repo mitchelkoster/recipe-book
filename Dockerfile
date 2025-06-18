@@ -6,14 +6,14 @@ WORKDIR /var/www/html
 COPY composer.json composer.lock /var/www/html/
 
 RUN mkdir -p /var/www/html/database/{factories,seeds} \
-  && composer install --no-dev --prefer-dist --no-scripts --no-autoloader --no-progress --ignore-platform-reqs
+    && composer install --no-dev --prefer-dist --no-scripts --no-autoloader --no-progress --ignore-platform-reqs
 
 # NPM image for front-end dependencies
 FROM node:20 AS npm-build
 
 WORKDIR /var/www/html
 
-COPY package.json package-lock.json webpack.mix.js /var/www/html/
+COPY package.json package-lock.json webpack.mix.js tailwind.config.js /var/www/html/
 COPY resources /var/www/html/resources/
 COPY public /var/www/html/public/
 
@@ -29,7 +29,6 @@ WORKDIR /var/www/html
 RUN apt-get update \
     && apt-get install --quiet --yes --no-install-recommends libzip-dev unzip libmemcached-dev \
     && docker-php-ext-install bcmath ctype pdo_mysql zip
-
 
 # Enable caching
 RUN a2enmod expires headers
