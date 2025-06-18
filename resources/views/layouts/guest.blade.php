@@ -14,10 +14,10 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}" defer>
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}" defer>
 
         <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="bg-gray-100 font-sans">
         <!-- Page Navigation -->

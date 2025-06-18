@@ -17,8 +17,8 @@ mix.js('resources/js/app.js', 'public/js')
         require('postcss-import'),
         require('tailwindcss'),
         require('autoprefixer'),
-    ]
-);
+    ])
+    .version();
 
 if (mix.inProduction()) {
   mix.sourceMaps(false, 'source-map');
