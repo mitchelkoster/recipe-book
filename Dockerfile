@@ -30,6 +30,10 @@ RUN apt-get update \
     && apt-get install --quiet --yes --no-install-recommends libzip-dev unzip libmemcached-dev \
     && docker-php-ext-install bcmath ctype pdo_mysql zip
 
+
+# Enable caching
+RUN a2enmod expires headers
+
 # Configure Virtual Hosts
 COPY docker/laravel.conf /etc/apache2/sites-available/laravel.conf
 RUN a2enmod rewrite \
