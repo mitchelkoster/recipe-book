@@ -10,6 +10,7 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.setPublicPath('public');
 
 mix.js('resources/js/app.js', 'public/js')
     .vue()
@@ -17,5 +18,9 @@ mix.js('resources/js/app.js', 'public/js')
         require('postcss-import'),
         require('tailwindcss'),
         require('autoprefixer'),
-    ]
-);
+    ])
+    .version();
+
+if (mix.inProduction()) {
+  mix.sourceMaps(false, 'source-map');
+}
