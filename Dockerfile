@@ -38,9 +38,9 @@ RUN a2enmod rewrite \
     && service apache2 restart
 
 # Copy over composer & npm dependencies
+COPY --chown=www-data . /var/www/html
 COPY --chown=www-data --from=composer-build /var/www/html/vendor/ /var/www/html/vendor/
 COPY --chown=www-data --from=npm-build /var/www/html/public/ /var/www/html/public/
-COPY --chown=www-data . /var/www/html
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN composer dump -o && composer check-platform-reqs
