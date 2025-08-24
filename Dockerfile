@@ -27,8 +27,8 @@ WORKDIR /var/www/html
 
 # Install system dependencies
 RUN apt-get update \
-    && apt-get install --quiet --yes --no-install-recommends libzip-dev unzip libmemcached-dev \
-    && docker-php-ext-install bcmath ctype pdo_mysql zip
+    && apt-get install --quiet --yes --no-install-recommends libzip-dev unzip libmemcached-dev libpq-dev \
+    && docker-php-ext-install bcmath ctype pdo_pgsql pdo_mysql zip
 
 # Enable caching
 RUN a2enmod expires headers
