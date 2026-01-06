@@ -22,6 +22,7 @@ Route::get('/', [RecipeController::class, 'latest']);
 Route::middleware('auth')->group(function () {
     Route::post('/recipes', [RecipeController::class, 'store ']);
     Route::get('/recipes/create', [RecipeController::class, 'create']);
+    Route::get('/recipes/favorites', [RecipeController::class, 'favorites'])->name('recipes.favorites');
     Route::post('/recipes/favorite/{recipe:slug}', [RecipeController::class, 'favorite'])->name('recipes.favorite');
     Route::get('/recipes/{recipe:slug}/edit', [RecipeController::class, 'edit']);
     Route::delete('/recipes/{recipe:slug}', [RecipeController::class, 'destroy']);

@@ -55,6 +55,29 @@ class RecipeController extends Controller
     }
 
     /**
+     * Display favorites
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function favorites(Request $request)
+    {
+        // Handle custom pagination
+        $paginationCount = 20;
+        if ($request->integer("recipe-count") > 0) {
+            $paginationCount = $request->integer("recipe-count");
+        }
+
+        $user = auth()->user();
+        $recipes =  $user->favoriteRecipes()->with(['user', 'tags'])
+            ->orderBy('title', 'asc')
+            ->paginate($paginationCount);
+
+
+        return view('recipes.favorites', compact('recipes'));
+    }
+
+    /**
      * Toggle favorite status of a recipe. 
      *
      * @param \Illuminate\Http\Request
