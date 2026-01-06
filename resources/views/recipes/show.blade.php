@@ -1,9 +1,4 @@
 <x-guest-layout>
-            @if (auth()->check() && $recipe->is_favorite)
-            <h1>YES</h1>
-            @else
-            <h1>NO</h1>
-            @endif
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <header class="flex items-center flex-col bg-white rounded">
             @if (auth()->check() && $recipe->user_id === auth()->user()->id)
@@ -43,10 +38,27 @@
                 <div class="flex flex-row justify-end mt-4 px-8 w-full">
                     <form method="POST" action="{{ route('recipes.favorite', $recipe) }}">
                         @csrf
-                        <button type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="mt-1 w-8 h-8 text-red-400 hover:text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                            </svg>
+                        <button type="submit" class="focus:outline-none">
+                            @if($recipe->is_favorite)
+                                <!-- Filled heart -->
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="mt-1 w-8 h-8 text-red-400"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/>
+                                </svg>
+                            @else
+                                <!-- Outline heart -->
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="mt-1 w-8 h-8 text-red-400 hover:text-red-600"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/>
+                                </svg>
+                            @endif
                         </button>
                     </form>
                 </div>

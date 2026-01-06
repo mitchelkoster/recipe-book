@@ -30,10 +30,12 @@ class Recipe extends Model
         if (!$user) {
             return false;
         }
-
+    
         $isFavorited = $this->favoritedByUsers()
-            ->where('user_id', $user->id)
+            ->where('recipe_favorites.user_id', $user->id) 
             ->exists();
+
+        return $isFavorited;
     }
 
     /**
