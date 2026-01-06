@@ -55,6 +55,6 @@ class User extends Authenticatable
      */
     public function favoriteRecipes()
     {
-        return $this->hasMany(RecipeFavorite::class, 'user_id');
+        return $this->belongsToMany(Recipe::class, 'recipe_favorites');
     }
 }

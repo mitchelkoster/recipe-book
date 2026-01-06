@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class Recipe extends Model
@@ -14,9 +15,25 @@ class Recipe extends Model
     // Allow mass assignment
     protected $guarded = [];
 
+    // Properties
+    protected $appends = ['is_favorite'];
+
     public function canBeUpdatedBy(User $user, $recipe)
     {
         return $user->id === $recipe->user_id;
+    }
+
+
+    public function getIsFavoriteAttribute() {
+
+        $user = Auth::user();
+        if (!$user) {
+            return false;
+        }
+
+        $isFavorited = $this->favoritedByUsers()
+            ->where('user_id', $user->id)
+            ->exists();
     }
 
     /**
@@ -49,5 +66,13 @@ class Recipe extends Model
     public function user()
     {
         return $this->belongsTo(User::class)->select(['id', 'name']);
+    }
+
+    /**
+     * Get the users that favorited this recipe
+     */
+    public function favoritedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'recipe_favorites');
     }
 }

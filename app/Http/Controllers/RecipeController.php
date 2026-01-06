@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Recipe;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class RecipeController extends Controller
 {
     /**
@@ -52,6 +52,20 @@ class RecipeController extends Controller
     {
         $apiKey = auth()->user()->api_token;
         return view('recipes.create', ['apikey' => $apiKey]);
+    }
+
+    /**
+     * Toggle favorite status of a recipe. 
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function favorite(Recipe $recipe)
+    {
+        $user = auth()->user();
+        $user->favoriteRecipes()->toggle($recipe->id);
+
+        return back();
     }
 
     /**

@@ -3,7 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\RecipeFavorite;
+use App\Models\Recipe;
+use App\Models\User;
 
 class FavoriteSeeder extends Seeder
 {
@@ -14,11 +15,13 @@ class FavoriteSeeder extends Seeder
      */
     public function run()
     {
-        #RecipeFavorite::factory(120)->create();
+        // each user favorites 1–5 recipes
+        User::all()->each(function ($user) {
+            $recipeIds = Recipe::inRandomOrder()
+                ->take(rand(1, 5))   
+                ->pluck('id');
 
-        # Seed sequentially instead, slower but prevents duplicates
-        for ($i = 0; $i < 30; $i++) {
-            RecipeFavorite::factory()->create();
-        }
+            $user->favoriteRecipes()->syncWithoutDetaching($recipeIds);
+    });
     }
 }

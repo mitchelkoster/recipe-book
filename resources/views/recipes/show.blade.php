@@ -1,4 +1,9 @@
 <x-guest-layout>
+            @if (auth()->check() && $recipe->is_favorite)
+            <h1>YES</h1>
+            @else
+            <h1>NO</h1>
+            @endif
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <header class="flex items-center flex-col bg-white rounded">
             @if (auth()->check() && $recipe->user_id === auth()->user()->id)
