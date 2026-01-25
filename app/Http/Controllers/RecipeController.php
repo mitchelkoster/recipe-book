@@ -23,6 +23,24 @@ class RecipeController extends Controller
     }
 
     /**
+     * Display recently viewed recipes
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function recentlyViewed()
+    {
+        $user = auth()->user();
+
+        $views = $user->recipeViews()
+            ->with(['recipe.user', 'recipe.tags'])
+            ->orderByDesc('last_viewed_at')
+            ->limit(8)
+            ->get();
+
+        return view('recipes.recently-viewed', compact('views'));
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param \Illuminate\Http\Request
