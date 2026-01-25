@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             RecipeSeeder::class,
             StepSeeder::class,
             FavoriteSeeder::class,
+            RecipeViewSeeder::class,
         ]);
     }
 }

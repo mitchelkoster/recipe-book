@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Recipe;
 use App\Models\User;
-use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 

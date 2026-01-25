@@ -77,4 +77,12 @@ class Recipe extends Model
     {
         return $this->belongsToMany(User::class, 'recipe_favorites');
     }
+    
+    /**
+     * Get all recent views for this recipe.
+     */
+    public function views()
+    {
+        return $this->hasMany(RecipeView::class, 'recipe_id');
+    }
 }
