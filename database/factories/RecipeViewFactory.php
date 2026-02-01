@@ -22,8 +22,8 @@ class RecipeViewFactory extends Factory
         $isGuest = $this->faker->boolean(30); // 30% guest, tune as needed
 
         return [
-            'recipe_id' => Recipe::inRandomOrder()->firstOrFail()->id,
-            'user_id' => $isGuest ? null : User::query()->inRandomOrder()->value('id'),
+            'recipe_id' => Recipe::factory(),
+            'user_id' => $isGuest ? null : User::factory(),
             'viewer_id' => $isGuest ? (string) Str::uuid() : null,
             'last_viewed_at' => $this->faker->date(),
             'view_count' => rand(1, 6),

@@ -37,7 +37,7 @@ class RecipeFactory extends Factory
             'ingredients' => implode("\n", $ingredients),
             'cover' => NULL,
             'portions' => rand(1, 6),
-            'user_id' => User::inRandomOrder()->firstOrFail()->id
+            'user_id' => User::factory(),
         ];
     }
 }
