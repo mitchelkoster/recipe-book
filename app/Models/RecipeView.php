@@ -9,6 +9,8 @@ class RecipeView extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['recipe_id'];
+
     // Timestamp is not required
     public $timestamps = false;
 
