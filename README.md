@@ -1,7 +1,11 @@
 # Recipe
+
 A simple recipe website because I am tired of remembering everything.
 
+test 123
+
 ## Pushing a new image
+
 Release a new docker image:
 
 ```bash
@@ -11,6 +15,7 @@ docker push thunarez/recipe-cookbook:1.0.0
 ```
 
 ## Running in Production
+
 Pull the latest image fromt the Docker registry and run the container  after copying the production `.env` file.
 
 ```bash
@@ -25,13 +30,16 @@ Because Laravel's scheduler is used, we need to add a single cron configuration 
 ```
 
 ## Setting up a Development Environment
+
 It is recommended to create a bash alias for `sail`:
+
 ```bash
 # Add to ~/.bashrc
 alias sail='bash vendor/bin/sail'
 ```
 
 Make sure all permissions are set correctly:
+
 ```bash
 sudo chown -R $USER:$USER .
 sudo chmod -R o+w storage/logs
