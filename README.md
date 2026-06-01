@@ -2,7 +2,7 @@
 
 A simple recipe website because I am tired of remembering everything.
 
-test 12345
+test for new run
 
 ## Pushing a new image
 
