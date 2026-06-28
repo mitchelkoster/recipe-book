@@ -27,7 +27,7 @@ class RecipeController extends Controller
             abort(400);
         }
 
-        // Fetch the user ID
+        // Grab the current user
         $request = request();
         $user = $request->user();
 

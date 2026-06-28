@@ -16,7 +16,7 @@ class Recipe extends Model
     protected $guarded = [];
 
     // Properties
-    protected $appends = ['is_favorite', 'total_views'];
+    protected $appends = ['is_favorite', 'personal_views'];
 
     public function canBeUpdatedBy(User $user, $recipe)
     {
@@ -91,12 +91,13 @@ class Recipe extends Model
      */
     public function getPersonalViewsAttribute(): int
     {
-        // Fall back to total views if somehow the user is not authenticated.
-        $user = auth()->user();
+        $request = request();
+        $user = $request->user();
+
         if (! $user) {
-            return $this->getTotalViewsAttribute();
+            return 0;
         }
 
-        return $this->views()->where('user_id', $user->id)->sum('view_count');
+       return $this->views()->where('user_id', $user->id)->sum('view_count');
     }
 }
