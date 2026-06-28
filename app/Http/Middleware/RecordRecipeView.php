@@ -29,9 +29,6 @@ class RecordRecipeView
            return $next($request); 
         }
 
-        // Perform task after it's handled by the application (return recipe first)
-        $response = $next($request);
-
         // Determine viewer
         // - If autneticated viewerId null as we can use the userID
         // - If not authenticated viewerId becomes a UUID
@@ -58,6 +55,12 @@ class RecordRecipeView
         $view->last_viewed_at = now()->toDateString();
         $view->view_count = ($view->view_count ?? 0) + 1;
         $view->save();
+
+        // Update recipe view count
+        $recipe->increment('total_views', 1);
+
+        // All view counts have been updated, hand of response
+        $response = $next($request);
 
         // Set cookie for anonymous visits
         if ($setCookie) {

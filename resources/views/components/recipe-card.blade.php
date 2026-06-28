@@ -72,7 +72,7 @@
                     @auth
                         <p class="ml-2">{{ $recipe->personalViews }} {{ __('My views') }}</p>
                     @else    
-                        <p class="ml-2">{{ $recipe->totalViews }} {{ __('Views') }}</p>
+                        <p class="ml-2">{{ $recipe->total_views }} {{ __('Views') }}</p>
                     @endauth
                 </div>
             </div>

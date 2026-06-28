@@ -16,7 +16,7 @@ class Recipe extends Model
     protected $guarded = [];
 
     // Properties
-    protected $appends = ['is_favorite'];
+    protected $appends = ['is_favorite', 'total_views'];
 
     public function canBeUpdatedBy(User $user, $recipe)
     {
@@ -84,14 +84,6 @@ class Recipe extends Model
     public function views()
     {
         return $this->hasMany(RecipeView::class, 'recipe_id');
-    }
-
-    /**
-     * Get the total view count for this recipe.
-     */
-    public function getTotalViewsAttribute(): int
-    {
-        return $this->views()->sum('view_count');
     }
 
     /**
