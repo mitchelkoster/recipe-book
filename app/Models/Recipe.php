@@ -93,4 +93,18 @@ class Recipe extends Model
     {
         return $this->views()->sum('view_count');
     }
+
+    /**
+     * Get the personal view count for this recipe.
+     */
+    public function getPersonalViewsAttribute(): int
+    {
+        // Fall back to total views if somehow the user is not authenticated.
+        $user = auth()->user();
+        if (! $user) {
+            return $this->getTotalViewsAttribute();
+        }
+
+        return $this->views()->where('user_id', $user->id)->sum('view_count');
+    }
 }

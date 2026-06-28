@@ -68,7 +68,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                     </svg>
 
-                    <p class="ml-2 mt-1">{{ $recipe->totalViews }} {{ __('views') }}</p>
+                    {{-- Show total personal views if authenticated, otherwise show total views  --}}
+                    @auth
+                        <p class="ml-2">{{ $recipe->personalViews }} {{ __('My views') }}</p>
+                    @else    
+                        <p class="ml-2">{{ $recipe->totalViews }} {{ __('Views') }}</p>
+                    @endauth
                 </div>
             </div>
 
