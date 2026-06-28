@@ -33,7 +33,7 @@ class RecipeController extends Controller
         $views = $user->recipeViews()
             ->with(['recipe.user', 'recipe.tags'])
             ->orderByDesc('last_viewed_at')
-            ->limit(8)
+            ->limit(12)
             ->get();
         
         return view('recipes.recently-viewed', compact('views'));

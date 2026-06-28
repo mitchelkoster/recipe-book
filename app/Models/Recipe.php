@@ -85,4 +85,12 @@ class Recipe extends Model
     {
         return $this->hasMany(RecipeView::class, 'recipe_id');
     }
+
+    /**
+     * Get the total view count for this recipe.
+     */
+    public function getTotalViewsAttribute(): int
+    {
+        return $this->views()->sum('view_count');
+    }
 }
