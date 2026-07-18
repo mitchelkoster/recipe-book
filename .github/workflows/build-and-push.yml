@@ -30,8 +30,8 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ vars.DOCKERHUB_USERNAME }}/recipe-book:${{ github.ref_name }}
-            ${{ vars.DOCKERHUB_USERNAME }}/recipe-book:latest
+            ${{ vars.DOCKERHUB_USERNAME }}/recipe-cookbook:${{ github.ref_name }}
+            ${{ vars.DOCKERHUB_USERNAME }}/recipe-cookbook:latest
   deploy:
     name: Deploy Image on Server
     runs-on: ubuntu-latest
@@ -45,9 +45,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ vars.SSH_PORT }}
           script: |
-            docker pull ${{ vars.DOCKERHUB_USERNAME }}/recipe-book:latest
-            docker stop recipe-book || true
-            docker rm recipe-book || true
+            docker pull ${{ vars.DOCKERHUB_USERNAME }}/recipe-cookbook:latest
+            docker stop recipe-cookbook || true
+            docker rm recipe-cookbook || true
             docker run -d \
               -v /var/www/recipe_book/laravel.conf:/etc/apache2/sites-enabled/laravel.conf \
               -v /var/www/recipe_book/public:/var/www/html/public \
@@ -56,5 +56,5 @@ jobs:
               -p 8080:80 \
               --restart unless-stopped \
               --name recipe-cookbook \
-              ${{ vars.DOCKERHUB_USERNAME }}/recipe-book:${{ github.ref_name }}
+              ${{ vars.DOCKERHUB_USERNAME }}/recipe-cookbook:${{ github.ref_name }}
               
