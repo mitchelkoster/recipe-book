@@ -4,12 +4,7 @@ on:
     tags:
       - "*"
 
-  workflow_dispatch: # Can be manually ran still
-    inputs:
-      tag:
-        description: 'Image test tag'
-        required: true
-        default: 'test'
+  workflow_dispatch:
 
 jobs:
   build-and-push:
@@ -55,4 +50,5 @@ jobs:
               --restart unless-stopped \
               --name recipe-cookbook \
               ${{ vars.DOCKERHUB_USERNAME }}/recipe-cookbook:${{ github.ref_name }}
-              
+            sleep 5
+            docker exec recipe-cookbook php artisan migrate --force 
