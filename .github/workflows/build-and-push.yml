@@ -50,7 +50,6 @@ jobs:
             docker rm recipe-cookbook || true
             docker run -d \
               -v /var/www/recipe_book/laravel.conf:/etc/apache2/sites-enabled/laravel.conf \
-              -v /var/www/recipe_book/public:/var/www/html/public \
               -v /var/www/recipe_book/.env:/var/www/html/.env \
               -p 8080:80 \
               --restart unless-stopped \
