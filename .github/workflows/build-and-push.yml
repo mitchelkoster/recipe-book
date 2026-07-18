@@ -3,8 +3,6 @@ on:
   push:
     tags:
       - "*"
-    branches:
-      - feature/cicd # Run on this branch for testing only
 
   workflow_dispatch: # Can be manually ran still
     inputs:
