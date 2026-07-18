@@ -52,7 +52,6 @@ jobs:
               -v /var/www/recipe_book/laravel.conf:/etc/apache2/sites-enabled/laravel.conf \
               -v /var/www/recipe_book/public:/var/www/html/public \
               -v /var/www/recipe_book/.env:/var/www/html/.env \
-              -v /var/www/recipe_book/AppserviceProvider.php:/var/www/html/app/Providers/AppServiceProvider.php \
               -p 8080:80 \
               --restart unless-stopped \
               --name recipe-cookbook \
