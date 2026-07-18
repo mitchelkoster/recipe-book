@@ -37,8 +37,7 @@ RUN a2enmod expires headers
 COPY docker/laravel.conf /etc/apache2/sites-available/laravel.conf
 RUN a2enmod rewrite \
     && a2dissite 000-default.conf \
-    && a2ensite laravel.conf \
-    && service apache2 restart
+    && a2ensite laravel.conf
 
 # Copy over composer & npm dependencies
 COPY --chown=www-data . /var/www/html
