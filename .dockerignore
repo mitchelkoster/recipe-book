@@ -4,3 +4,6 @@ tests/
 .git/
 .vscode/
 _dev/
+.env
+storage/log
+webpack.mix.js

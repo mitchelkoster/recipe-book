@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Recipe;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class RecipeController extends Controller
 {
     /**
@@ -20,6 +20,23 @@ class RecipeController extends Controller
             ->get();
 
         return view('recipes.latest', compact('recipes'));
+    }
+
+    /**
+     * Display recently viewed recipes
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function recentlyViewed()
+    {
+        $user = auth()->user();
+        $views = $user->recipeViews()
+            ->with(['recipe.user', 'recipe.tags'])
+            ->orderByDesc('last_viewed_at')
+            ->limit(12)
+            ->get();
+        
+        return view('recipes.recently-viewed', compact('views'));
     }
 
     /**
@@ -52,6 +69,43 @@ class RecipeController extends Controller
     {
         $apiKey = auth()->user()->api_token;
         return view('recipes.create', ['apikey' => $apiKey]);
+    }
+
+    /**
+     * Display favorites
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function favorites(Request $request)
+    {
+        // Handle custom pagination
+        $paginationCount = 20;
+        if ($request->integer("recipe-count") > 0) {
+            $paginationCount = $request->integer("recipe-count");
+        }
+
+        $user = auth()->user();
+        $recipes =  $user->favoriteRecipes()->with(['user', 'tags'])
+            ->orderBy('title', 'asc')
+            ->paginate($paginationCount);
+
+
+        return view('recipes.favorites', compact('recipes'));
+    }
+
+    /**
+     * Toggle favorite status of a recipe. 
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function favorite(Recipe $recipe)
+    {
+        $user = auth()->user();
+        $user->favoriteRecipes()->toggle($recipe->id);
+
+        return back();
     }
 
     /**

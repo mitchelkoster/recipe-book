@@ -2,8 +2,9 @@
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <header class="flex items-center flex-col bg-white rounded">
             @if (auth()->check() && $recipe->user_id === auth()->user()->id)
+            {{--  Edit recipe  --}}
             <div class="flex flex-row justify-end mt-4 px-8 w-full">
-                <a class="mt-1 underline text-sm text-gray-600 hover:text-gray-900" href="{{ url('/recipes').'/'.$recipe->slug.'/edit'}}">
+                <a class="mt-1 text-gray-600 hover:text-gray-900" href="{{ url('/recipes').'/'.$recipe->slug.'/edit'}}">
                     <div class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
@@ -11,8 +12,8 @@
                     </div>
                 </a>
 
-                <span class="mt-2 mx-4">{{ __('or') }}</span>
-                <form method="POST" action="{{ url('/recipes') .'/' . $recipe->slug }}" class="mt-1 underline text-sm text-red-600 hover:text-red-800">
+                {{--  Delete recipe  --}}
+                <form method="POST" action="{{ url('/recipes') .'/' . $recipe->slug }}" class="mt-1 text-red-600 hover:text-red-800">
                     @csrf
                     @method("DELETE")
                     <button type="submit" onclick="return confirm('{{ __('Are you sure you want to delete this recipe?') }}')">
@@ -21,7 +22,46 @@
                         </svg>
                     </button>
                 </form>
+
+                {{-- Favorite recipe --}}
+                <form method="POST" action="{{ route('recipes.favorite', $recipe) }}">
+                    @csrf
+                    <button type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="mt-1 w-8 h-8 text-red-400 hover:text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                        </svg>
+                    </button>
+                </form>
             </div>
+            @elseif (auth()->check())
+                {{-- Favorite recipe --}}
+                <div class="flex flex-row justify-end mt-4 px-8 w-full">
+                    <form method="POST" action="{{ route('recipes.favorite', $recipe) }}">
+                        @csrf
+                        <button type="submit" class="focus:outline-none">
+                            @if($recipe->is_favorite)
+                                <!-- Filled heart -->
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="mt-1 w-8 h-8 text-red-400"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/>
+                                </svg>
+                            @else
+                                <!-- Outline heart -->
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="mt-1 w-8 h-8 text-red-400 hover:text-red-600"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/>
+                                </svg>
+                            @endif
+                        </button>
+                    </form>
+                </div>
             @endif
 
             <!-- Title and description -->
@@ -67,6 +107,22 @@
 
                     <p class="ml-2">{{ $recipe->portions }} {{ __('portion(s)') }}</p>
                 </div>
+
+                <!-- views -->
+                <div class="flex my-1 mx-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+
+                    {{-- Show total personal views if authenticated, otherwise show total views  --}}
+                    @auth
+                        <p class="ml-2">{{ $recipe->personalViews }} {{ __('My views') }}</p>
+                    @else    
+                        <p class="ml-2">{{ $recipe->total_views }} {{ __('Toal views') }}</p>
+                    @endauth
             </section>
 
             <!-- Tags -->

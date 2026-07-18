@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             RecipeSeeder::class,
             StepSeeder::class,
+            FavoriteSeeder::class,
+            RecipeViewSeeder::class,
         ]);
     }
 }

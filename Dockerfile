@@ -13,15 +13,15 @@ FROM node:20 AS npm-build
 
 WORKDIR /var/www/html
 
-COPY package.json package-lock.json webpack.mix.js tailwind.config.js /var/www/html/
+COPY package.json package-lock.json vite.config.js tailwind.config.js postcss.config.js /var/www/html/
 COPY resources /var/www/html/resources/
 COPY public /var/www/html/public/
 
 RUN npm ci
-RUN npm run production
+RUN npm run build
 
 # PHP image that will host Laravel
-FROM php:8.3-apache
+FROM php:8.4-apache
 
 WORKDIR /var/www/html
 
@@ -37,8 +37,7 @@ RUN a2enmod expires headers
 COPY docker/laravel.conf /etc/apache2/sites-available/laravel.conf
 RUN a2enmod rewrite \
     && a2dissite 000-default.conf \
-    && a2ensite laravel.conf \
-    && service apache2 restart
+    && a2ensite laravel.conf
 
 # Copy over composer & npm dependencies
 COPY --chown=www-data . /var/www/html

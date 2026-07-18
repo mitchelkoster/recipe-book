@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Recipe;
 use App\Models\User;
-use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -27,7 +26,7 @@ class RecipeFactory extends Factory
         // Create ingredients
         $ingredients = [];
         for ($i = 0; $i < rand(3, 8); $i++) {
-            $ingredients[] = strval($this->faker->randomDigit(1)) . ' ' . $this->faker->words(3, true);
+            $ingredients[] = strval($this->faker->randomDigit()) . ' ' . $this->faker->words(3, true);
         }
 
         $title = $this->faker->unique()->sentence();
@@ -38,7 +37,7 @@ class RecipeFactory extends Factory
             'ingredients' => implode("\n", $ingredients),
             'cover' => NULL,
             'portions' => rand(1, 6),
-            'user_id' => User::inRandomOrder()->firstOrFail()->id
+            'user_id' => User::factory(),
         ];
     }
 }

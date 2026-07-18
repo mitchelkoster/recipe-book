@@ -27,16 +27,15 @@ class RecipeController extends Controller
             abort(400);
         }
 
-        // Fetch the user ID
-        $apikey = $request->header('Authorization');
-        $apikey = explode('Bearer ', $apikey)[1];
-        $userId = User::firstOrFail()->where(['api_token' => $apikey])->get('id');
+        // Grab the current user
+        $request = request();
+        $user = $request->user();
 
         // Start a database transaction
-        DB::transaction(function () use ($request, $userId) {
+        DB::transaction(function () use ($request, $user) {
             // Save recipe
             $recipe = Recipe::create([
-                'user_id' => $userId[0]->id,
+                'user_id' => $user->id,
                 'title' => $request->input('title'),
                 'slug' => Str::slug($request->input('title'), '-'),
                 'description' => $request->input('description'),

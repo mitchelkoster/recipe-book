@@ -1,14 +1,18 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-    purge: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/views/**/*.blade.php',
-        './resources/js/**/*.vue', // Purge VieJS
-        './resources/js/**/*.js', // Better safe then sorry
-    ],
-
+    purge: {
+        content: [
+            './resources/views/**/*.blade.php',
+            './resources/js/**/*.vue',
+            './resources/js/**/*.js',
+        ],
+        options: {
+            safelist: [
+                { pattern: /justify-(start|center|end|between|around|evenly)/ },
+            ],
+        },
+    },
     theme: {
         extend: {
             fontFamily: {
@@ -16,13 +20,6 @@ module.exports = {
             },
         },
     },
-
-    variants: {
-        extend: {
-            opacity: ['disabled'],
-        },
-    },
-
     plugins: [
         require('@tailwindcss/forms')
     ],

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\TagController;
+use App\Http\Middleware\RecordRecipeView;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,9 @@ Route::get('/', [RecipeController::class, 'latest']);
 Route::middleware('auth')->group(function () {
     Route::post('/recipes', [RecipeController::class, 'store ']);
     Route::get('/recipes/create', [RecipeController::class, 'create']);
+    Route::get('/recipes/favorites', [RecipeController::class, 'favorites'])->name('recipes.favorites');
+    Route::get('/recipes/recently-viewed', [RecipeController::class, 'recentlyViewed']);
+    Route::post('/recipes/favorite/{recipe:slug}', [RecipeController::class, 'favorite'])->name('recipes.favorite');
     Route::get('/recipes/{recipe:slug}/edit', [RecipeController::class, 'edit']);
     Route::delete('/recipes/{recipe:slug}', [RecipeController::class, 'destroy']);
 });
@@ -29,7 +33,7 @@ Route::middleware('auth')->group(function () {
 // public recipe routes
 Route::get('/latest', [RecipeController::class, 'latest']);
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes');
-Route::get('/recipes/{recipe:slug}', [RecipeController::class, 'show']);
+Route::get('/recipes/{recipe:slug}', [RecipeController::class, 'show'])->middleware(RecordRecipeView::class);
 
 Route::get('/tags/search', [TagController::class, 'search']);
 Route::get('/tags/{tag:name}', [TagController::class, 'show']);
