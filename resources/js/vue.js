@@ -2,10 +2,10 @@ import { createApp } from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
-import recipesCreate from './components/recipes-create';
-import recipesEdit from './components/recipes-edit';
-import tagsCreate from './components/tags-create';
-import tagsSearch from './components/tags-search';
+import recipesCreate from './components/recipes-create.vue';
+import recipesEdit from './components/recipes-edit.vue';
+import tagsCreate from './components/tags-create.vue';
+import tagsSearch from './components/tags-search.vue';
 
 const app = createApp({});
 
