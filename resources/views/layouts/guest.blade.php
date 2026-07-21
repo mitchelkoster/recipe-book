@@ -18,7 +18,7 @@
     </head>
     <body class="bg-gray-100 font-sans">
         <!-- Page Navigation -->
-        <header class="flex flex-row bg-white p-2 shadow bg-gray-50">
+        <header class="flex flex-row bg-white p-2 shadow bg-gray-50 relative">
             @include('layouts.navigation')
         </header>
 

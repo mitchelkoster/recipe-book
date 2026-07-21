@@ -22,4 +22,8 @@ app.component('add-recipe', recipesCreate);
 app.component('edit-recipe', recipesEdit);
 app.component('tags-create', tagsCreate);
 app.component('tags-search', tagsSearch);
-app.mount('#app');
+
+const appElm = document.getElementById('app');
+if (appElm) {
+    app.mount(appElm);
+}
