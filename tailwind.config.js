@@ -9,6 +9,7 @@ module.exports = {
         ],
         options: {
             safelist: [
+                'hidden',
                 { pattern: /justify-(start|center|end|between|around|evenly)/ },
             ],
         },
