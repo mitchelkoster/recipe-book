@@ -1,3 +1,6 @@
+# Don't track build folder
+public/build/
+
 # Track the empty file but ignore changes
 /database/database.sqlite
 
