@@ -50,12 +50,12 @@
         <div class="flex flex-col items-center py-4 h-full">
             <a href="{{ url("/") }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('Latest') }}</a>
             <a href="{{ url("/recipes") }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('All') }}</a>
-            <a href="{{ url("/recipes/search") }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('Search') }}</a>
+            <a href="{{ url("/tags/search") }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('Search') }}</a>
             @auth
                 <a href="{{ url("/tags/recently-viewed") }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('Recent') }}</a>
                 <a href="{{ url("/recipes/favorites") }}" class="mt-1 block p-3 text-green-600 font-semibold rounded hover:text-green-400 sm:mt-0 sm:ml-1">{{ __('Favorites') }}</a>
             @endauth
-            
+
             <div class="flex flex-col items-center">
                 @auth
                 <a href="{{ url("/recipes/create") }}" class="p-3"><x-button>{{ __('Add Recipe') }}</x-button></a>
