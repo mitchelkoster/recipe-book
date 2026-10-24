@@ -9,7 +9,7 @@ RUN mkdir -p /var/www/html/database/{factories,seeds} \
     && composer install --no-dev --prefer-dist --no-scripts --no-autoloader --no-progress --ignore-platform-reqs
 
 # NPM image for front-end dependencies
-FROM node:20 AS npm-build
+FROM node:26 AS npm-build
 
 WORKDIR /var/www/html
 
