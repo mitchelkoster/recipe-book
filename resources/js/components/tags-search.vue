@@ -18,7 +18,7 @@
         </div>
 
         <!-- Show resulting tags -->
-        <div v-if="suggestedTags.length > 0" class="mb-4 relative mx-auto w-full">
+        <div v-if="suggestedTags.length > 0" class="rounded-md border-solid border-2 mb-4 relative mx-auto w-full">
             <ul class="w-full p-3 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block"
                 type="search" name="search" placeholder="bread">
                 <li v-for="tag in suggestedTags" :key="tag.id" @click="selectTag(tag)" class="cursor-pointer p-2 hover:bg-green-100 hover:rounded">
@@ -30,8 +30,8 @@
 
     <!-- TODO: Only display once one or multiple tags have been selected -->
     <!-- Show resulting Recipes -->
-    <section v-if="suggestedRecipes.length > 0"
-        class="flex items-center flex-col bg-white rounded my-2 my-2 w-full border-t">
+    <section v-if="suggestedRecipes.length > 0 && suggestedTags.length > 0"
+        class="flex items-center flex-col bg-white rounded my-2 w-full border-t">
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
             <div v-for="recipe in suggestedRecipes" class="p-6 bg-white rounded shadow">
